@@ -42,20 +42,14 @@ void() W_FireAxe =
 {
 	local vector source;
 	local vector org;
-	local float wrange;
 	local float damage;
 	
 	makevectors (self.v_angle);
 	source = self.origin + '0 0 16';
 	
-	/* Berserks have a longer axe range */
-	if(self.playerclass == CL_BERSERK)
-		wrange = 96;
-	else
-		wrange = 64;
 	
 	/* Check if there is a target within range*/
-	traceline(source, source + v_forward*wrange, FALSE, self);
+	traceline(source, source + v_forward*64, FALSE, self);
 	if(trace_fraction >= 1.0)
 		return;
 
@@ -70,8 +64,6 @@ void() W_FireAxe =
 		/* Pick damage based on class */
 		if(self.playerclass == CL_SILENT) /* Ninja */
 			damage = 30+(random()*40);
-		else if(self.playerclass == CL_BERSERK) /* Berserk */
-			damage = 50+(random()*40);
   		else /* All others */
 			damage = 20+(random()*25);
 			
@@ -382,8 +374,11 @@ void() W_SetCurrentAmmo =
 	
 	if (self.weapon == IT_AXE)
 	{
+		if(self.playerclass == CL_BERSERK)
+			self.weaponmodel = "";
+		else
+			self.weaponmodel = "progs/v_axe.mdl";
 		self.currentammo = 0;
-		self.weaponmodel = "progs/v_axe.mdl";
 		self.weaponframe = 0;
 	}
 	else if (self.weapon == IT_SHOTGUN)
@@ -565,6 +560,7 @@ void()  player_hw_nail1;
 void()  player_light1;
 void()  player_rocket1;
 void()  player_demon_atta1;
+void() player_berserk_attack;
 
 void() W_Attack =
 {
@@ -593,10 +589,7 @@ void() W_Attack =
 	if (self.weapon == IT_AXE)
 	{
 		self.attack_finished = time + 0.5;
-		
-		if(self.playerclass == CL_BERSERK)
-			self.attack_finished - self.attack_finished - 0.2;
-
+	
 		if (self.axe_mode == 1)
 		{
 			player_hook1();
@@ -606,13 +599,8 @@ void() W_Attack =
 		// Berserk plays different sounds
 		if(self.playerclass == CL_BERSERK)
 		{
-			r = random();
-			if(r < 0.33)
-				sound(self, CHAN_WEAPON, "hknight/slash1.wav", 1, ATTN_NORM);
-			else if(r < 0.66)
-				sound(self, CHAN_WEAPON, "knight/sword1.wav", 1, ATTN_NORM);
-			else
-				sound(self, CHAN_WEAPON, "knight/sword2.wav", 1, ATTN_NORM);			
+			player_berserk_attack();
+			return;
 		}
 		else
 			sound (self, CHAN_WEAPON, "weapons/ax1.wav", 1, ATTN_NORM);

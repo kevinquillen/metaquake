@@ -143,71 +143,71 @@ void() MOTD1 =
 	
 	// Aliases -- Class Changing 
 	//=========================================================
-	AddAlias(self.owner, "standard",IMPULSE_CLASS_START + CL_STANDARD);
-	AddAlias(self.owner, "scout",	IMPULSE_CLASS_START + CL_SCOUT);
-	AddAlias(self.owner, "sniper",	IMPULSE_CLASS_START + CL_SNIPER);
-	AddAlias(self.owner, "soldier", IMPULSE_CLASS_START + CL_SOLDIER);
-	AddAlias(self.owner, "hweap",	IMPULSE_CLASS_START + CL_HWEAP);
-	AddAlias(self.owner, "special", IMPULSE_CLASS_START + CL_SPECIAL);
-	AddAlias(self.owner, "berserk",	IMPULSE_CLASS_START + CL_BERSERK);
+	AddAlias(pl, "standard",IMPULSE_CLASS_START + CL_STANDARD);
+	AddAlias(pl, "scout",	IMPULSE_CLASS_START + CL_SCOUT);
+	AddAlias(pl, "sniper",	IMPULSE_CLASS_START + CL_SNIPER);
+	AddAlias(pl, "soldier", IMPULSE_CLASS_START + CL_SOLDIER);
+	AddAlias(pl, "hweap",	IMPULSE_CLASS_START + CL_HWEAP);
+	AddAlias(pl, "special", IMPULSE_CLASS_START + CL_SPECIAL);
+	AddAlias(pl, "berserk",	IMPULSE_CLASS_START + CL_BERSERK);
 	
-	AddAlias(self.owner, "mage",	IMPULSE_CLASS_START + CL_MAGE);
-	AddAlias(self.owner, "cleric",	IMPULSE_CLASS_START + CL_CLERIC);
-	AddAlias(self.owner, "druid",	IMPULSE_CLASS_START + CL_DRUID);
+	AddAlias(pl, "mage",	IMPULSE_CLASS_START + CL_MAGE);
+	AddAlias(pl, "cleric",	IMPULSE_CLASS_START + CL_CLERIC);
+	AddAlias(pl, "druid",	IMPULSE_CLASS_START + CL_DRUID);
 	
-	AddAlias(self.owner, "fireelem",IMPULSE_CLASS_START + CL_FIREELEM);
-	AddAlias(self.owner, "shock",	IMPULSE_CLASS_START + CL_SHOCK);
-	AddAlias(self.owner, "ninja",	IMPULSE_CLASS_START + CL_SILENT);
-	AddAlias(self.owner, "lich",	IMPULSE_CLASS_START + CL_LICH);
-	AddAlias(self.owner, "asniper",	IMPULSE_CLASS_START + CL_ASNIPER);
+	AddAlias(pl, "fireelem",IMPULSE_CLASS_START + CL_FIREELEM);
+	AddAlias(pl, "shock",	IMPULSE_CLASS_START + CL_SHOCK);
+	AddAlias(pl, "ninja",	IMPULSE_CLASS_START + CL_SILENT);
+	AddAlias(pl, "lich",	IMPULSE_CLASS_START + CL_LICH);
+	AddAlias(pl, "asniper",	IMPULSE_CLASS_START + CL_ASNIPER);
 
 // Special aliases...
-  stuffcmd(self.owner,"alias light \"impulse 98\"\n");
-  stuffcmd(self.owner,"alias +hook \"impulse 90\"\n");
-  stuffcmd(self.owner,"alias -hook \"impulse 91\"\n");
-  stuffcmd(self.owner,"alias +jet \"impulse 92\"\n");
-  stuffcmd(self.owner,"alias -jet \"impulse 93\"\n");
-  stuffcmd(self.owner,"alias blowpipe \"impulse 94\"\n");
-  stuffcmd(self.owner,"alias mortar \"impulse 108\"\n");
-  stuffcmd(self.owner,"alias autopush \"impulse 111\"\n");
-  stuffcmd(self.owner,"alias classexec \"impulse 95\"\n");  
-  stuffcmd(self.owner,"alias droprune \"impulse 96\"\n");
-  stuffcmd(self.owner,"alias dropflag \"impulse 97\"\n");
-  stuffcmd(self.owner,"alias aim \"impulse 109\"\n");
-  stuffcmd(self.owner,"alias flag \"impulse 110\"\n");
-  stuffcmd(self.owner,"alias create \"impulse 113\"\n");
-  stuffcmd(self.owner,"alias accept \"impulse 114\"\n");
-  stuffcmd(self.owner,"alias teams \"impulse 115\"\n");
-  stuffcmd(self.owner,"alias disband \"impulse 117\"\n");
-  stuffcmd(self.owner,"alias gorandom \"impulse 106\"\n");
-  stuffcmd(self.owner,"alias changeteam \"impulse 116\"\n");
-  stuffcmd(self.owner,"alias hr \"impulse 118\"\n");
-  stuffcmd(self.owner,"alias hl \"impulse 119\"\n");
+  stuffcmd(pl,"alias light \"impulse 98\"\n");
+  stuffcmd(pl,"alias +hook \"impulse 90\"\n");
+  stuffcmd(pl,"alias -hook \"impulse 91\"\n");
+  stuffcmd(pl,"alias +jet \"impulse 92\"\n");
+  stuffcmd(pl,"alias -jet \"impulse 93\"\n");
+  stuffcmd(pl,"alias blowpipe \"impulse 94\"\n");
+  stuffcmd(pl,"alias mortar \"impulse 108\"\n");
+  stuffcmd(pl,"alias autopush \"impulse 111\"\n");
+  stuffcmd(pl,"alias classexec \"impulse 95\"\n");  
+  stuffcmd(pl,"alias droprune \"impulse 96\"\n");
+  stuffcmd(pl,"alias dropflag \"impulse 97\"\n");
+  stuffcmd(pl,"alias aim \"impulse 109\"\n");
+  stuffcmd(pl,"alias flag \"impulse 110\"\n");
+  stuffcmd(pl,"alias create \"impulse 113\"\n");
+  stuffcmd(pl,"alias accept \"impulse 114\"\n");
+  stuffcmd(pl,"alias teams \"impulse 115\"\n");
+  stuffcmd(pl,"alias disband \"impulse 117\"\n");
+  stuffcmd(pl,"alias gorandom \"impulse 106\"\n");
+  stuffcmd(pl,"alias changeteam \"impulse 116\"\n");
+  stuffcmd(pl,"alias hr \"impulse 118\"\n");
+  stuffcmd(pl,"alias hl \"impulse 119\"\n");
 
 
 // spell commands
-  stuffcmd(self.owner,"alias prevspell \"impulse 160\"\n");
-  stuffcmd(self.owner,"alias nextspell \"impulse 161\"\n");
-  stuffcmd(self.owner,"alias spellmode \"impulse 162\"\n");
-  stuffcmd(self.owner,"alias cast \"impulse 163\"\n");
+  stuffcmd(pl,"alias prevspell \"impulse 160\"\n");
+  stuffcmd(pl,"alias nextspell \"impulse 161\"\n");
+  stuffcmd(pl,"alias spellmode \"impulse 162\"\n");
+  stuffcmd(pl,"alias cast \"impulse 163\"\n");
 
 
 // HUD commands
-  stuffcmd(self.owner,"alias hud_off \"impulse 102\"\n");
-  stuffcmd(self.owner,"alias hud_on \"impulse 103\"\n");
-  stuffcmd(self.owner,"alias hud_up \"impulse 104\"\n");
-  stuffcmd(self.owner,"alias hud_down \"impulse 105\"\n");
+  stuffcmd(pl,"alias hud_off \"impulse 102\"\n");
+  stuffcmd(pl,"alias hud_on \"impulse 103\"\n");
+  stuffcmd(pl,"alias hud_up \"impulse 104\"\n");
+  stuffcmd(pl,"alias hud_down \"impulse 105\"\n");
 
 // Special bindings...
-  stuffcmd(self.owner,"bind BACKSPACE \"impulse 99\"\n");
-  stuffcmd(self.owner,"alias commands \"impulse 99\"\n");
-  stuffcmd(self.owner,"alias meta \"impulse 112\"\n");
+  stuffcmd(pl,"bind BACKSPACE \"impulse 99\"\n");
+  stuffcmd(pl,"alias commands \"impulse 99\"\n");
+  stuffcmd(pl,"alias meta \"impulse 112\"\n");
 
-  stuffcmd(self.owner,"bind l light\n");
-  stuffcmd(self.owner,"bind [ prevspell\n");
-  stuffcmd(self.owner,"bind ] nextspell\n");
-  stuffcmd(self.owner,"bind p spellmode\n");
-  stuffcmd(self.owner,"bind ' cast\n");
+  stuffcmd(pl,"bind l light\n");
+  stuffcmd(pl,"bind [ prevspell\n");
+  stuffcmd(pl,"bind ] nextspell\n");
+  stuffcmd(pl,"bind p spellmode\n");
+  stuffcmd(pl,"bind ' cast\n");
 
   self.think = MOTD2;
   self.nextthink = time + 1.7;

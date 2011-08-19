@@ -458,6 +458,8 @@ void() MageDoggie =
 	if(!CheckMana(self,10))
 		return;
 		
+	
+
 	spell_become_doggie();
 };
 
@@ -542,15 +544,17 @@ void() ConfusionTouch =
 		if(head.health >= 1 && head.classname == "player")
 		{
 			if(
-			!(head == self.owner) &&
+			//!(head == self.owner) && 
 			(!teamplay  || (teamplay && !SameTeam(self.owner,head)))
 			)
 			{
 				if(!CheckResist(head, 0.20)) //20% chance to resist by default
 				{
 					Magic_AddEffect(head, self.owner, SPELLFX_CONFUSION, 3.5); 
+					sound (self, CHAN_VOICE, "boss2/idle.wav", 1, ATTN_NORM);
+
 					//Give player concusion
-					stuffcmd(conf.enemy, "v_idlescale 140\n");
+					stuffcmd(head, "v_idlescale 140\n");
 				}
 				else //Show a resist message
 				{

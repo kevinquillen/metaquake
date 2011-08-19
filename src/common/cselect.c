@@ -22,7 +22,7 @@
  
  void (vector org, entity death_owner) spawn_tdeath;
 entity() SelectSpawnPoint;
-void() player_pain;
+void(entity attacker, float damage) player_pain;
 
 void () ClassScout =
 {
@@ -132,7 +132,7 @@ void () ClassMage =
 
   
   self.max_health = 90;
-  self.max_arm = 80;
+  self.max_arm = CLASS_MAGE_MAXARMOR;
   self.max_ammo_shells = 50;
   self.max_ammo_nails = 100;
   self.max_ammo_rockets = 8;
@@ -347,7 +347,7 @@ void () ClassDruid =
   self.armortype = 0;
 
   self.max_health = 115;
-  self.max_arm = 115;
+  self.max_arm = CLASS_DRUID_MAXARMOR;
   self.max_ammo_shells = 100;
   self.max_ammo_nails = 200;
   self.max_ammo_rockets = 6;
@@ -406,7 +406,6 @@ void () ClassLich =
   self.armorvalue = 0;
   self.armortype = 0;
 
-  
   self.max_health = 75;
   self.max_arm = 60;
   self.max_ammo_shells = 20;
@@ -450,15 +449,18 @@ void() ClassBerserk =
 	}
 	self.saves = 0;
 	self.harms = 0;
-	self.player_flags = self.player_flags; 
+	self.player_flags = self.player_flags | PF_NO_HOOK; 
 
-	self.items = IT_AXE;
+	self.items = IT_AXE | IT_ARMOR3;
 	self.ammo_shells = 0;
 	self.ammo_cells = 0;
 	self.ammo_nails = 0;
 	self.ammo_rockets = 0;
-
-	self.max_health = 300;
+	
+	self.armorvalue = 50;
+	self.armortype = 0.8;
+	
+	self.max_health = 200;
 	self.max_arm = 50;
 	self.max_ammo_shells = 0;
 	self.max_ammo_nails = 0;

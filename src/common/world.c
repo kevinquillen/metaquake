@@ -66,11 +66,15 @@ void() MetaPrecache =
   precache_model ("progs/dog.mdl");		// dog morph
   precache_model ("progs/enforcer.mdl");	// hweap
   precache_model ("progs/tarbaby.mdl"); // ensnare
+  precache_model ("progs/hknight.mdl"); //berserk
 
   precache_sound ("demon/dhit2.wav");		// demon hit
   precache_sound ("demon/djump.wav");		// demon jump
+  precache_sound ("demon/dpain1.wav");		// demon pain
+  precache_sound ("dog/dpain1.wav");		// dog pain
   precache_sound ("dog/dattack1.wav");		// dog jump/attack
   precache_sound ("boss1/sight1.wav");    	// hyper boom?
+  precache_sound ("boss2/idle.wav");		//Mage confusion spell
 
   // Special items
   precache_model ("progs/end1.mdl");		// runes

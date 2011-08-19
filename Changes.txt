@@ -18,7 +18,8 @@ There are 6 sections.
 6) CODE BASE CHANGES - For developers. Changes in the code structure.
 
 1) New Weapons/Spells
--------------------------------* SSG 31: Sawed Barrel Shotgun
+-------------------------------
+* SSG 31: Sawed Barrel Shotgun
     It deals a lot of damage up close, but spreads out quickly at a short range
     Ideal for melee opponents or grappling hook kills.
     Cost: 4 shells / 1.2s reload.
@@ -74,6 +75,11 @@ There are 6 sections.
 * Renamed Cleric's "Heal" to "Group Heal" to better convey what it does
 * Renamed Cleric's "Strengthen Armor" to "Magical Vestment" so it sounds
   more D&D like.
+* The Druid's demon form jump attack had its minimum damage increase from
+  10 to 25. The maximum damage of 50 is unchanged.
+* Added "Berserk" class. High health, some armor, and a deadly sword. At
+  the moment, missing a ranged attack. There will likely be some balance
+  changes related to this later.
   
 3) Changed Weapons/Spells
 -------------------------------
@@ -92,6 +98,7 @@ There are 6 sections.
 -------------------------------
 * (Re)Added the Meta help system.
 * Changed a few death messages.
+* Added 4 new death messages for when the player gets a kill as the dog.
 * Added the "spell effects" system, which tracks what spells have been cast
   on the player and how long until they expire. This replaces a lot of the
   ad-hoc code and makes a more generalized framework for spells that affect
@@ -104,7 +111,9 @@ There are 6 sections.
 5) Bugs Fixed (compared to Meta 5)
 -------------------------------
 * When a Druid kills someone as a demon, the death message no longer reads
-  "...by his chain lightning"
+  "...by his chain lightning".
+* When a Mage kills someone as a dog, the death message no longer reads
+  "...by his lightning".
 * When a class had extra fall damage (specialist/heavy weaps/base guard),
   their damage was actually multiplied by 1.95 instead of 1.5. This has been
   changed back to 1.5x since it was assumed that the double damage amplification
@@ -133,12 +142,27 @@ There are 6 sections.
 * The Lich's "Acid Blob" doesn't explode when it hits an option rocket.
 * The option rocket doesn't explode when it hits something owned by the
   player (e.g. spell effects)
-
+* Fixed case where Druids were unable to pick up health after leaving the
+  demon morph. The code doubles the druid's maximum health when s/he enters
+  demon state, but cuts it in 1/3 when leaving, which actually sets the maximum
+  health LOWER than when starting.
+* Fixed case where Druids with 1 or 2 health in demon form returning to human
+  form looked like they were dead, but weren't.
+* Fixed Mage's maximum armor being set to 75 when exiting from dog morph,
+  instead of being restored to 80.
+* Fixed Druid's maximum armor being set to 120 when exiting from demon morph,
+  instead of being restored to 115.
+* Fixed Mage's dog stand animation. It accidentally went 1 frame too far and
+  cause a graphical glitch.
+* The dog's jump attack code actually was set to use the demon's jump, causing
+  it to do too much damage. It now does normal damage (25-35)
 
 6) Code Base Changes
 -------------------------------
 * Tons of comments added to existing code to improve readability
-* Added weapons/ssg.c for super shotgun improvements
+* Reformatted some code to use tabs (tab = 4 spaces in my editor)
+* Added common/weapons/ssg.c for super shotgun improvements
+* Added common/class/berserk.c for berserk animation and attacking
 * Added magic.h for magic related symbols
 * Added spellfx.c for the spell effect system.
 * Renamed mglobals.h -> meta.h

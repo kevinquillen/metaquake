@@ -1597,8 +1597,8 @@ void() DropBackpack =
 	if (!(self.ammo_shells + self.ammo_nails + self.ammo_rockets + self.ammo_cells))
 		return;	// nothing in it
 
-	if (self.playerclass == CL_FIREELEM)
-          return;
+	if(self.playerclass == CL_FIREELEM || self.playerclass == CL_BERSERK)
+		return;
 
 	item = spawn();
 	item.origin = self.origin - '0 0 24';

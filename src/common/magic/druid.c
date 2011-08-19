@@ -298,7 +298,7 @@ void() Erupt =
   ball.avelocity = '300 300 300';
   ball.velocity_z = random()*300 + 400;
   ball.owner = self.owner;
-  self.nextthink = time+0.3;
+  self.nextthink = time + 0.3;
   self.think = Erupt;
 };
 void() DruidErupt =
@@ -311,13 +311,8 @@ void() DruidErupt =
 		return;
 	}
 
-  if (self.ammo_cells < 180)
-  {
-    sprint(self,"Insufficient mana!\n");
-    return;
-  }
-
-  self.ammo_cells = self.ammo_cells - 180;
+	if(!CheckMana(self, 180))
+		return;
 
   if (!CheckCount(2200,"magic_erupt",1))
   {
@@ -463,16 +458,39 @@ void() DruidRegen =
 {
 	local entity spelltarget;
 	
-	if(!CheckMana(self, 45))
-		return;
-
+		
 	if(self.tb_mode == CASTMODE_SELF)
+	{
+		if(!CheckMana(self, 75))
+			return;
+			
 		spelltarget = self;
+	}
 	else
-		spelltarget = self.enemy;
+	{
+		//Ensure beneficial spells follow teamplay rules
+		if(!CheckHelpfulSpellTarget())
+			return;
 
-	Magic_AddEffect(spelltarget, self, SPELLFX_REGEN, 15); //regen for 15 seconds
-					
+		if(!CheckMana(self, 75))
+			return;
+	
+		spelltarget = self.enemy;
+		
+		//Let caster know who the spell was cast on
+		sprint(self, "Regenerating: ");
+		sprint(self, spelltarget.netname);
+		sprint(self, "\n");
+		
+	}
+		
+	sound(self, CHAN_AUTO, "enforcer/enfire.wav", 1, ATTN_NORM);
+	if(spelltarget.classname == "player")
+		cprint(spelltarget, "Your wounds start to mend.");
+
+	//Regenerate for 15 seconds
+	Magic_AddEffect(spelltarget, self, SPELLFX_REGEN, 15);
+	self.attack_finished = time + 1.0;
 };
 
 // Spell casting: by selection.

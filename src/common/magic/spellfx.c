@@ -32,25 +32,25 @@ void() SpellFX_Regen_Think =
 	local entity pl;
        
 	pl = self.owner;
-
+	
 	//Regeneration only helps if under max health
 	if(pl.health < pl.max_health)
 	{
 		pl.health = pl.health + 5;
 		if(pl.health > pl.max_health)
 			pl.health = pl.max_health;
-
+			
+		sound(pl, CHAN_ITEM, "items/r_item1.wav", 1, ATTN_NORM);
 	}
 
 	//Recast again in a second.
 	self.nextthink = time + 1.0;
-	self.think = SpellFX_Regen_Think; //TODO: really needed?
 };
 
 //Confusion spell: Messed with camera angles
 void() SpellFX_Confusion_Think =
 {
-	self.enemy.punchangle_z = self.enemy.punchangle_z - 5;
+	self.owner.punchangle_z = self.owner.punchangle_z - 5;
 	
 	self.nextthink = time + 0.3;
 	self.think = SpellFX_Confusion_Think;
@@ -59,8 +59,8 @@ void() SpellFX_Confusion_Think =
 //Confusion expire: restore camera angles
 void() SpellFX_Confusion_Expire =
 {
-	self.enemy.punchangle = '0 0 0';
-	stuffcmd(self.enemy, "v_idlescale 0\n");
+	self.owner.punchangle = '0 0 0';
+	stuffcmd(self.owner, "v_idlescale 0\n");
 };
 
 

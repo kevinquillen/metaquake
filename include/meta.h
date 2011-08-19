@@ -43,6 +43,11 @@
 
 #define CLASS_COUNT 15 //Number of classes
 
+//Since mage/druid morph spells (see player.c and { mage.c, druid.c }) change
+//the maximum armor values of the player, use the same value in both *.c files
+//by #defining them here
+#define CLASS_MAGE_MAXARMOR		80
+#define CLASS_DRUID_MAXARMOR	115
 
 // Player field flags ===================================================
 #define PF_FLY 1			//Player can fly

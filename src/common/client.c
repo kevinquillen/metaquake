@@ -21,14 +21,14 @@ void() PlayerDeathThink;
 // prototypes
 void () W_WeaponFrame;
 void() W_SetCurrentAmmo;
-void() player_pain;
 void() player_stand1;
 void (vector org) spawn_tfog;
 void (vector org, entity death_owner) spawn_tdeath;
 
-float   modelindex_eyes, modelindex_player, 
-             modelindex_demon, modelindex_dog, 
-             modelindex_hweap, modelindex_fire;
+float	modelindex_eyes, modelindex_player, 
+		modelindex_demon, modelindex_dog, 
+		modelindex_hweap, modelindex_fire,
+		modelindex_hknight;
 
 void() SetChangeParms =
 {
@@ -311,21 +311,26 @@ void() PutClientInServer =
 	setmodel (self, "progs/player.mdl");
 	modelindex_player = self.modelindex;
 
-        setmodel (self, "progs/demon.mdl");
-        modelindex_demon = self.modelindex;
+	setmodel (self, "progs/demon.mdl");
+	modelindex_demon = self.modelindex;
 
-        setmodel (self, "progs/dog.mdl");
-        modelindex_dog = self.modelindex;
+	setmodel (self, "progs/dog.mdl");
+	modelindex_dog = self.modelindex;
 
-        setmodel (self, "progs/enforcer.mdl");
-        modelindex_hweap = self.modelindex;
+	setmodel (self, "progs/enforcer.mdl");
+	modelindex_hweap = self.modelindex;
+	
+	setmodel(self, "progs/hknight.mdl");
+	modelindex_hknight = self.modelindex;
 
-	if (self.playerclass == CL_FIREELEM)
-	  self.normalmodel = modelindex_fire;
-	else if (self.playerclass == CL_HWEAP)
-	  self.normalmodel = modelindex_hweap;
+	if(self.playerclass == CL_FIREELEM)
+		self.normalmodel = modelindex_fire;
+	else if(self.playerclass == CL_BERSERK)
+		self.normalmodel = modelindex_hknight;
+	else if(self.playerclass == CL_HWEAP)
+		self.normalmodel = modelindex_hweap;
 	else
-	  self.normalmodel = modelindex_player;
+		self.normalmodel = modelindex_player;
 
 
 
@@ -577,7 +582,7 @@ void() PlayerPreThink =
 
 	CheckRules();
 	WaterMove();
-	Magic_CheckExpired();
+	Magic_CheckExpired(self);
 
 
 #ifndef QUAKEWORLD
@@ -660,7 +665,7 @@ void() CheckPowerups =
 	if (self.player_flags & PF_NO_MORPH)
 	{
 		self.normalmodel = modelindex_player;
-		self.player_flags = self.player_flags - (self.player_flags & PF_NO_MORPH);
+		self.player_flags = self.player_flags - PF_NO_MORPH;
 	}
 
 

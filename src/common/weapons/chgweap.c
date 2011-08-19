@@ -26,10 +26,7 @@ void() M_ChangeWeapon =
 	it = self.items;
 	am = 0;
 
-	if (self.sysop >= 3)
-          return;
-	
-        if (self.impulse == 1)
+	if (self.impulse == 1)
 	{
 		fl = IT_AXE;
                 if (self.weapon == IT_AXE)

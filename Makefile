@@ -2,7 +2,7 @@
 # Makefile for Metamorphism; (C) 2007 Lon Hohberger
 # Updated by Patrick Baggett 2011
 
-COPYDIR := ~/Quake/meta/
+COPYDIR ?= ~/Quake/meta/
 
 all: qcc progs.dat
 

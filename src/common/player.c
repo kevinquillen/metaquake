@@ -7,6 +7,9 @@
 #include "meta.h"
 void() bubble_bob;
 
+#define DOGFRAME_STAND_BASE		69	//Base frame of dog's standing animation (see Quake 1.06 source, dog.qc)
+#define DOGFRAME_STAND_LENGTH	9	//Length of dog's standing animation
+
 /*
 ==============================================================================
 
@@ -93,10 +96,10 @@ PLAYER
 */
 
 void() player_run;
+void() player_berserk_stand;
 
 void()  player_stand1 =[        $axstnd1,       player_stand1   ]
 {
-
 	self.weaponframe=0;
 
 // regenerate hitpoints if standing still and in air
@@ -128,35 +131,36 @@ void()  player_stand1 =[        $axstnd1,       player_stand1   ]
 		return;
 	}
 
-        if (self.player_flags & PF_DEMON)
-        {
-          if (self.walkframe >= 13)
-            self.walkframe = 0;
-          self.frame = $axrun1 + self.walkframe;
-        }
-
-	else if (self.player_flags & PF_DOGGIE)
+	//Handle morphs
+	if(self.player_flags & PF_DEMON)
 	{
-          // dog stand frame 70, 9
-          if (self.walkframe >= 10)
-            self.walkframe = 0;
-          self.frame = $deathb9 + self.walkframe;
+		if (self.walkframe >= 13)
+			self.walkframe = 0;
+		self.frame = $axrun1 + self.walkframe;
 	}
-
-	else if (self.playerclass == CL_HWEAP)
+	else if(self.player_flags & PF_DOGGIE)
 	{
-	  if (self.walkframe >= 7)
-            self.walkframe = 0;
-	  self.frame = $axrun1 + self.walkframe;
-        }
-
-	else if (self.playerclass == CL_FIREELEM)
-	{
-          if (self.walkframe > 3)
-            self.walkframe = 1;
-          self.frame = self.walkframe;
+		//Need to wrap stand animation?
+		if(self.walkframe >= DOGFRAME_STAND_LENGTH) 
+			self.walkframe = 0;
+		self.frame = DOGFRAME_STAND_BASE+self.walkframe;
 	}
-
+	else if(self.playerclass == CL_HWEAP)
+	{
+		if (self.walkframe >= 7)
+			self.walkframe = 0;
+		self.frame = $axrun1 + self.walkframe;
+	}
+	else if(self.playerclass == CL_FIREELEM)
+	{
+		if (self.walkframe > 3)
+			self.walkframe = 1;
+		self.frame = self.walkframe;
+	}
+	else if(self.playerclass == CL_BERSERK)
+	{
+		player_berserk_stand();
+	}
 	else if (self.weapon == IT_AXE)
 	{
 		if (self.walkframe >= 12)
@@ -172,29 +176,34 @@ void()  player_stand1 =[        $axstnd1,       player_stand1   ]
 	self.walkframe = self.walkframe + 1;    
 };
 
+// Run animations
+//================================================
+
+void() player_berserk_run; //prototype
+
 void()  player_run =[   $rockrun1,      player_run      ]
 {
-
 	self.weaponframe=0;
 
-	if (self.help)
+	if(self.help)
 		return;
 
-        if (((self.playerclass == CL_HWEAP) && (self.ammo_nails < self.max_ammo_nails)) && (self.attack_finished < time)) self.ammo_nails = self.ammo_nails + 1;
+	if(((self.playerclass == CL_HWEAP) && (self.ammo_nails < self.max_ammo_nails)) && (self.attack_finished < time))
+		self.ammo_nails = self.ammo_nails + 1;
 
-        if ((self.player_flags & PF_MAGIC) && (self.ammo_cells < self.max_ammo_cells))
-          self.ammo_cells = self.ammo_cells + 1;
-        if ((self.playerclass == CL_SHOCK) && (self.ammo_cells < self.max_ammo_cells))
-	    self.ammo_cells = self.ammo_cells + 1;
+	if((self.player_flags & PF_MAGIC) && (self.ammo_cells < self.max_ammo_cells))
+		self.ammo_cells = self.ammo_cells + 1;
+		
+	if((self.playerclass == CL_SHOCK) && (self.ammo_cells < self.max_ammo_cells))
+		self.ammo_cells = self.ammo_cells + 1;
 
-        if (self.player_flags & PF_NOFRAME)
-        {
-          self.frame = 1;
-          return;
-        }
+	if (self.player_flags & PF_NOFRAME)
+	{
+		self.frame = 1;
+		return;
+	}
 
-
-
+	//Stopped moving?
 	if (!self.velocity_x && !self.velocity_y)
 	{
 		self.walkframe=0;
@@ -202,34 +211,34 @@ void()  player_run =[   $rockrun1,      player_run      ]
 		return;
 	}
 
-        if (self.player_flags & PF_DEMON)
-        {
-          if (self.walkframe >= 7)
-            self.walkframe = 0;
-          self.frame = $axstnd6 + self.walkframe;
-        }
-
-        else if (self.player_flags & PF_DOGGIE)
-        {
-          if (self.walkframe >= 12)
-            self.walkframe = 0;
-          self.frame = $axdeth8 + self.walkframe;
-        }
-
+	if (self.player_flags & PF_DEMON)
+	{
+		if (self.walkframe >= 7)
+			self.walkframe = 0;
+		self.frame = $axstnd6 + self.walkframe;
+	}
+	else if (self.player_flags & PF_DOGGIE)
+	{
+		if (self.walkframe >= 12)
+			self.walkframe = 0;
+		self.frame = $axdeth8 + self.walkframe;
+	}
 	else if (self.playerclass == CL_HWEAP)
 	{
-	  if (self.walkframe >= 9)
-	    self.walkframe = 0;
-	  self.frame = $axstnd7 + self.walkframe;
+		if (self.walkframe >= 9)
+			self.walkframe = 0;
+		self.frame = $axstnd7 + self.walkframe;
 	}
-
 	else if (self.playerclass == CL_FIREELEM)
 	{
-          if (self.walkframe > 3)
-            self.walkframe = 1;
-          self.frame = self.walkframe;
+		if (self.walkframe > 3)
+			self.walkframe = 1;
+		self.frame = self.walkframe;
 	}
-
+	else if(self.playerclass == CL_BERSERK)
+	{
+		player_berserk_run();
+	}
 	else if (self.weapon == IT_AXE)
 	{
 		if (self.walkframe == 6)
@@ -466,7 +475,7 @@ local float             rs;
 	}
 	
 
-	rs = rint((random() * 5) + 1);
+	
 
 	if(self.playerclass == CL_MAGE) //Mages get a Scrag pain sound.
 	{
@@ -476,21 +485,29 @@ local float             rs;
 	{
 		self.noise = "hknight/pain1.wav";
 	}
-	else
+	else //Not class-specific
 	{
-		self.noise = "";
-		if(rs == 1)
-			self.noise = "player/pain1.wav";
-		else if (rs == 2)
-			self.noise = "player/pain2.wav";
-		else if (rs == 3)
-			self.noise = "player/pain3.wav";
-		else if (rs == 4)
-			self.noise = "player/pain4.wav";
-		else if (rs == 5)
-			self.noise = "player/pain5.wav";
+		if(self.player_flags & PF_DEMON)
+			self.noise = "demon/dpain1.wav";
+		else if(self.player_flags & PF_DOGGIE)
+			self.noise = "dog/dpain1.wav";
 		else
-			self.noise = "player/pain6.wav";
+		{
+			rs = rint((random() * 5) + 1);
+			
+			if(rs == 1)
+				self.noise = "player/pain1.wav";
+			else if (rs == 2)
+				self.noise = "player/pain2.wav";
+			else if (rs == 3)
+				self.noise = "player/pain3.wav";
+			else if (rs == 4)
+				self.noise = "player/pain4.wav";
+			else if (rs == 5)
+				self.noise = "player/pain5.wav";
+			else
+				self.noise = "player/pain6.wav";
+		}
 	}
 
 	sound (self, CHAN_VOICE, self.noise, 1, ATTN_NORM);
@@ -521,7 +538,9 @@ void() player_hw_pain5 = [$deathc14, player_hw_pain6] {};
 void() player_hw_pain6 = [$deathc15, player_run] {};
 
 
-void() player_pain =
+void(entity attacker, float damage) player_berserk_pain;
+
+void(entity attacker, float damage) player_pain =
 {
 	if (self.weaponframe)
 		return;
@@ -536,6 +555,12 @@ void() player_pain =
 	{ 
 	  player_hw_pain1();
 	  return;
+	}
+	
+	if(self.playerclass == CL_BERSERK)
+	{
+		player_berserk_pain(attacker, damage);
+		return;
 	}
 
 
@@ -764,26 +789,34 @@ void() PlayerDie =
 	DropBackpack();
 
 	self.items = 0;
-        self.player_flags = (self.player_flags & (PF_HAS_CLASS | PF_CHEATER));// | PF_UNLOCKED));
+	self.player_flags = (self.player_flags & (PF_HAS_CLASS | PF_CHEATER));// | PF_UNLOCKED));
 	
 
-        self.attack_finished = time + 3;
- 	self.invisible_finished = 0;    // don't die as eyes
+	self.attack_finished = time + 3;
+	self.invisible_finished = 0;    // don't die as eyes
 	self.invincible_finished = 0;
 	self.super_damage_finished = 0;
 	self.radsuit_finished = 0;
-	self.modelindex = modelindex_player;    // don't use eyes
-	self.normalmodel = modelindex_player;
+	
+	if(self.playerclass != CL_BERSERK)
+	{
+		self.modelindex = modelindex_player;    // don't use eyes
+		self.normalmodel = modelindex_player;
+	}
 	
 	self.weaponmodel="";
 	self.view_ofs = '0 0 -8';
 	self.deadflag = DEAD_DYING;
 	self.solid = SOLID_NOT;
 	self.flags = self.flags - (self.flags & FL_ONGROUND);
-	self.movetype = MOVETYPE_TOSS;
-	if (self.velocity_z < 10)
-		self.velocity_z = self.velocity_z + random()*300;
-
+	
+	if(self.playerclass != CL_BERSERK)
+	{
+		self.movetype = MOVETYPE_TOSS;
+		if (self.velocity_z < 10)
+			self.velocity_z = self.velocity_z + random()*300;
+	}
+	
 	if (self.health < -40)
 	{
 		GibPlayer ();
@@ -794,12 +827,19 @@ void() PlayerDie =
 	
 	self.angles_x = 0;
 	self.angles_z = 0;
+
+	if(self.playerclass == CL_BERSERK)
+	{
+		player_berserk_die();
+		return;
+	}
 	
-	if (self.weapon == IT_AXE)
+	if(self.weapon == IT_AXE)
 	{
 		player_die_ax1 ();
 		return;
 	}
+
 	
 	i = cvar("temp1");
 	if (!i)
@@ -898,49 +938,45 @@ void()  player_die_ax7  =       [       $axdeth7,       player_die_ax8  ] {};
 void()  player_die_ax8  =       [       $axdeth8,       player_die_ax9  ] {};
 void()  player_die_ax9  =       [       $axdeth9,       player_die_ax9  ] {PlayerDead();};
 
-// **************************************
-// OLD stuff from old source (unchanged)
-
-/* Demon stuff
-
-   BECOME DEMON SPELL -- Necromancy
-
-*/
-
 void (vector org) spawn_tfog;
 
 void() spell_become_demon =
 {
-  spawn_tfog(self.origin);
-  self.player_flags = self.player_flags | PF_DEMON;
-// we don't want fiends w/ 600+ hp...
-  if (self.health > self.max_health)
-    self.health = self.max_health;
-  self.max_health = self.max_health * 2;
-  self.health = self.health * 2;
-  self.max_arm = 0;
-  self.armorvalue = 0;
-  self.armortype = 0;
-  self.view_ofs = '0 0 4';
-  stuffcmd(self,"bf\n");
-  self.weaponmodel = "";
-//  stuffcmd(self,"r_drawviewmodel 0\n");
-  cprint(self,"You are now a demon.");
+	spawn_tfog(self.origin);
+	self.player_flags = self.player_flags | PF_DEMON;
+
+	if(self.health > self.max_health)
+		self.health = self.max_health;
+
+	self.max_health = self.max_health * 2;
+	self.health = self.health * 2;
+	self.max_arm = 0;
+	self.armorvalue = 0;
+	self.armortype = 0;
+	self.view_ofs = '0 0 4';
+	stuffcmd(self,"bf\n");
+	self.weaponmodel = "";
+	cprint(self,"You are now a demon.");
 };
 
 void() end_demon =
 {
-  spawn_tfog(self.origin);
-  self.player_flags = self.player_flags - (self.player_flags & PF_DEMON);
-  self.player_flags = self.player_flags | PF_NO_MORPH;
-  self.max_health = self.max_health / 3;
-  self.health = self.health / 3;
-  self.max_arm = 120;
-  self.view_ofs = '0 0 22';
-  stuffcmd(self,"bf\n");
-//  self.viewmodel = "";
-//  stuffcmd(self,"r_drawviewmodel 1\n");
-  cprint(self,"You are now human.");
+	spawn_tfog(self.origin);
+	self.player_flags = self.player_flags - (self.player_flags & PF_DEMON);
+	self.player_flags = self.player_flags | PF_NO_MORPH;
+	self.max_health = self.max_health / 2;
+	self.health = floor(self.health / 3);
+  
+	//Integer division by 3 can result in 0 values, which screws up the camera
+	//and leaves the player in a weird dead-alive state. Don't do that.
+	if(self.health == 0)
+		self.health = 1;
+	
+	self.max_arm = CLASS_DRUID_MAXARMOR;
+	self.view_ofs = '0 0 22';
+	stuffcmd(self,"bf\n");
+  
+	cprint(self,"You are now human.");
 };
 
 void(float side) Player_Demon_Melee =
@@ -979,11 +1015,11 @@ void()  player_demon_atta15 = [$deathb8, player_stand1 ] {};
 
 void() Player_Demon_JumpTouch =
 {
-  if (other.takedamage)
-  {
-    T_Damage(other, self, self, 10+40*random(), SH_UNKNOWN);
-    self.touch = SUB_Null;
-  }
+	if (other.takedamage)
+	{
+		T_Damage(other, self, self, 25+25*random(), SH_UNKNOWN);
+		self.touch = SUB_Null;
+	}
 };
 
 void() player_demon_jump2 =[     $axstnd11,  player_demon_jump2  ]
@@ -1047,7 +1083,7 @@ void() end_dog =
   self.player_flags = self.player_flags | PF_NO_MORPH;
   self.max_health = self.max_health / 2;
   self.health = self.health / 2;
-  self.max_arm = 75;
+  self.max_arm = CLASS_MAGE_MAXARMOR;
   self.view_ofs = '0 0 22';
   stuffcmd(self,"bf\n");
 //  stuffcmd(self,"r_drawviewmodel 1\n");
@@ -1070,7 +1106,7 @@ void() player_dog_jump2 =[     $deathb3,  player_dog_jump2  ]
 void() player_dog_jump1 =[    $deathb3, player_dog_jump2 ]
 {
   makevectors (self.v_angle);
-  self.touch = Player_Demon_JumpTouch;
+  self.touch = Player_Dog_JumpTouch;
   self.origin_z = self.origin_z + 1;
   self.velocity = v_forward * 600 + '0 0 150';
   if (self.velocity_z > 600)

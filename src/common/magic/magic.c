@@ -210,13 +210,20 @@ void(entity e) Magic_RemoveAll =
 {
 	local entity head;
 	local entity nexteff;
+	local entity oldself;
 	
 	head = e.spell_effects;
 	while(head != world)
 	{
 		nexteff = head.chain;
 		head.voided = 1;
+		
+		//Call use() in context of 'head'
+		oldself = self;
+		self = head;
 		head.use();
+		self = oldself;
+		
 		remove(head);
 		
 		head = nexteff;
@@ -273,6 +280,7 @@ void(entity e) Magic_CheckExpired =
 {
 	local entity fx;
 	local entity prev;
+	local entity oldself;
 	
 	//No spell effects;
 	if(e.spell_effects == world)
@@ -317,7 +325,13 @@ void(entity e) Magic_CheckExpired =
 			
 			//Remove next frame
 			fx.voided = 1;
+			
+			//Call use() in context of 'fx'
+			oldself = self;
+			self = fx;
 			fx.use();
+			self = oldself;
+			
 			fx.think = SUB_Remove;
 			fx.nextthink = time;
 		}
@@ -390,4 +404,32 @@ float(entity caster, float amount) CheckMana =
 	caster.attack_finished = time + 0.5;
 	
 	return 0;	
+};
+
+//Checks if the caster's target is one that can be helped (i.e. on the same team)
+//Returns zero if the spell should not be cast on this target (helpful on enemy)
+float() CheckHelpfulSpellTarget =
+{
+	if(!SameTeam(self, self.enemy))
+	{
+		sprint(self, "You cannot cast this spell on enemies!");
+		return 0;
+	}
+
+	//Not on the same team / teamplay disabled
+	return 1;
+};
+
+//Checks if the casters target is one that can be harmed (i.e. not on the same team or friendly fire enabled)
+//Returns zero if the spell should not be cast on this target (harmful on ally)
+float() CheckHarmfulSpellTarget =
+{
+	if(SameTeam(self, self.enemy))
+	{
+		sprint(self, "You cannot cast this spell on teammates!");
+		return 0;
+	}
+
+	//On same team
+	return 1;
 };

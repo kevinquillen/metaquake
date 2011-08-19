@@ -24,20 +24,27 @@
 \******************************/
 void(float wep) DisplayWeaponMode =
 {
-  local string s;
+	local string s;
 
-  if (wep == IT_AXE)
-  {
-    s = ftos(1);
-    sprint(self,s);
-    s = ftos(self.axe_mode);
-    sprint(self,s);
+	if (wep == IT_AXE)
+	{
+		s = ftos(1);
+		sprint(self,s);
+		s = ftos(self.axe_mode);
+		sprint(self,s);
 
-    sprint(self," AXE: ");
-    if (self.axe_mode == 0)
-      sprint(self,"Standard\n");
-    else if (self.axe_mode == 1)
-      sprint(self,"Grappling Hook\n");
+		if(self.playerclass != CL_BERSERK)
+		{
+			sprint(self," AXE: ");
+			if(self.axe_mode == 0)
+				sprint(self,"Standard\n");
+			else if (self.axe_mode == 1)
+				sprint(self,"Grappling Hook\n");
+		}
+		else
+		{
+			sprint(self, " Long Sword\n");
+		}
   }
 
   if (wep == IT_SHOTGUN)

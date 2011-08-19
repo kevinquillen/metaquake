@@ -22,7 +22,7 @@ void(entity targ, entity attacker, entity inflictor, float dam, float dtype) Dea
 {
   local string dmsg;
   local string smsg;
-  
+  local float r;
   
 
   if (dtype == SH_RESET)
@@ -203,10 +203,46 @@ void(entity targ, entity attacker, entity inflictor, float dam, float dtype) Dea
 		bprint(" scores a CRITICAL HIT!\n");
 	}
 
-	// Section 3: attacker = targ (suicide)
+	//Attacker is a dog
+	if(attacker.classname == "player" && (attacker.player_flags & PF_DOGGIE))
+	{
+		r = random();
+		
+		bprint(targ.netname);
+		
+		if(r < 0.25)
+		{
+			bprint(" became ");
+			bprint(attacker.netname);
+			bprint("'s Milk-Bone.\n");
+		}
+		else if(r < 0.50)
+		{
+			bprint(" was shredded by ");
+			bprint(attacker.netname);
+			bprint("'s fangs.\n");
+		}
+		else if(r < 0.75)
+		{
+			bprint("'s kneecaps become ");
+			bprint(attacker.netname);
+			bprint("'s frisbee.\n");
+		}
+		else
+		{
+			bprint(" gets a double helping of ");
+			bprint(attacker.netname);
+			bprint("'s puppy love.\n");
+		}
+		return;
+	}
+	
+	
 	bprint(targ.netname);
 	bprint(" was ");
 	bprint(dmsg);
+	
+	// Section 3: attacker = targ (suicide)
 	if((attacker == targ) && (inflictor == world))
 	{
 		#ifdef GAME_CTF
@@ -311,7 +347,12 @@ void(entity targ, entity attacker, entity inflictor, float dam, float dtype) Dea
 		if(attacker.playerclass == CL_FIREELEM)
 			bprint("burning touch");
 		else if(attacker.playerclass == CL_BERSERK)
-			bprint("raging axe swing");
+		{
+			if(random() < 0.5)
+				bprint("raging sword swing");
+			else
+				bprint("razor blade")
+		}
 		else
 			bprint("axe blow");
 	}
