@@ -1,0 +1,12 @@
+CHANGES
+========
+
+
+
+
+The following changes were made to QCC (far as I know)
+
+
+
+-- Patrick Baggett
+8/5/2011

@@ -1,0 +1,159 @@
+METAMORPHISM QUAKE V6.0
+=======================
+
+Release Notes
+-------------------------------
+This is a modified version of Metamorphism v5 (often called just "Meta5")
+originally by Lon Hohberger. He released the source under the GPL license and
+so this is too. This release aims to keep the same spirit of the game, but any
+changes you don't like can't be blamed on Lon. ;)
+
+There are 6 sections.
+
+1) NEW WEAPONS/SPELLS - Describes any new weapons or spells added to the game.
+2) GAMEPLAY CHANGES - Describes any changes that affect the balance of the game.
+3) CHANGED WEAPONS/SPELLS - Describes changes to existing weapons/spells.
+4) MISC. CHANGES - Non-gameplay related changes
+5) BUGS FIXED - Fixes to bugs in Meta.
+6) CODE BASE CHANGES - For developers. Changes in the code structure.
+
+1) New Weapons/Spells
+-------------------------------* SSG 31: Sawed Barrel Shotgun
+    It deals a lot of damage up close, but spreads out quickly at a short range
+    Ideal for melee opponents or grappling hook kills.
+    Cost: 4 shells / 1.2s reload.
+
+* Readded Lich's "Darkness" spell.
+    This was commented out, but it is pretty cool. It makes the level extremely
+    dark (removes all static lighting). Future versions might just reduce the
+    lighting effects of dynamic lights instead of darkening the entire area.
+* Mage Spell: Confusion
+    An area of effect spell that causes enemies to be confused. They become
+    severely disoriented for a few seconds.
+* Cleric Spell: Aid
+    Aid gives the caster or target a bonus health over their maximum. If the
+    player isn't at full health, then it functions like a heal spell. The bonus
+    health is not treated as a maximum health, so once hurt, it is not possible
+    to pick up a health box and restore it.
+* Druid Spell: Regeneration
+    Similar to the D&D spell, Regeneration causes the target to heal damage over
+    time. The spell may be cast on the caster or target and heals 5 health per 
+    second for 15 seconds (75 health total). 
+ 
+2) Gameplay Changes
+-------------------------------
+* Standard Quake Guy added back in and is the default upon entering.
+* Changing classes to the Standard Quake Guy does not deduct a frag.
+* Changing classes to the class you already have selected does not deduct a frag
+* Soldier now starts with 35 green armor (was 0)
+* Fire Elemental now takes damage from water and is healed by lava like it was
+  in Meta 3.
+* Removed handicap system, looks like it was only partially functioning.
+* Added a new damage type of "Cold" which is separate from "Water" of previous.
+  Meta 5 used water damage to represent cold, which was confusing when the
+  player died from water and the game showed a cold-related message.
+* Added the Rune of Mana similar to Meta 3 (faster mana regen + higher capacity)
+  NOTE: Original Quake doesn't show > 255 ammo (mana) in the bars, so the 
+  counter appears to return to zero even when the player still has more mana.
+  In other words, if you get the rune and see your mana go back to zero, don't
+  panic! The server keeps track of the proper amount of mana.
+* Lich no longer removes land mines when walking on them. I don't know what
+  this was supposed to have meant before, but its gone now...
+* Originally, classes had binary resistance to magic. If you had "magic
+  resistance" then you were immune to a number of effects. This system was
+  redone for all spells. Now, each spell has a base percent chance to affect
+  each player. This base chance is is then modified by +/- 25% depending on
+  whether the player is resistance to magic or weak to magic. Finally,
+  the percent chance is clamped to [5%, 95%], meaning you always have at
+  least a 5% chance of being affected by a spell, and no greater than a 95%
+  chance to resist its effects.
+* Cleric's Sanctuary now just reduces damage by 20% and can be toggled.
+* Renamed Cleric's "Feebleness" spell to "Dispel Evil" since it really throws
+  out the player's (evil) runes.
+* Renamed Cleric's "Cure" to just "Heal"
+* Renamed Cleric's "Heal" to "Group Heal" to better convey what it does
+* Renamed Cleric's "Strengthen Armor" to "Magical Vestment" so it sounds
+  more D&D like.
+  
+3) Changed Weapons/Spells
+-------------------------------
+* The Lich's "Acid Blob" spell had its damage reduced from 100-220 to 80-120,
+  its mana cost reduced from 40 to 30, and no longer harms the caster. Due to
+  limitations of the Quake Engine, sometimes the blob deflects the option
+  rocket. There isn't really a fix for this that is suitable, so I guess you
+  just have to aim better.
+* Cleric's "Holy Aura" spell was entirely broken, perhaps only partially 
+  implemented, in Meta 5. Its behavior was something to the effect of
+  doubling the caster's health, but only if the caster was at full health
+  and armor; otherwise, it would harm the caster for 30 health/6 seconds
+  until the caster died. Very random.
+
+4) Misc. Changes
+-------------------------------
+* (Re)Added the Meta help system.
+* Changed a few death messages.
+* Added the "spell effects" system, which tracks what spells have been cast
+  on the player and how long until they expire. This replaces a lot of the
+  ad-hoc code and makes a more generalized framework for spells that affect
+  players for a certain amount of time. It additionally allows players to
+  see when a spell expires, what its name was, and who cast it. All of
+  the player-affecting spells have been re-written to take advantage of
+  this. From a developer's standpoint, it makes it easier to track down
+  problems in spells, or add new and interesting effects easily.
+
+5) Bugs Fixed (compared to Meta 5)
+-------------------------------
+* When a Druid kills someone as a demon, the death message no longer reads
+  "...by his chain lightning"
+* When a class had extra fall damage (specialist/heavy weaps/base guard),
+  their damage was actually multiplied by 1.95 instead of 1.5. This has been
+  changed back to 1.5x since it was assumed that the double damage amplification
+  was an unintentional effect.
+* When a player is killed with radiation suit, the server incorrectly used the
+  quad damage time instead of the radiation suit to figure out how much
+  radiation suit to throw. It appears that code to actually throw unused
+  radition suit time was not completed however.
+* When picking up the armor rune, it was supposed to switch green armor to
+  yellow armor on pickup, but it did not due to a minor typo. Now it does
+  correctly.
+* When moving and entering help, the player's weapon no longer bobs around.
+* Resistance to "Inceneration" was incorrectly comparing damage amount to
+  damage type flags, which usually led to incorrect compuation of damage.
+* The handicap was set to 0% sometimes, resulting in immunity to damage.
+* Classes that do not drown no longer make gasping sounds when surfacing
+  from water.
+* Drowning damage computation didn't make any sense. It added 2 damage then
+  immediately doubled it, then set the damage back to 10 if it was larger than
+  15. Drowning now just simply starts at 2 damage and adds 2 points per
+  second up to 12 damage/sec.
+* Drowning no longer gives a message implying cold damage ("cooled", "chilled",
+  etc.)
+* Scouts had double resistance to snipers. Instead of 40% damage reduction,
+  they got 76%. This was fixed back to 40% like normal damage resistances.
+* The Lich's "Acid Blob" doesn't explode when it hits an option rocket.
+* The option rocket doesn't explode when it hits something owned by the
+  player (e.g. spell effects)
+
+
+6) Code Base Changes
+-------------------------------
+* Tons of comments added to existing code to improve readability
+* Added weapons/ssg.c for super shotgun improvements
+* Added magic.h for magic related symbols
+* Added spellfx.c for the spell effect system.
+* Renamed mglobals.h -> meta.h
+* Removed some stuff from globals.qc/magic.qc and put into meta.h/magic.h. This
+  should reduce the number of global variables (and size of the progs code) and
+  hopefully make it more maintainable.
+* All of the Quake/*.qc files have been replaced with *.c files and are
+  preprocessed using GCC
+* Unused Quake/*.qc files were removed.
+
+License
+-------------------------------
+In short: GPL.
+
+This code is a modification of Metamorphism, available at http://lon.110mb.com/.
+The mod was released under the GPL license (see license.txt for legal details).
+By law then, Metamorphism Quake 6.0 (this mod) must be released under the terms
+of the GPL.
