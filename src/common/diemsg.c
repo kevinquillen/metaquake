@@ -351,7 +351,7 @@ void(entity targ, entity attacker, entity inflictor, float dam, float dtype) Dea
 			if(random() < 0.5)
 				bprint("raging sword swing");
 			else
-				bprint("razor blade")
+				bprint("razor blade");
 		}
 		else
 			bprint("axe blow");
