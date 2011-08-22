@@ -131,19 +131,22 @@ void() ParseImpulse =
     return;
   }
 
-  /*****************\
-   Special (UnMorph)
-  \*****************/
-  if ((self.player_flags & PF_DOGGIE) || (self.player_flags & PF_DEMON))
-  {
-    if (self.impulse <= 89)
-      if (self.player_flags & PF_DOGGIE)
-        end_dog();
-      else 
-        end_demon();
-    else
-      self.impulse = 0;
-    return;
+	/*****************\
+	Special (UnMorph)
+	\*****************/
+	if(self.player_flags & (PF_DOGGIE | PF_DEMON))
+	{
+		if(self.impulse <= 89)
+		{
+			if (self.player_flags & PF_DOGGIE)
+				end_dog();
+			else 
+				end_demon();
+		}
+		else
+			self.impulse = 0;
+
+		return;
   }
 
   /***************************\

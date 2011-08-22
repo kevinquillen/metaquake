@@ -98,20 +98,43 @@ PLAYER
 void() player_run;
 void() player_berserk_stand;
 
+
+void() RegenMana =
+{
+	//Not full mana?
+	if(self.ammo_cells < self.max_ammo_cells)
+		self.ammo_cells = self.ammo_cells + 1;
+	
+	//If they have their magic selected, show the cells in the status bar
+	if(self.weapon == IT_LIGHTNING)
+	{
+		self.currentammo = self.ammo_cells;
+		self.items = self.items - ( self.items & (IT_SHELLS | IT_NAILS | IT_ROCKETS) );
+		self.items = self.items | IT_CELLS;
+	}
+};
+
 void()  player_stand1 =[        $axstnd1,       player_stand1   ]
 {
 	self.weaponframe=0;
 
-// regenerate hitpoints if standing still and in air
-        if ((self.player_flags & PF_REGEN) && (self.health < self.max_health))
-	  if ((pointcontents(self.origin)!=CONTENT_WATER) && (pointcontents(self.origin)!=CONTENT_LAVA) && (pointcontents(self.origin)!=CONTENT_SLIME))
-          self.health = self.health + 1;
+	// regenerate hitpoints if standing still and in air
+	if((self.player_flags & PF_REGEN) && (self.health < self.max_health))
+	{
+		if ((pointcontents(self.origin)!=CONTENT_WATER) && (pointcontents(self.origin)!=CONTENT_LAVA) && (pointcontents(self.origin)!=CONTENT_SLIME))
+			self.health = self.health + 1;
+	}
 
-// regenerate "magic"
-        if (((self.playerclass == CL_HWEAP) && (self.ammo_nails < self.max_ammo_nails)) && (self.attack_finished < time)) self.ammo_nails = self.ammo_nails + 1;
+	//Heavy weapons guy regenerates nails if he's not attacking
+	if(self.playerclass == CL_HWEAP)
+	{
+		if(self.ammo_nails < self.max_ammo_nails && self.attack_finished < time)
+			self.ammo_nails = self.ammo_nails + 1;
+	}
 
-        if ((self.player_flags & PF_MAGIC) && (self.ammo_cells < self.max_ammo_cells))
-          self.ammo_cells = self.ammo_cells + 1;
+	//Spellcasters regenerate mana
+	if(self.player_flags & PF_MAGIC)
+		RegenMana();
 
         if ((self.playerclass == CL_SHOCK) && (self.ammo_cells < self.max_ammo_cells))
 	  self.ammo_cells = self.ammo_cells + 1;
@@ -191,8 +214,9 @@ void()  player_run =[   $rockrun1,      player_run      ]
 	if(((self.playerclass == CL_HWEAP) && (self.ammo_nails < self.max_ammo_nails)) && (self.attack_finished < time))
 		self.ammo_nails = self.ammo_nails + 1;
 
-	if((self.player_flags & PF_MAGIC) && (self.ammo_cells < self.max_ammo_cells))
-		self.ammo_cells = self.ammo_cells + 1;
+	//Spellcasters regenerate mana
+	if(self.player_flags & PF_MAGIC)
+		RegenMana();
 		
 	if((self.playerclass == CL_SHOCK) && (self.ammo_cells < self.max_ammo_cells))
 		self.ammo_cells = self.ammo_cells + 1;
@@ -657,7 +681,6 @@ local float             rs;
 void() PlayerDead =
 {
 	self.nextthink = -1;
-// allow respawn after a certain time
 	self.deadflag = DEAD_DEAD;
 };
 
@@ -777,14 +800,15 @@ void() GibPlayer =
 
 void() PlayerDie =
 {
-	local   float   i;
-	local	string	s;	
-
-        if (deathmatch == 2)
-        {
-          self.items = self.items - (self.items & IT_KEY1);
-          self.items = self.items - (self.items & IT_KEY2);
-        }
+	local float i;
+	local string	s;	
+	
+	//TODO: uhh ctf?
+	if (deathmatch == 2)
+	{
+		self.items = self.items - (self.items & IT_KEY1);
+		self.items = self.items - (self.items & IT_KEY2);
+	}
 
 	DropBackpack();
 
@@ -798,9 +822,10 @@ void() PlayerDie =
 	self.super_damage_finished = 0;
 	self.radsuit_finished = 0;
 	
+	//Revert to normal player on death, except berserk
 	if(self.playerclass != CL_BERSERK)
 	{
-		self.modelindex = modelindex_player;    // don't use eyes
+		self.modelindex = modelindex_player;
 		self.normalmodel = modelindex_player;
 	}
 	
@@ -834,34 +859,34 @@ void() PlayerDie =
 		return;
 	}
 	
+	//Players with the axe have a special animation.
 	if(self.weapon == IT_AXE)
 	{
-		player_die_ax1 ();
+		player_die_ax1();
 		return;
 	}
 
+	i = 1 + floor(random()*6);
 	
-	i = cvar("temp1");
-	if (!i)
-		i = 1 + floor(random()*6);
-	
-	if (i == 1)
+	if(i == 1)
 		player_diea1();
-	else if (i == 2)
+	else if(i == 2)
 		player_dieb1();
-	else if (i == 3)
+	else if(i == 3)
 		player_diec1();
-	else if (i == 4)
+	else if(i == 4)
 		player_died1();
 	else
 		player_diee1();
 
 };
 
+// Used by "kill" command and "disconnect" command
 void() set_suicide_frame =
-{       // used by klill command and diconnect command
+{
+	//TODO: the assertion that you are either a player or gibbed is wrong. Handle cases of berserk, dog, demon, hweap
 	if (self.model != "progs/player.mdl")
-		return; // allready gibbed
+		return; // already gibbed
 	self.frame = $deatha11;
 	self.solid = SOLID_NOT;
 	self.movetype = MOVETYPE_TOSS;
@@ -1072,7 +1097,6 @@ void() spell_become_doggie =
   self.view_ofs = '0 0 1';
   stuffcmd(self,"bf\n");
   self.weaponmodel = "";
-//  stuffcmd(self,"r_drawviewmodel 0\n");
   cprint(self,"You are now a dog.");
 };
 
@@ -1086,7 +1110,6 @@ void() end_dog =
   self.max_arm = CLASS_MAGE_MAXARMOR;
   self.view_ofs = '0 0 22';
   stuffcmd(self,"bf\n");
-//  stuffcmd(self,"r_drawviewmodel 1\n");
   cprint(self,"You are now human.");
 };
 

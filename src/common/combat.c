@@ -108,7 +108,7 @@ The damage is coming from inflictor, but get mad at attacker
 This should be the only function that ever reduces health.
 ============
 */
-void(entity targ, entity inflictor, entity attacker, float damage, float dtype) T_Damage=
+void(entity targ, entity inflictor, entity attacker, float damage, float dtype) T_Damage =
 {
 	local vector dir;
 	local entity oldself;
@@ -118,9 +118,7 @@ void(entity targ, entity inflictor, entity attacker, float damage, float dtype) 
 
 	if (!targ.takedamage)
 		return;
-	
-	
-	
+
 	// used by buttons and triggers to set activator for target firing
 	damage_attacker = attacker;
 
@@ -153,8 +151,8 @@ void(entity targ, entity inflictor, entity attacker, float damage, float dtype) 
 				targ = attacker;		// do damage to self!
 		}
 
-		//Non-armor piercing rounds
-		if(inflictor.classname != "armor_pierce")
+		//Non-armor piercing rounds / damages other than magic
+		if(inflictor.classname != "armor_pierce" || dtype != SH_MAGIC)
 		{
 			save = ceil(targ.armortype*damage);
 			if(save >= targ.armorvalue)
@@ -186,18 +184,7 @@ void(entity targ, entity inflictor, entity attacker, float damage, float dtype) 
 		}
 	} // end of "else not invicibile"
 	
-	#if 0 //From old meta with Ghost class?
-	oldself = self;
-	self = targ;
-	if ((targ.affects & AF_BLINK) && (targ.health <= 30))
-	{
-		targ.velocity = '0 0 100';
-		DoBlink();
-		return;
-	}
-	self = oldself;
-	#endif
-	
+
 	// KNOCKBACK CALCULATION
 	//==========================
 
@@ -277,6 +264,29 @@ void(entity inflictor, entity attacker, float damage, entity ignore, float damag
 					}
 				}
 			}
+		}
+		head = head.chain;
+	}
+};
+
+/*
+============
+T_AreaDamage
+============
+Like T_RadiusDamage() but with no damage attenutation and explicit radius
+*/
+void(entity inflictor, entity attacker, float damage, float radius, entity ignore, float damagetype) T_AreaDamage =
+{
+	local entity head;
+
+	head = findradius(inflictor.origin, radius);
+	
+	while (head)
+	{
+		if(head != ignore)
+		{
+			if(head.takedamage)
+				DoDamage (head, inflictor, attacker, damage, damagetype);
 		}
 		head = head.chain;
 	}

@@ -30,6 +30,7 @@ float	modelindex_eyes, modelindex_player,
 		modelindex_hweap, modelindex_fire,
 		modelindex_hknight;
 
+		
 void() SetChangeParms =
 {
 };
@@ -121,7 +122,7 @@ void() DoRatePing =
 void() respawn =
 {
 	// make a copy of the dead body for appearances sake
-	CopyToBodyQue (self);
+	CopyToBodyQueue(self);
 	// set default spawn parms
 //	SetNewParms ();
 	// respawn
@@ -293,6 +294,12 @@ void() PutClientInServer =
 	self.weapon = IT_AXE;
 
 	self.velocity = '0 0 0';
+	
+	/* Set the origin somewhere wayyyy far out.By this point, a visual copy of
+	the player's body (corpse) has been left where they last died (if
+	respawning). If 
+	*/
+	self.origin = '9999 9999 9999'; 
 
 	ClassRespawn();
 

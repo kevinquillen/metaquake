@@ -88,11 +88,11 @@ void () ClassFireElem =
     stuffcmd(self,"exec fireelem.cfg\n");
   }
   self.saves = SH_FIRE | SH_EXPLOSION | SH_LAVA | SH_INCINERATE | SH_FALL | SH_ELECTRICITY;
-  self.harms = SH_WATER;
+  self.harms = SH_WATER | SH_COLD;
 
   self.player_flags = self.player_flags | PF_FLY | PF_REGEN | PF_MAGIC | PF_NO_HOOK;
 
-  self.items = 0 | IT_AXE | IT_LIGHTNING;
+  self.items = IT_AXE | IT_LIGHTNING;
   self.ammo_shells = 0;
   self.ammo_cells = 80;
   self.ammo_nails = 0;
@@ -661,7 +661,7 @@ void () S_SelectClass =
 		self.playerclass = self.impulse - IMPULSE_CLASS_START;
 	
 	#ifdef GAME_CTF
-	if (deathmatch != MODE_CTF) {
+	if (deathmatch != MODE_CTF) { //Don't allow trolls to bring down the team
 	#endif
 	
 	//Only lose a frag if choosing a class other than standard and not the same as your current class.

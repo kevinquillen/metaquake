@@ -430,15 +430,11 @@ void() W_SetCurrentAmmo =
 		
 		/* Magic makes Thunderbolt disappear */
 		if(self.player_flags & PF_MAGIC)
-		{
-			self.currentammo = 1;
 			self.weaponmodel = "";
-		}
 		else
-		{
-			self.currentammo = self.ammo_cells;
 			self.weaponmodel = "progs/v_light.mdl";
-		}
+		
+		self.currentammo = self.ammo_cells;
 		
 	}
 	else
@@ -950,22 +946,21 @@ Called every frame so impulse events can be handled as well as possible
 void() W_WeaponFrame =
 {
 	local float speedcap;
-        if ((self.player_flags & PF_SPEED) && (!(self.player_flags & PF_MISSILE)))
-        {
-          makevectors (self.v_angle);
-          if (self.player_flags & PF_FLY) 
-            speedcap = 340;
-          else
+	if ((self.player_flags & PF_SPEED) && (!(self.player_flags & PF_MISSILE)))
+	{
+		makevectors(self.v_angle);
+		if (self.player_flags & PF_FLY) 
+			speedcap = 340;
+		else
 #ifdef GAME_CTF
-            if (self.player_flags & PF_HAS_FLAG)
-              speedcap = 375;
-            else
+		if (self.player_flags & PF_HAS_FLAG)
+			speedcap = 375;
+		else
 #endif
-              speedcap = 430;
+		speedcap = 430;
 	  
-           self.velocity = v_forward * speedcap;
-	  
-        }          
+		self.velocity = v_forward * speedcap;
+	}          
 
 	if ((self.player_flags & PF_MISSILE) && (self.velocity == '0 0 0'))
 	  self.velocity = '0 0 -100';

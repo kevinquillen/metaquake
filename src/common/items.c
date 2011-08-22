@@ -220,10 +220,8 @@ float (entity e, float healamount, float ignore) T_Heal =
 	e.health = e.health + healamount;
 	if ((!ignore) && (e.health >= other.max_health))
 		e.health = other.max_health;
-		
-	if (e.health > e.max_health + 100)
-		e.health = e.max_health + 100;
-
+	
+	//Only allow double maximum health
 	if (e.health > e.max_health * 2)
 		e.health = e.max_health * 2;
 	return 1;
@@ -231,18 +229,14 @@ float (entity e, float healamount, float ignore) T_Heal =
 
 /*QUAKED item_health (.3 .3 1) (0 0 0) (32 32 32) rotten megahealth
 Health box. Normally gives 25 points.
-Rotten box heals 5-10 points,
-megahealth will add 100 health, then 
-rot you down to your maximum health limit, 
-one point per second.
+Rotten box heals 15 points,
+Megahealth will add 100 health, up to 2x your max health
 */
 
-float   H_ROTTEN = 1;
-float   H_MEGA = 2;
+#define H_ROTTEN  1
+#define H_MEGA 2
 .float  healamount, healtype;
 void() health_touch;
-void() item_megahealth_rot;
-
 void() item_health =
 {       
 #ifdef GAME_CTF
@@ -297,14 +291,14 @@ void() item_health =
 
 void() health_touch =
 {
-	local   float amount;
-	local   string  s;
+	local float amount;
+	local string s;
 	
-	if (other.classname != "player")
+	if(other.classname != "player")
 		return;
 	
 
-	if (self.healtype == 2) // Megahealth?  Ignore max_health...
+	if(self.healtype == 2) // Megahealth?  Ignore max_health...
 	{
 		if (!T_Heal(other, self.healamount, 1))
 			return;
@@ -328,40 +322,16 @@ void() health_touch =
 	self.model = string_null;
 	self.solid = SOLID_NOT;
 
-	// Megahealth = rot down the player's super health
 	if (self.healtype == 2)
-	{
 		self.nextthink = time + 50 + random()*30;
-		self.think = SUB_regen;
-	}
 	else
-	{
 		self.nextthink = time + 20;
-		self.think = SUB_regen;
-	}
+		
+	self.think = SUB_regen;
 	
 	activator = other;
 	SUB_UseTargets();                               // fire all targets / killtargets
 };      
-
-void() item_megahealth_rot =
-{
-	other = self.owner;
-	
-	if (other.health > other.max_health)
-	{
-		other.health = other.health - 1;
-		self.nextthink = time + 1;
-		return;
-	}
-
-// it is possible for a player to die and respawn between rots, so don't
-// just blindly subtract the flag off
-	other.items = other.items - (other.items & IT_SUPERHEALTH);
-	
-	self.nextthink = time + 20;
-	self.think = SUB_regen;
-};
 
 /*
 ===============================================================================
@@ -370,9 +340,6 @@ ARMOR
 
 ===============================================================================
 */
-
-void() armor_touch;
-
 void() armor_touch =
 {
 	local   float   type, value, bit;
@@ -887,7 +854,7 @@ local float             best;
 
 
 
-float WEAPON_BIG2 = 1;
+#define AMMO_BIG 1	//Spawn with large size
 
 /*QUAKED item_shells (0 .5 .8) (0 0 0) (32 32 32) big
 */
@@ -896,7 +863,7 @@ void() item_shells =
 {
 	self.touch = ammo_touch;
 
-	if (self.spawnflags & WEAPON_BIG2)
+	if (self.spawnflags & AMMO_BIG)
 	{
 		precache_model ("maps/b_shell1.bsp");
 		setmodel (self, "maps/b_shell1.bsp");
@@ -921,7 +888,7 @@ void() item_spikes =
 {
 	self.touch = ammo_touch;
 
-	if (self.spawnflags & WEAPON_BIG2)
+	if (self.spawnflags & AMMO_BIG)
 	{
 		precache_model ("maps/b_nail1.bsp");
 		setmodel (self, "maps/b_nail1.bsp");
@@ -947,7 +914,7 @@ void() item_rockets =
 {
 	self.touch = ammo_touch;
 
-	if (self.spawnflags & WEAPON_BIG2)
+	if (self.spawnflags & AMMO_BIG)
 	{
 		precache_model ("maps/b_rock1.bsp");
 		setmodel (self, "maps/b_rock1.bsp");
@@ -974,7 +941,7 @@ void() item_cells =
 {
 	self.touch = ammo_touch;
 
-	if (self.spawnflags & WEAPON_BIG2)
+	if (self.spawnflags & AMMO_BIG)
 	{
 		precache_model ("maps/b_batt1.bsp");
 		setmodel (self, "maps/b_batt1.bsp");
@@ -992,78 +959,6 @@ void() item_cells =
 	StartItem ();
 
 };
-
-
-/*QUAKED item_weapon (0 .5 .8) (0 0 0) (32 32 32) shotgun rocket spikes big
-DO NOT USE THIS!!!! IT WILL BE REMOVED!
-*/
-
-float WEAPON_SHOTGUN = 1;
-float WEAPON_ROCKET = 2;
-float WEAPON_SPIKES = 4;
-float WEAPON_BIG = 8;
-void() item_weapon =
-{
-	self.touch = ammo_touch;
-
-	if (self.spawnflags & WEAPON_SHOTGUN)
-	{
-		if (self.spawnflags & WEAPON_BIG)
-		{
-			precache_model ("maps/b_shell1.bsp");
-			setmodel (self, "maps/b_shell1.bsp");
-			self.aflag = 40;
-		}
-		else
-		{
-			precache_model ("maps/b_shell0.bsp");
-			setmodel (self, "maps/b_shell0.bsp");
-			self.aflag = 20;
-		}
-		self.weapon = 1;
-		self.netname = "shells";
-	}
-
-	if (self.spawnflags & WEAPON_SPIKES)
-	{
-		if (self.spawnflags & WEAPON_BIG)
-		{
-			precache_model ("maps/b_nail1.bsp");
-			setmodel (self, "maps/b_nail1.bsp");
-			self.aflag = 40;
-		}
-		else
-		{
-			precache_model ("maps/b_nail0.bsp");
-			setmodel (self, "maps/b_nail0.bsp");
-			self.aflag = 20;
-		}
-		self.weapon = 2;
-		self.netname = "spikes";
-	}
-
-	if (self.spawnflags & WEAPON_ROCKET)
-	{
-		if (self.spawnflags & WEAPON_BIG)
-		{
-			precache_model ("maps/b_rock1.bsp");
-			setmodel (self, "maps/b_rock1.bsp");
-			self.aflag = 10;
-		}
-		else
-		{
-			precache_model ("maps/b_rock0.bsp");
-			setmodel (self, "maps/b_rock0.bsp");
-			self.aflag = 5;
-		}
-		self.weapon = 3;
-		self.netname = "rockets";
-	}
-	
-	setsize (self, '0 0 0', '32 32 56');
-	StartItem ();
-};
-
 
 /*
 ===============================================================================

@@ -106,7 +106,7 @@ void (entity targ,
 	if((attacker==world) && (targ==inflictor))
 		newdam = newdam * 4;
 
-	//Don't deal quad damage falls (by this point, already applied x4 modifier)
+	//Don't deal quad damage falls (divide by 4 since by this point, already applied x4 modifier)
 	if((damtype == SH_FALL) && (targ.items & IT_QUAD)) 
 		newdam = ceil(newdam / 4); //so reduce it back to normal
 

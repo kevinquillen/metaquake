@@ -54,6 +54,7 @@ void() MetaPrecache =
   precache_sound ("items/r_item2.wav");		// Cleric group heal
   precache_sound ("wizard/wpain.wav");		// Mage class getting hit
   precache_sound ("hknight/pain1.wav");		// Berserk pain
+  precache_sound ("hknight/hit.wav");		// Actually, this is used in the fire elemental (magic/fireelem.c)
   precache_sound ("hknight/death1.wav");	// Berkserk death
   precache_sound ("hknight/grunt.wav");		// Berkserk grunt
   precache_sound ("hknight/slash1.wav");	// Berkserk swing 1

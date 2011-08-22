@@ -21,7 +21,7 @@
 
 void() M_ChangeWeapon = 
 {
-	local	float	it, am, fl;
+	local float it, am, fl;
 	
 	it = self.items;
 	am = 0;
@@ -29,20 +29,23 @@ void() M_ChangeWeapon =
 	if (self.impulse == 1)
 	{
 		fl = IT_AXE;
-                if (self.weapon == IT_AXE)
-                  self.axe_mode = self.axe_mode + 1;
+		if(self.weapon == IT_AXE)
+			self.axe_mode = self.axe_mode + 1;
 
-// No one has a 3rd axe mode.
-                if (self.player_flags & PF_NO_HOOK)
-                  self.axe_mode = 0;
-                if (self.axe_mode == 2)
-                  self.axe_mode = 0;
 
-		if (self.playerclass == CL_HWEAP)
-		  self.axe_mode = 1;
+		//No hook -> switch back to axe
+		if(self.player_flags & PF_NO_HOOK)
+			self.axe_mode = 0;
+
+		// No one has a 3rd axe mode.
+		if(self.axe_mode == 2)
+			self.axe_mode = 0;
+
+		//Heavy weapons guy does not get an axe, just a grappling hook
+		if(self.playerclass == CL_HWEAP)
+			self.axe_mode = 1;
 
 		DisplayWeaponMode(IT_AXE);
-                
 	}
 	else if (self.impulse == 2)
 	{

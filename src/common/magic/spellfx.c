@@ -63,6 +63,9 @@ void() SpellFX_Confusion_Expire =
 	stuffcmd(self.owner, "v_idlescale 0\n");
 };
 
+void() SpellFX_Drain_Think =
+{
+};
 
 //==============================================================================
 //This is the only function called directly from outside this module.
@@ -77,6 +80,8 @@ void(entity fx, float spelleffect, float duration) SpellFX_Init =
 		fx.attack_finished = time + duration;
 
 	//Set up name and functions
+	//Reminder: .think() = per frame logic
+	//          .use() = destructor, called when spell expires
 	if(spelleffect == SPELLFX_REGEN)
 	{
 		fx.netname = "regeneration";
@@ -88,6 +93,12 @@ void(entity fx, float spelleffect, float duration) SpellFX_Init =
 		fx.netname = "confusion";
 		fx.think = SpellFX_Confusion_Think;
 		fx.use = SpellFX_Confusion_Expire;
+	}
+	else if(spelleffect == SPELLFX_DRAIN)
+	{
+		fx.netname = "drain spell";
+		fx.think = SpellFX_Drain_Think;
+		fx.use = SUB_Null;
 	}
 
 	fx.nextthink = time;

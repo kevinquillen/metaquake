@@ -120,19 +120,22 @@ void() E_ShowSpellImpulse =
 
 void() E_NextSpell =
 {
-  self.spell = self.spell + 1;
-  if (self.spell > SetSpellNum())
-    self.spell = 0;
-  E_ShowSpellImpulse();
-  E_SpellName();
-  self.impulse = 0;
+	self.spell = self.spell + 1;
+	if(self.spell == SetSpellNum())
+		self.spell = 0;
+
+	E_ShowSpellImpulse();
+	E_SpellName();
+	self.impulse = 0;
 };
 
 void() E_PrevSpell =
 {
   self.spell = self.spell - 1;
+  
   if (self.spell < 0)
-    self.spell = SetSpellNum();
+    self.spell = SetSpellNum() - 1;
+
   E_ShowSpellImpulse();
   E_SpellName();
   self.impulse = 0;
@@ -421,9 +424,17 @@ float(entity caster, float amount) CheckMana =
 //Returns zero if the spell should not be cast on this target (helpful on enemy)
 float() CheckHelpfulSpellTarget =
 {
+	if(self.enemy == world || self.enemy.deadflag)
+	{
+		sprint(self, "You must find an appropriate target first!\n");
+		self.attack_finished = time + 0.3;
+		return 0;
+	}
+
 	if(!SameTeam(self, self.enemy))
 	{
 		sprint(self, "You cannot cast this spell on enemies!");
+		self.attack_finished = time + 0.3;
 		return 0;
 	}
 
@@ -435,9 +446,17 @@ float() CheckHelpfulSpellTarget =
 //Returns zero if the spell should not be cast on this target (harmful on ally)
 float() CheckHarmfulSpellTarget =
 {
+	if(self.enemy == world || self.enemy.deadflag)
+	{
+		sprint(self, "You must find an appropriate target first!\n");
+		self.attack_finished = time + 0.3;
+		return 0;
+	}
+
 	if(SameTeam(self, self.enemy))
 	{
 		sprint(self, "You cannot cast this spell on teammates!");
+		self.attack_finished = time + 0.3;
 		return 0;
 	}
 

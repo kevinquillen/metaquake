@@ -48,7 +48,7 @@ void() markChase =
     remove(self);
     return;
   }
-  if ((time - 120) > self.ltime)
+  if ((time - 30) > self.ltime)
   {
     sprint(self.owner,"Your mark has worn off\n");
     remove(self);
@@ -81,121 +81,83 @@ void() markChase =
 
 void() NinjaMark =
 {
-  local entity mark;
-  if (self.ammo_cells < 200)
-  {
-    sprint(self,"Insufficient Mana!\n");
-    return;
-  }
-  if (!CheckCount(10000,"deathmark",1))
-  {
-    cprint(self,"Someone is already marked!\n");
-    return;
-  }
-  self.ammo_cells = self.ammo_cells - 30;
+	local entity mark;
+	
+	if(!CheckHarmfulSpellTarget())
+		return;
 
-  makevectors(self.v_angle);
-  traceline(
-	(self.origin + '0 0 16') + v_forward * 150,
-	(self.origin + '0 0 16') + v_forward * 700,
-	FALSE,
-	self);
+	if(!CheckCount(10000,"deathmark",1))
+	{
+		cprint(self,"Someone is already marked!\n");
+		return;
+	}
+	
+	if(!CheckMana(self, 200))
+		return;
+	
 
-  self.enemy = world;
-
-#ifdef QUAKEWORLD
-    WriteByte (MSG_MULTICAST, SVC_TEMPENTITY);
-    WriteByte (MSG_MULTICAST, TE_LIGHTNINGBLOOD);
-    WriteCoord (MSG_MULTICAST, trace_endpos_x);
-    WriteCoord (MSG_MULTICAST, trace_endpos_y);
-    WriteCoord (MSG_MULTICAST, trace_endpos_z);
-    multicast (trace_endpos, MULTICAST_PVS);
-#else
-    particle (trace_endpos, '0 0 100', 225, 20);
-#endif
-
-
-  self.attack_finished = time + 1;
+	self.attack_finished = time + 1;
  	
-  if (trace_fraction != 1.0)
-  {
-    if (trace_ent.takedamage == DAMAGE_AIM)
-      self.enemy = trace_ent;
-  } else
-    return;
+	mark = spawn();
+	if(self.enemy.classname == "player")
+	{
+		centerprint(self.enemy,"  @@  @@  \n          \n @      @ \n  @@@@@@  \n");
+		bprint (self.enemy.netname);
+		bprint (" was marked for death by ");
+		bprint (self.netname);
+		bprint("\n");
+	}
 
-  if (self.enemy == world)
-   return;
-
-  self.ammo_cells = self.ammo_cells - 170;   
-
-  mark = spawn();
-  if (self.enemy.classname == "player")
-  {
-    centerprint(self.enemy,"  @@  @@  \n          \n @      @ \n  @@@@@@  \n");
-    bprint (self.enemy.netname);
-    bprint (" was marked for death by ");
-    bprint (self.netname);
-    bprint("\n");
-  }
-
-  setmodel(mark,"progs/k_spike.mdl");
-  mark.netname = "tracker";
-  mark.movetype = MOVETYPE_FLYMISSILE;
-  mark.origin = self.origin + '0 0 16';
-  setsize(mark,'0 0 0','0 0 0');
-  mark.owner = self;
-  mark.enemy = self.enemy;
-  mark.health = self.enemy.id_number;
-  mark.id_number = self.id_number;
-  mark.think = markChase;
-  mark.nextthink = time + 0.2;
-  mark.touch = markTouch;
-  mark.effects = EF_DIMLIGHT;
-  mark.solid = SOLID_BBOX;
-  mark.classname = "deathmark";
-  mark.ltime = time;
-
+	setmodel(mark,"progs/k_spike.mdl");
+	mark.netname = "Mark of Death";
+	mark.movetype = MOVETYPE_FLYMISSILE;
+	mark.origin = self.origin + '0 0 16';
+	setsize(mark,'0 0 0','0 0 0');
+	mark.owner = self;
+	mark.enemy = self.enemy;
+	mark.health = self.enemy.id_number;
+	mark.id_number = self.id_number;
+	mark.think = markChase;
+	mark.nextthink = time + 0.2;
+	mark.touch = markTouch;
+	mark.effects = EF_DIMLIGHT;
+	mark.solid = SOLID_BBOX;
+	mark.classname = "deathmark";
+	mark.ltime = time;
 };
 
 void() NinjaPort =
 {
-  
-  if (self.ammo_cells < 120)
-  {
-    sprint(self,"Insufficient mana!\n");
-    return;
-  }
-
 #ifdef GAME_CTF
-  if (self.player_flags & PF_HAS_FLAG)
-  {
-    cprint(self,"You must drop the flag first!\n");
-    return;
-  }
+	if(self.player_flags & PF_HAS_FLAG)
+	{
+		cprint(self,"You must drop the flag first!\n");
+		return;
+	}
 #endif
+	if(!CheckMana(self, 120))
+		return;
    
-  self.ammo_cells = self.ammo_cells - 120;
-  spawn_tdeath(self.spawn_origin,self);
-  self.origin = self.spawn_origin;
+	spawn_tdeath(self.spawn_origin,self);
+	self.origin = self.spawn_origin;
 };
 
 void() NinjaSetPort =
 {
-  cprint(self,"Location Set!\n");
-  self.spawn_origin = self.origin;
-  self.attack_finished = time + 0.5;
+	cprint(self,"Location Set!\n");
+	self.spawn_origin = self.origin;
+	self.attack_finished = time + 0.5;
 };
 
 void() Ensnare = 
 {
-  if (other.classname == "player")
-  {
-    other.pausetime = time + 2.5;
-    sprint(other,"Hmmm... Sticky.\n");
-    sprint(self.owner,"Snag!\n");
-  }
-  remove(self);
+	if (other.classname == "player")
+	{
+		other.pausetime = time + 2.5;
+		sprint(other,"Hmmm... Sticky.\n");
+		sprint(self.owner,"Snag!\n");
+	}
+	remove(self);
 };
 
 void() NinjaEnsnare =
