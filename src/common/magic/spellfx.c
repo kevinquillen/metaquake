@@ -53,7 +53,6 @@ void() SpellFX_Confusion_Think =
 	self.owner.punchangle_z = self.owner.punchangle_z - 5;
 	
 	self.nextthink = time + 0.3;
-	self.think = SpellFX_Confusion_Think;
 };
 
 //Confusion expire: restore camera angles
@@ -63,8 +62,31 @@ void() SpellFX_Confusion_Expire =
 	stuffcmd(self.owner, "v_idlescale 0\n");
 };
 
+//Drain spell: Drains 10 health / second (1 per 0.1s)
 void() SpellFX_Drain_Think =
 {
+
+	//Drain a point of health directly (no pain animation)
+	self.owner.health = self.owner.health - 1;
+	
+	//If they reach 1 or less, call DoDamage() so the caster gets a
+	//kill (use SH_MAGIC so it ignores armor)
+	if(self.owner.health <= 1)
+		DoDamage(self.owner, self, self.enemy, 5, SH_MAGIC);
+
+	//Take the drained health and give it to the caster
+	if(self.enemy.health < self.enemy.max_health)
+		self.enemy.health = self.enemy.health + 1;    
+
+	//If either the caster or the target dies, then mark as done.
+	if(self.enemy.deadflag || self.owner.deadflag)
+	{
+		self.voided = 1;
+		return;
+	}
+
+	//Next frame in 0.1 secs
+	self.nextthink = time + 0.1;
 };
 
 //==============================================================================
@@ -104,5 +126,4 @@ void(entity fx, float spelleffect, float duration) SpellFX_Init =
 	fx.nextthink = time;
 	fx.chain = world;
 	fx.spell = spelleffect;
-
 };

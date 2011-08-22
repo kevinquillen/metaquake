@@ -177,13 +177,15 @@ void() E_CastMode =
 	.owner -- Player who the effect is attached to
 	.enemy -- Player who cast the spell
 	.chain -- Next spell effect in the linked list, or world if none
-	.think -- Function called automatically by Quake.
+	.think -- Function called automatically by Quake. How the effect is
+	          actually implemented.
 	.use -- Function called when spell expires.
 	.nextthink -- When to call think() function
 	.attack_finished -- When to remove this spell effect, or SPELL_NOEXPIRE.
 	.netname -- Name displayed when the spell expires, or when killed by
 	            a DoT spell.
-	.voided -- Set to non-zero when the spell expires.
+	.voided -- If set to non-zero, then the spell instantly expires. Useful
+	           if canceling a spell effect inside its .think() function.
 */
 
 //Check if an entity already has a spell effect. If so, return it
@@ -206,32 +208,18 @@ entity(entity e, float spelleffect) Magic_HasEffect =
 	return world;
 };
 
-//Silently remove all spell effects from an entity. The effects
-//are removed immediately using remove(). Their expiration function
-//is called before they are removed.
+//Marks all spell effects to be removed. The remove actually happens the
+//next frame.
 void(entity e) Magic_RemoveAll =
 {
 	local entity head;
-	local entity nexteff;
-	local entity oldself;
 	
 	head = e.spell_effects;
 	while(head != world)
 	{
-		nexteff = head.chain;
 		head.voided = 1;
-		
-		//Call use() in context of 'head'
-		oldself = self;
-		self = head;
-		head.use();
-		self = oldself;
-		
-		remove(head);
-		
-		head = nexteff;
+		head = head.chain;
 	}
-	e.spell_effects = world;
 };
 
 //Add a spell effect to a given entity. If the spell effect already exists,
@@ -289,12 +277,9 @@ void(entity e) Magic_CheckExpired =
 	if(e.spell_effects == world)
 		return;
 
-	//Dead player -> remove all effects
+	//Dead player -> mark all effects for removal (below)
 	if(e.deadflag)
-	{
 		Magic_RemoveAll(e);
-		return;
-	}
 
 	fx = e.spell_effects;
 	prev = world;
@@ -302,7 +287,7 @@ void(entity e) Magic_CheckExpired =
 	while(fx)
 	{
 		//Spell expired?
-		if(fx.attack_finished < time)
+		if(fx.attack_finished < time || fx.voided)
 		{
 			if(prev == world) //i.e removing head element
 				e.spell_effects = fx.chain;
@@ -324,17 +309,15 @@ void(entity e) Magic_CheckExpired =
 				sprint(fx.owner, fx.enemy.netname);
 				sprint(fx.owner, " has expired.\n");
 			}
-
 			
-			//Remove next frame
-			fx.voided = 1;
-			
-			//Call use() in context of 'fx'
+			//Call use() in context of 'fx' (the expiration 
+			//function pointer)
 			oldself = self;
 			self = fx;
 			fx.use();
 			self = oldself;
-			
+		
+			//Remove next frame	
 			fx.think = SUB_Remove;
 			fx.nextthink = time;
 		}

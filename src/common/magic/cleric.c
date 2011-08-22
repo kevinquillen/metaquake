@@ -226,48 +226,17 @@ void() ClericGroupHeal =
 	healobj.think = GroupHeal;
 };
 
-// Spell: Drain, Type: Directed
-void() Drain =
-{
-	//Drain a point of health directly
-	self.enemy.health = self.enemy.health - 1;
-	
-	//If they reach 1 or less, call DoDamage() so the caster gets a
-	//kill.
-	if(self.enemy.health <= 1)
-		DoDamage(self.enemy, self, self.owner, 5, SH_MAGIC); // armor no matter
-
-	//Take the drained health and give it to the other player
-	if(self.owner.health < self.owner.max_health)
-		self.owner.health = self.owner.health + 1;    
-
-	//If either the caster or the target dies, or the spell duration runs out, then remove
-	if(((self.enemy.deadflag) || (self.health <= 1)) || (self.owner.deadflag))
-	{
-		remove(self);
-		return;
-	}
-
-	//Next frame in 0.1 secs
-	self.health = self.health - 1;
-	self.nextthink = time + 0.1;
-	self.think = Drain; 
-};  
-
 void() ClericDrain =
 {
-	local entity drainobj;
-	
-	if(CheckMana(self, 40))
+	local float duration;
+
+	if(!CheckHarmfulSpellTarget())
 		return;
 
-	sound (self, CHAN_AUTO, "enforcer/enfire.wav", 1, ATTN_NORM);
-
-	if (!(self.enemy.takedamage == DAMAGE_AIM))
-	{
-		sprint(self,"Invalid target!\n");
+	if(!CheckMana(self, 40))
 		return;
-	}
+
+	sound(self, CHAN_AUTO, "enforcer/enfire.wav", 1, ATTN_NORM);
 
 	//Give a resistance check of 10%
 	if(CheckResist(self.enemy, 0.10))
@@ -276,26 +245,24 @@ void() ClericDrain =
 		ResistMsg(self.enemy, self);
 		return;
 	}
-	
-	drainobj = spawn();
-	drainobj.owner = self;
-	drainobj.think = Drain;
-
-	if(self.super_damage_finished > time) //Quad does improve damage
-		drainobj.health = 40;
+	//Quad damage improves the damage, but only by 2x
+	if(self.super_damage_finished > time)
+		duration = 4;//4s @ 10 health/s	
 	else
-		drainobj.health = 20;
-  
-	drainobj.nextthink = time + 0.1;
-	drainobj.enemy = self.enemy;
+  		duration = 2;//2s @ 10 health/s
+
+	//TODO: move this to spellfx.c ?
 #ifndef QUAKEWORLD
 	SpawnSurround(self.enemy, 30, 65);
 #endif
+
+	//Now add the effect on the player
+	Magic_AddEffect(self.enemy, self, SPELLFX_DRAIN, duration);
+
 	//Change caster's target so s/he can't just spam drain spells
 	//without at least targeting the other player.
 	self.enemy = world;
 	self.attack_finished = time + 0.5;
-	drainobj.netname = "drain spell";
 };
 
 void() ClericDivinity =
@@ -345,7 +312,7 @@ void() HolyMissileTouch =
 	DoDamage(other, self, self.owner, 25 + random()*20, SH_COLD);
 
 	//Then deal some damage via explosion
-	T_RadiusDamage(self, self.owner, 75, self.owner, SH_COLD);
+	T_RadiusDamage(self, self.owner, 60, self.owner, SH_COLD);
 	BecomeExplosion();
 };
 
@@ -379,8 +346,8 @@ void() ClericMagicalVestment =
 {
 	local entity targ;
  
-	//Need 25 mana to cast
-	if(!CheckMana(self, 25))
+	//Need 15 mana to cast
+	if(!CheckMana(self, 15))
 		return;
 
 	sound(self, CHAN_VOICE, "items/itembk2.wav", 1, ATTN_NORM);
@@ -661,6 +628,6 @@ void() ClericCast =
 		ClericDispelEvil();
 	else if(self.spell ==  CLERIC_SPELL_AID)
 		ClericAid();
-  if (self.spell == CLERIC_SPELL_LOCK)
-    ClericLock();
+	else if (self.spell == CLERIC_SPELL_LOCK)
+		ClericLock();
 };

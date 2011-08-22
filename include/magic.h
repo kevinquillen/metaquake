@@ -59,6 +59,7 @@
 #define SPELLFX_DEMON		4			//Demon Morph (Druid)
 #define SPELLFX_SANCTUARY	5			//Sanctuary (Cleric)
 #define SPELLFX_CONFUSION	6			//Confusion (Mage)
+#define SPELLFX_DRAIN		7			//Drain (Cleric)
 
 #define SPELL_NOEXPIRE	-1		//When used as the 'duration' argument for Magic_AddEffect(), the spell does not expire
 
