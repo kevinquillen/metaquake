@@ -25,7 +25,7 @@ void(entity inflictor, entity attacker, float damage, float radius, entity ignor
 entity() SelectSpawnPoint;
 void() TurnThink;
 
-void() FireElemStatisField =
+void() FireElemStasisField =
 {
 	if(!CheckHarmfulSpellTarget())
 		return;
@@ -340,7 +340,7 @@ void() FireElemMeltdown =
 void() FireElemSpellName =
 {
 	sprint(self,"FireElem: ");
-	if(self.spell == FIREELEM_SPELL_STATIS)
+	if(self.spell == FIREELEM_SPELL_STASIS)
 		sprint(self,"Stasis Field\n");
 	else if(self.spell == FIREELEM_SPELL_BEAM)
 		sprint(self,"Beam\n");
@@ -360,8 +360,8 @@ void() FireElemCast =
 		return;
 	}
 
-	if(self.spell == FIREELEM_SPELL_STATIS)
-		FireElemStatisField();
+	if(self.spell == FIREELEM_SPELL_STASIS)
+		FireElemStasisField();
 	else if(self.spell == FIREELEM_SPELL_BEAM)
 		FireElemBeam();
 	else if(self.spell == FIREELEM_SPELL_FIRESTORM)
