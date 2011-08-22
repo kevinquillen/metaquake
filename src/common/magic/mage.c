@@ -118,8 +118,12 @@ void() MageFire =
 	self.attack_finished = time + 0.3;
 };
 
-void() MageCalm =
+void() MageFreeze =
 {
+	//Only cast on enemies
+	if(!CheckHarmfulSpellTarget())
+		return;
+
 	if(!CheckMana(self, 40))
 		return;
 	
@@ -134,17 +138,15 @@ void() MageCalm =
 		
 	if(self.enemy.takedamage == DAMAGE_AIM)
 	{
-		//Don't freeze your ally's weapons...
-		if(teamplay && SameTeam(self, self.enemy))
-			return;
-			
 		if(self.enemy.classname == "player")
 		{
 			cprint(self.enemy,"Your weapons freeze!\n");
 			#ifndef QUAKEWORLD
 				SpawnSurround(self.enemy, 40, 45); 
 			#endif
-			stuffcmd(self.enemy,"-attack\n");
+
+			//Stop attacks if they are in progress
+			stuffcmd(self.enemy,"-attack\n"); 
 		}
 		sprint(self,self.enemy.netname);
 		sprint(self," calmed down\n");
@@ -293,7 +295,7 @@ void() MageGate =
 	}
 #endif
 
-	if(!CheckMana(self, 20))
+	if(!CheckMana(self, 70))
 		return;
 
 
@@ -457,8 +459,6 @@ void() MageDoggie =
 {
 	if(!CheckMana(self,10))
 		return;
-		
-	
 
 	spell_become_doggie();
 };
@@ -493,26 +493,25 @@ void() MageSwarm =
 	if(!CheckMana(self, 15))
 		return;
 		
-  fireball = spawn ();
-  fireball.netname = "meteor swarm";
-  fireball.voided = 0;
-  fireball.owner = self;
-  fireball.movetype = MOVETYPE_BOUNCE;
-  fireball.solid = SOLID_BBOX;
-  fireball.classname = "magic_fire";
-  makevectors(self.v_angle);
-  fireball.velocity = v_forward * 600 + v_up * 100;
-  fireball.velocity_x = fireball.velocity_x + (random()*300 - 150);  
-  fireball.velocity_y = fireball.velocity_y + (random()*300 - 150);  
-  fireball.touch = T_FireTouch;
-  fireball.nextthink = time + 5;
-  fireball.think = SUB_Remove;
-  fireball.armorvalue = SH_UNKNOWN;
-  setmodel (fireball, "progs/lavaball.mdl");
-  setsize(fireball,'-1 -1 -1','1 1 1');
-  setorigin (fireball, self.origin + v_forward*8 + '0 0 16');
-  self.attack_finished = time + 0.2;
-
+	fireball = spawn ();
+	fireball.netname = "meteor swarm";
+	fireball.voided = 0;
+	fireball.owner = self;
+	fireball.movetype = MOVETYPE_BOUNCE;
+	fireball.solid = SOLID_BBOX;
+	fireball.classname = "magic_fire";
+	makevectors(self.v_angle);
+	fireball.velocity = v_forward * 600 + v_up * 100;
+	fireball.velocity_x = fireball.velocity_x + (random()*300 - 150);  
+	fireball.velocity_y = fireball.velocity_y + (random()*300 - 150);  
+	fireball.touch = T_FireTouch;
+	fireball.nextthink = time + 5;
+	fireball.think = SUB_Remove;
+	fireball.armorvalue = SH_UNKNOWN;
+	setmodel (fireball, "progs/lavaball.mdl");
+	setsize(fireball,'-1 -1 -1','1 1 1');
+	setorigin (fireball, self.origin + v_forward*8 + '0 0 16');
+	self.attack_finished = time + 0.2;
 };
 
 //Called when the mage's confusion projection explodes
@@ -544,7 +543,7 @@ void() ConfusionTouch =
 		if(head.health >= 1 && head.classname == "player")
 		{
 			if(
-			//!(head == self.owner) && 
+			!(head == self.owner) && 
 			(!teamplay  || (teamplay && !SameTeam(self.owner,head)))
 			)
 			{
@@ -586,10 +585,7 @@ void() MageConfusion =
 	cast.touch = ConfusionTouch;
 	cast.origin = self.origin + '0 0 16';
 	cast.owner = self;
-	cast.velocity = v_forward * 400 + '0 0 30';
-	//makevectors(self.v_angle);
-	//cast.angles = vectoangles(v_forward);
-	//cast.velocity = v_forward * 650;
+	cast.velocity = v_forward * 400;
 
 	cast.nextthink = time + 4.0;
 	cast.think = ConfusionTouch;
@@ -635,7 +631,7 @@ void() MageCast =
   if(self.spell == 0)
     MageFire();
   if (self.spell == 1)
-    MageCalm();
+    MageFreeze();
   if (self.spell == 2)
     MageInvis();
   if (self.spell == 3)
