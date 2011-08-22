@@ -387,7 +387,7 @@ void() RuneThink =
 
 	}
 	
-	if(self.classname == "special_mana" && self.owner.ammo_cells < self.owner.max_ammo_cells + self.health)
+	if(self.classname == "special_mana" && self.owner.ammo_cells < self.owner.max_ammo_cells)
 	{
 		//Use max_health as a counter so that every few frames the owner gets mana
 		if(self.max_health >= RUNE_MANA_SPEED)
@@ -487,8 +487,11 @@ void() T_RuneTouch =
 		msg = "You got the Rune of Armor!";
 		other.max_arm = other.max_arm + self.health;
 	}
-	else if(self.classname == "special_mana") 
+	else if(self.classname == "special_mana")
+	{
 		msg = "You got the Rune of Mana!";
+		other.max_ammo_cells = other.max_ammo_cells + self.health;
+	}
 	else if(self.classname == "special_health")
 		msg = "You got the Rune of Health!";
 	else if(self.classname == "special_elec")
