@@ -366,7 +366,7 @@ void() LanceHit =
 	if (other == self.owner)
 		return;
 	
-	DoDamage(other,self,self.owner,100+random()*250,SH_COLD);
+	DoDamage(other,self,self.owner,40+random()*25,SH_COLD);
 	
 	remove(self);
 };
@@ -434,7 +434,7 @@ void() LichIceLance =
 	e.velocity = dir * 2000;
 	e.angles = vectoangles(e.velocity);
 	e.netname = "ice lance";
-	self.attack_finished = time + 0.5;
+	self.attack_finished = time + 0.7;
 	e.touch = LanceHit;
 };
 

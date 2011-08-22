@@ -88,6 +88,13 @@ There are 6 sections.
   limitations of the Quake Engine, sometimes the blob deflects the option
   rocket. There isn't really a fix for this that is suitable, so I guess you
   just have to aim better.
+* The Lich's "Ice Lance" spell had its damage reduced from 100-350 to 40-65.
+  The spell was ridiculously overpowered and usually capable of 1-hit killing
+  anyone and everyone, especially considering the fire rate and low, low
+  mana cost.
+* The Fire Elementals' "Beam" spell had its damage reduced by 1/2 and fire
+  rate slowed down. It did huge damage extremely rapidly and silently making
+  it extremely overpowered. It also now makes a soft sound effect.
 * Cleric's "Holy Aura" spell was entirely broken, perhaps only partially 
   implemented, in Meta 5. Its behavior was something to the effect of
   doubling the caster's health, but only if the caster was at full health
