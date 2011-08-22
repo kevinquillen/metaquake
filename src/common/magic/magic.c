@@ -347,14 +347,25 @@ void(entity e) Magic_CheckExpired =
 //Displays a message when 'resistor' resists 'caster's spell.
 void(entity resistor, entity caster) ResistMsg =
 {
+	local string name;
+
+	//Make sure *something* is printed
+	if(resistor.netname != "")
+		name = resistor.netname;
+	else
+		name = resistor.classname;
+	
 	//Let the caster know the target resisted the spell
-	sprint(caster, resistor.netname);
+	sprint(caster, name);
 	sprint(caster, " resists your spell.\n");
 		
 	//Let the other player know they resisted the spell
-	sprint(resistor, "You resist the spell cast by ");
-	sprint(resistor, caster.netname);
-	sprint(resistor, ".\n");
+	if(resistor.classname == "player")
+	{
+		sprint(resistor, "You resist the spell cast by ");
+		sprint(resistor, caster.netname);
+		sprint(resistor, ".\n");
+	}
 
 };
 
