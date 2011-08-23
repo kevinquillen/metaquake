@@ -460,13 +460,13 @@ void() ClassBerserk =
 	self.armorvalue = 50;
 	self.armortype = 0.8;
 	
-	self.max_health = 200;
-	self.max_arm = 50;
+	self.max_health = 230;
+	self.max_arm = 200;
 	self.max_ammo_shells = 0;
 	self.max_ammo_nails = 0;
 	self.max_ammo_rockets = 0;
 	self.max_ammo_cells = 0;
-	self.weight = 115;
+	self.weight = 90;
 	self.weapon = IT_AXE;
 };
 

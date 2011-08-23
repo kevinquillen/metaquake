@@ -108,7 +108,7 @@ void() player_berserk_attack =
 	if(random() < 0.5)
 		berserk_attack1();
 	else
-		berserk_attack1();
+		berserk_attack1(); //TODO: set up framing for animation #2
 
 	self.attack_finished = time + 0.7;		
 };
@@ -117,6 +117,11 @@ void(entity attacker, float damage) player_berserk_pain =
 {		
 	//Play a hurt sound
 	sound(self, CHAN_VOICE, "hknight/pain1.wav", 1, ATTN_NORM);
+	
+	//Yup, he's hardcore, okay.
+	if(damage < 40)
+		return;
+	
 	
 	self.walkframe = 0;
 	berserk_pain();
