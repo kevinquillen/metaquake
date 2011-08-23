@@ -406,7 +406,7 @@ void () ClassLich =
   self.armorvalue = 0;
   self.armortype = 0;
 
-  self.max_health = 75;
+  self.max_health = 80;
   self.max_arm = 60;
   self.max_ammo_shells = 20;
   self.max_ammo_nails = 50;
