@@ -75,11 +75,7 @@ void() T_MissileTouch =
 
 	BecomeExplosion();
 };
-/*
-================
-W_FireRocket
-================
-*/
+
 void() ShalHome =
 {
   if ((self.enemy == self.owner) || (self.enemy.takedamage != DAMAGE_AIM))
@@ -114,6 +110,11 @@ void() ShalHome =
   self.think = ShalHome;  
 };
 
+/*
+================
+W_FireRocket
+================
+*/
 void() W_FireRocket =
 {
 	if (self.classname == "player")

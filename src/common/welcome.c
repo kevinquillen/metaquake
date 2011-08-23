@@ -17,6 +17,6 @@
  *************************************************************************/
 
 void() WelcomeMessage = {
-	centerprint(self.owner,"3realsoft.com\nMetamorphism 6 Server\n\nAdmin: baggett.patrick@gmail.com\n");
+	cprint(self.owner,"WELCOME TO\nMetamorphism 6.0 Server\n");
 
 };

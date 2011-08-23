@@ -393,7 +393,7 @@ void () ClassLich =
     stuffcmd(self,"exec lich.cfg\n");
   }
   self.player_flags = self.player_flags | PF_MAGIC | PF_REGEN; 
-  // Start with mortal resists.:
+  // Start with mortal resists:
   self.saves = SH_BULLETS | SH_UNKNOWN | SH_ELECTRICITY; 
   self.harms = 0;
 

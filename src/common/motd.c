@@ -135,7 +135,6 @@ void() MOTD1 =
 	local entity pl;
 	
 	S_MetaInfo(self.owner);
-	cdate(self.owner);
 	WelcomeMessage();
 
 	//Player reference, so my fingers don't fall off when typing these

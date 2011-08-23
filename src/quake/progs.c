@@ -10,7 +10,6 @@ effects.qc
 ../common/damage.qc
 ../common/hud.qc
 ../common/print.qc
-../common/cdate.qc
 ../common/weapons/hook.qc
 ../common/special.qc
 ../common/weapons/sg.qc

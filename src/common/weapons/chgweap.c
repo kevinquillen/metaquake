@@ -175,25 +175,25 @@ void() M_ChangeWeapon =
 	}
 	else if (self.impulse == 7)
 	{
-                if (self.playerclass == CL_SPECIAL)
-                  return;
+		if (self.playerclass == CL_SPECIAL)
+			return;
 
 		fl = IT_ROCKET_LAUNCHER;
-                if (self.weapon == IT_ROCKET_LAUNCHER)
-                  self.rl_mode = self.rl_mode + 1;
+		if(self.weapon == IT_ROCKET_LAUNCHER)
+			self.rl_mode = self.rl_mode + 1;
 
-		if (self.ammo_rockets < 1)
+		if(self.ammo_rockets < 1)
 			am = 1;
 
-// Multi weapon fixes:
-                if (self.rl_mode > 2) // no one has 3
-                  self.rl_mode = 0;
-                if ((self.rl_mode != 0) && (self.player_flags & PF_MAGIC))
-                        self.rl_mode = 0;
+		// Multi weapon fixes:
+		if(self.rl_mode > 2) // no one has 3
+			self.rl_mode = 0;
 
-                if ((am != 1) && (self.items & fl)) {
-		  DisplayWeaponMode(IT_ROCKET_LAUNCHER);
-                }
+		if(self.rl_mode != 0 && (self.player_flags & PF_MAGIC))
+			self.rl_mode = 0;
+
+		if(am != 1 && (self.items & fl))
+			DisplayWeaponMode(IT_ROCKET_LAUNCHER);
 	}
 	else if (self.impulse == 8)
 	{
