@@ -26,16 +26,26 @@
 #define __META_MAGIC_H
  
 #define NUM_MAGE_SPELLS 		9
-#define NUM_CLERIC_SPELLS		11
+
 #define NUM_DRUID_SPELLS		7
-#define NUM_FIREELEM_SPELLS 	3
+
 #define NUM_NINJA_SPELLS		4
 #define NUM_LICH_SPELLS			11
 
 //Mage spell numbers
 #define MAGE_SPELL_CONFUSION	9
 
+//Fire Elemental spell numbers
+#define NUM_FIREELEM_SPELLS 		5
+#define FIREELEM_SPELL_STASIS		0
+#define FIREELEM_SPELL_BEAM			1
+#define FIREELEM_SPELL_FIRESTORM	2
+#define FIREELEM_SPELL_INFERNO		3
+#define FIREELEM_SPELL_MELTDOWN		4
+
+
 //Cleric spell numbers
+#define NUM_CLERIC_SPELLS		12
 #define CLERIC_SPELL_SANCT		0	//Sanctuary
 #define CLERIC_SPELL_RUPTURE	1	//Rupture armor
 #define CLERIC_SPELL_HEAL		2	//Heal
@@ -49,6 +59,7 @@
 #define CLERIC_SPELL_AID		10	//Aid
 #define CLERIC_SPELL_LOCK		11	//Lock target
 
+// Casting mode =======================================
 #define CASTMODE_SELF	0
 #define CASTMODE_TARGET	1
 

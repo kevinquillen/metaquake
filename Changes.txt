@@ -100,6 +100,7 @@ There are 6 sections.
   doubling the caster's health, but only if the caster was at full health
   and armor; otherwise, it would harm the caster for 30 health/6 seconds
   until the caster died. Very random.
+* Cleric's "Divinity" spell no longer gives everyone in a huge radius pentagram.
 
 4) Misc. Changes
 -------------------------------
