@@ -1042,7 +1042,7 @@ void() Player_Demon_JumpTouch =
 {
 	if (other.takedamage)
 	{
-		T_Damage(other, self, self, 25+25*random(), SH_UNKNOWN);
+		T_Damage(other, self, self, 10+30*random(), SH_UNKNOWN);
 		self.touch = SUB_Null;
 	}
 };

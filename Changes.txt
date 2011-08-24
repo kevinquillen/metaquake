@@ -75,8 +75,6 @@ There are 6 sections.
 * Renamed Cleric's "Heal" to "Group Heal" to better convey what it does
 * Renamed Cleric's "Strengthen Armor" to "Magical Vestment" so it sounds
   more D&D like.
-* The Druid's demon form jump attack had its minimum damage increase from
-  10 to 25. The maximum damage of 50 is unchanged.
 * Added "Berserk" class. High health, some armor, and a deadly sword. At
   the moment, missing a ranged attack. There will likely be some balance
   changes related to this later.
