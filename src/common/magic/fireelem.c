@@ -319,11 +319,11 @@ void() FireElemMeltdown =
 	
 	meltdown = spawn();
 	setmodel(meltdown, "progs/s_explod.spr");
+	setorigin(meltdown, self.origin + '0 0 16');
+	setsize(meltdown,'0 0 0','0 0 0');
 	meltdown.owner = self;
 	meltdown.netname = "meltdown";
 	meltdown.frame = 0;
-	setsize(meltdown,'0 0 0','0 0 0');
-	meltdown.origin = self.origin;
 	meltdown.effects = EF_BRIGHTLIGHT | EF_BRIGHTFIELD;
 	meltdown.solid = SOLID_NOT;
 	meltdown.touch = SUB_Null;

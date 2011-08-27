@@ -297,7 +297,7 @@ void() PutClientInServer =
 	
 	/* Set the origin somewhere wayyyy far out.By this point, a visual copy of
 	the player's body (corpse) has been left where they last died (if
-	respawning). If 
+	respawning).
 	*/
 	self.origin = '9999 9999 9999'; 
 
@@ -309,22 +309,22 @@ void() PutClientInServer =
 
 // oh, this is a hack!
 
-	setmodel (self, "progs/eyes.mdl");
+	setmodel(self, "progs/eyes.mdl");
 	modelindex_eyes = self.modelindex;
 
-	setmodel (self, "progs/s_explod.spr");
+	setmodel(self, "progs/s_explod.spr");
 	modelindex_fire = self.modelindex;
 
-	setmodel (self, "progs/player.mdl");
+	setmodel(self, "progs/player.mdl");
 	modelindex_player = self.modelindex;
 
-	setmodel (self, "progs/demon.mdl");
+	setmodel(self, "progs/demon.mdl");
 	modelindex_demon = self.modelindex;
 
-	setmodel (self, "progs/dog.mdl");
+	setmodel(self, "progs/dog.mdl");
 	modelindex_dog = self.modelindex;
 
-	setmodel (self, "progs/enforcer.mdl");
+	setmodel(self, "progs/enforcer.mdl");
 	modelindex_hweap = self.modelindex;
 	
 	setmodel(self, "progs/hknight.mdl");
