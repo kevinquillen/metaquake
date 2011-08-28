@@ -24,6 +24,7 @@ qwprogs.dat: $(QCC)
 	make -C srcQW
 
 progs.dat: $(QCC) force_look
+	-rm progs.dat
 	make -C src/common CFLAGS="-I../../include -DQUAKE -DGAME_CTF"
 	make -C src/quake QCC=../../$(QCC) CFLAGS="-I../../include -DQUAKE -DGAME_CTF"
 	cp progs.dat $(COPYDIR)

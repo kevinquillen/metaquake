@@ -152,7 +152,7 @@ void(entity targ, entity inflictor, entity attacker, float damage, float dtype) 
 		}
 
 		//Non-armor piercing rounds / damages other than magic
-		if(inflictor.classname != "armor_pierce" || dtype != SH_MAGIC)
+		if(inflictor.classname != "armor_pierce" && dtype != SH_MAGIC)
 		{
 			save = ceil(targ.armortype*damage);
 			if(save >= targ.armorvalue)

@@ -1,6 +1,5 @@
 /*************************************************************************
  * Metamorphism Quake Server: weapons.h,                                 *
- * Copyright (C) 1996-2000 by Lon Hohberger.                             *
  * Copyright (C) 2011 by Patrick Baggett                                 *
  *                                                                       *
  * This code is free software; you can redistribute it and/or modify     *
@@ -17,10 +16,22 @@
  *                                                                       *
  *************************************************************************/
 
+#ifndef __META_WEAPONS_H
+#define __META_WEAPONS_H
+
  /*
 	This file defines symbolic constants for the <weapon>_mode. For example,
-	ssg_mode = SSG_NORMAL
+	ssg_mode = SSG_NORMAL means normal
  */
+
+//Axe (axe_mode) 
+#define AXE_NORMAL	0
+#define AXE_HOOK	1
  
- #define W_AXE_NORMAL
- #define W_AXE_NORMAL
+//Rocket launcher (rl_mode)
+#define RL_NORMAL 0
+#define RL_SHALRATH 1
+#define RL_DUMBFIRE 2
+#define NUM_RL_MODES 3
+
+#endif
