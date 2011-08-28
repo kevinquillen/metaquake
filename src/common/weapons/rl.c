@@ -39,13 +39,14 @@ void() T_MissileTouch =
 {
 	local float damg;
 
-	//Don't explode on owner, unless it is a shalrath ball with no other targets
-	//that turned on the shooter.
-	//if((other == self.owner) && (self.enemy != self.owner))
-	//	return;
+	//Don't explode other rockets.
 	if(other.classname == "rocket")
 		return;
-	bprint("T_MissileTouch()\n");
+	
+	//Don't explode on the shooter.
+	if(other == self.owner)
+		return;
+	
 	//Only explode once on touch
 	if (self.voided)
 		return;
@@ -61,32 +62,23 @@ void() T_MissileTouch =
 	if(self.rl_mode == RL_NORMAL)
 		damg = 85 + random()*25;
 	else if(self.rl_mode == RL_SHALRATH)
-		damg = 40 + random()*15;
+		damg = 35 + random()*15;
 	else if(self.rl_mode == RL_DUMBFIRE)
 		damg = 40 + random()*25;
 	
 	//Directly to damage to whatever is touched (except shalrath ball)
 	if(other.health > 0 && self.rl_mode != RL_SHALRATH) 
-	{
-		other.deathtype = "rocket";//TODO: what is this for?
 		DoDamage (other, self, self.owner, damg, SH_EXPLOSION);
-	}
 
-	//Create an explosion radius.	
-	//Note that 'other' (param #4) is who to ignore when damaging. This is so that
-	//the player doesn't take direct hit damange AND radius damage -- which would
-	//effectively double the damage dealt to the victim. Of course, this only
-	//holds true for the normal/dumbfire rockets -- the shalrath ball uses explosion
-	//only damage.
+	//Create an explosion radius. Note that the 4th parameter to T_RadiusDamage()
+	//is the entity to ignore. This is so that the player doesn't take direct hit
+	//damange AND radius damage -- which would effectively double the damage dealt
+	//to the victim. Of course, this only holds true for the normal/dumbfire rockets
+	//-- the shalrath ball uses explosion only damage.
 	if(self.rl_mode == RL_NORMAL)
-	{
 		T_RadiusDamage(self, self.owner, damg, other, SH_EXPLOSION);
-	}
 	else if(self.rl_mode == RL_DUMBFIRE)
-	{
 		T_AreaDamage(self, self.owner, damg, 100, other, SH_EXPLOSION);
-		
-	}
 	else //Shalrath ball does magic damage
 		T_RadiusDamage(self, self.owner, damg, world, SH_MAGIC);
 
@@ -114,30 +106,32 @@ void() ShalHome =
 		self.owner = world;
 	}
   
-  if (self.ltime < time - 3.5)
-  {
-     self.think = SUB_Null;
-     self.movetype = MOVETYPE_BOUNCE;
-     self.velocity = self.velocity + '0 0 100';
-     return;
-  }
-  if (self.enemy == world)
-  {
-    self.think = SUB_Null; 
-    return;
-  }
-  if (self.enemy.takedamage != DAMAGE_AIM)
-    return;
+	if(self.ltime < time)
+	{
+		self.think = SUB_Null;
+		self.movetype = MOVETYPE_BOUNCE;
+		self.velocity = self.velocity + '0 0 100';
+		return;
+	}
+	
+	if(self.enemy == world)
+	{
+		self.think = SUB_Null; 
+		return;
+	}
+	
+	if(self.enemy.takedamage != DAMAGE_AIM)
+		return;
 
-  if (self.enemy.health < 1)
-  {
-    self.enemy = world;
-    return;
-  }
-  self.velocity = normalize((self.enemy.origin + '0 0 10') - self.origin) * 325;
-
-  self.nextthink = time + 0.1;
-  self.think = ShalHome; 
+	if(self.enemy.health < 1)
+	{
+		self.enemy = world;
+		return;
+	}
+	
+	self.velocity = normalize((self.enemy.origin + '0 0 10') - self.origin) * 325;
+	self.nextthink = time + 0.1;
+	self.think = ShalHome; 
 };
 
 /*
@@ -191,11 +185,10 @@ void() W_FireRocket =
 		newmis.velocity = aim(self, 1000);
 		newmis.velocity = newmis.velocity * 1000;
 	}
-	newmis.angles = vectoangles(newmis.velocity);
-
 	
-		setsize(newmis, '0 0 0', '0 0 0');
-	setorigin(newmis, self.origin + v_forward*8 + '0 0 16');
+	newmis.angles = vectoangles(newmis.velocity);
+	setsize(newmis, '0 0 0', '0 0 0');
+	setorigin(newmis, self.origin + v_forward*16 + v_up*16);
 
 	
 	if(self.rl_mode == RL_NORMAL) //Normal rockets
@@ -220,13 +213,14 @@ void() W_FireRocket =
 	}
 	else if(self.rl_mode == RL_DUMBFIRE) //Dumbfire rockets
 	{
-		newmis.netname = "missile";
+		newmis.netname = "missile barrage";
 		setmodel(newmis, "progs/missile.mdl");
 		
-		//Randomly move to the left/right of the player, then move forward.		
-		
+		//Randomly position rocket in a small circle coplanar to the player
+		// of the player, then move forward.
+		newmis.origin = newmis.origin + (v_forward * 8);
 		newmis.origin = newmis.origin + (v_right * (random()*30 - 15));
-		newmis.origin = newmis.origin + (v_up * (random()*30 - 15));		
+		newmis.origin = newmis.origin + (v_up * (random()*10 - 5));		
 
 		self.attack_finished = time + 0.3;
 	}
