@@ -804,10 +804,7 @@ void() CheckPowerups =
 		{
 			if (self.super_time == 1)
 			{
-				if (deathmatch == 4)
-					sprint (self,  "OctaPower is wearing off\n");
-				else
-					sprint (self,  "Quad Damage is wearing off\n");
+				sprint (self,  "Quad Damage is wearing off\n");
 				stuffcmd (self, "bf\n");
 				sound (self, CHAN_AUTO, "items/damage2.wav", 1, ATTN_NORM);
 				self.super_time = time + 1;
