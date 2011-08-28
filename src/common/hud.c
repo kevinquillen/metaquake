@@ -80,7 +80,7 @@ void() TargetID =
     if ((self.enemy == trace_ent) && (time < self.ltime))
       return;
 
-    if (((trace_ent.playerclass == CL_FIREELEM) || (trace_ent.invisible_finished > time)) || (trace_ent.playerclass == CL_LICH))
+    if(trace_ent.invisible_finished > time)
     {
       if (teamplay & TP_ON)
       {
