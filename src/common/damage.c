@@ -36,6 +36,7 @@ float (entity targ, entity inflictor, entity attacker, float damg, float damaget
 		return newdam;
 	}
 
+	//Weakness means +30% damage
 	if(targ.harms & damagetype)
 		newdam = ceil(newdam * 1.3);
 
@@ -43,43 +44,36 @@ float (entity targ, entity inflictor, entity attacker, float damg, float damaget
 	if(!(targ.saves & damagetype))
 		return newdam;
 
-  if (targ.saves & damagetype)
-    newdam = floor(newdam * 0.6);
+	// Logic for damage reduction
+	//===========================
+
+	//Fire damage, but inflictor (e.g. a fireball) is in water -> 1/2 damage
+	if(damagetype & SH_FIRE)
+	{
+		if(pointcontents(inflictor.origin) == CONTENT_WATER)
+			newdam = floor(newdam * 0.5);
+		
+		//Fire elementals take even less damage from fire (instead of -40% damage, -75%)
+		if(targ.playerclass == CL_FIREELEM)
+		{
+			newdam = floor(newdam * 0.25);
+			return newdam;
+		}
+
+	}
+		
+	//Target resists this damage type -> reduce damage by 40%
+	if(targ.saves & damagetype)
+		newdam = floor(newdam * 0.6);
  
-  if (damagetype & SH_INCINERATE)
-  {
-    tmp = floor(targ.health * 0.66); // incinerate save = no death from melt
-    if ((damagetype > tmp) && (targ != attacker))
-    {
-      // Remove health, but don't damage -- armor stay put.
-      targ.health = targ.health - tmp;
-      return 0;
-    }
-    else if (targ != attacker)
-      newdam = ceil(newdam * 0.33);			// BIG fire proof
-  }
+	//Don't hurt self with fire/melee (TODO: is this needed?)
+	if((damagetype & (SH_FIRE|SH_UNKNOWN)) && (attacker == targ))
+		return 0;
 
-  if ((damagetype & (SH_FIRE|SH_UNKNOWN)) && (attacker == targ))
-	  return 0;
-  if (damagetype & SH_FIRE)
-  {
-    if (pointcontents(inflictor.origin) == CONTENT_WATER)
-      newdam = floor(newdam * 0.5);
-    if (targ.playerclass == CL_FIREELEM)
-      return 0;
-  }
-  if (damagetype & SH_PLASMA)
-  {
-    if (attacker==targ)
-      newdam=0;
-    else // about half damage
-      newdam = floor(newdam*0.6);			// fire proof
-  }
+	if(damagetype & SH_FALL)
+		return 0;			// resilient person
 
-  if (damagetype & SH_FALL)
-    return 0;			// resilient person
-
-  return newdam;
+	return newdam;
 };
   
 void (entity targ, 
@@ -102,7 +96,7 @@ void (entity targ,
 			newdam = newdam * 4;
 	}
   
-	// Check Quad for Liches -- attacker==world, targ==inflictor
+	// Check Quad for Liches -- attacker==world, targ==inflictor   TODO: wtf??
 	if((attacker==world) && (targ==inflictor))
 		newdam = newdam * 4;
 

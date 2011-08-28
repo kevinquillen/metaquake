@@ -72,7 +72,7 @@ void() T_FireTouch =
 		return;
 	}
 
-	//TODO: wtf?
+	//TODO: wtf? is this used for the druid?
 	if(self.netname == "eruption")
 		self.owner = self.owner.owner;
 
@@ -329,17 +329,15 @@ void() CFBDie =
 
 void() T_CFB =
 {
-  if (self.voided)
-    return;
+	if (self.voided)
+		return;
+	self.voided = 1;
 
-  self.voided = 1;
-
-  sound (self, CHAN_WEAPON, "weapons/r_exp3.wav", 1, ATTN_NORM);
-  //TODO: wtf 5K damage? 
-  if(other.takedamage == DAMAGE_AIM)
-  {
-    DoDamage(other,self,self.owner,5000,SH_PLASMA);
-  }
+	sound (self, CHAN_WEAPON, "weapons/r_exp3.wav", 1, ATTN_NORM);
+	
+	//If damagable, then do damage directly
+	if(other.takedamage == DAMAGE_AIM)
+		DoDamage(other, self, self.owner, 180, SH_PLASMA);
   
   T_PlasmaDamage(300,100+random()*20,world); 
     

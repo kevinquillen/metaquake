@@ -114,7 +114,7 @@ void() InfernoEx =
 
   sound(self,CHAN_VOICE,"weapons/r_exp3.wav",1,ATTN_NORM);
   self.owner.effects = self.owner.effects - (self.owner.effects & EF_BRIGHTLIGHT);
-  T_RadiusDamage (self, self.owner, 180, self.owner, SH_INCINERATE);
+  T_RadiusDamage (self, self.owner, 180, self.owner, SH_FIRE);
   WriteByte (MSG_MULTICAST, SVC_TEMPENTITY);
   WriteByte (MSG_MULTICAST, TE_LAVASPLASH);
   WriteCoord (MSG_MULTICAST, self.origin_x);
@@ -357,6 +357,7 @@ void() FireElemCast =
 	if(pointcontents(self.origin) == CONTENT_WATER)
 	{
 		sprint(self,"You can't cast in water!\n");
+		self.attack_finished = time + 0.3;
 		return;
 	}
 

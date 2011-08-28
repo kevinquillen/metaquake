@@ -87,7 +87,7 @@ void () ClassFireElem =
   {
     stuffcmd(self,"exec fireelem.cfg\n");
   }
-  self.saves = SH_FIRE | SH_EXPLOSION | SH_LAVA | SH_INCINERATE | SH_FALL | SH_ELECTRICITY;
+  self.saves = SH_FIRE | SH_EXPLOSION | SH_LAVA | SH_FALL | SH_ELECTRICITY;
   self.harms = SH_WATER | SH_COLD;
 
   self.player_flags = self.player_flags | PF_FLY | PF_REGEN | PF_MAGIC | PF_NO_HOOK;
@@ -148,7 +148,7 @@ void () ClassCleric =
     stuffcmd(self,"exec cleric.cfg\n");
   }
   self.player_flags = self.player_flags | PF_MAGIC;
-  self.saves = SH_INCINERATE | SH_MAGIC; 
+  self.saves = SH_MAGIC; 
   self.harms = SH_PLASMA | SH_FIRE | SH_SLIME;
 
   self.items = 0 | IT_SHOTGUN | IT_AXE | IT_LIGHTNING;
@@ -178,7 +178,7 @@ void () ClassHweap =
     stuffcmd(self,"exec hweap.cfg\n");
   }
   self.saves = SH_BULLETS | SH_EXPLOSION | SH_UNKNOWN | SH_ELECTRICITY;
-  self.harms = SH_FALL | SH_WATER | SH_SLIME | SH_LAVA | SH_SNIPER | SH_FIRE | SH_INCINERATE;
+  self.harms = SH_FALL | SH_WATER | SH_SLIME | SH_LAVA | SH_SNIPER | SH_FIRE;
 
   self.items = 0 | IT_SHOTGUN | IT_AXE | IT_SUPER_NAILGUN;
   self.ammo_shells = 20;
@@ -214,7 +214,7 @@ void () ClassSoldier =
 	if (self.option_flags & OF_CE)
 		stuffcmd(self,"exec soldier.cfg\n");
  
-	self.saves = SH_INCINERATE;
+	self.saves = SH_FIRE;
 	self.harms = SH_MAGIC | SH_SNIPER;
 
 	self.items = 0 | IT_SHOTGUN | IT_AXE | IT_ROCKET_LAUNCHER | IT_ARMOR1;

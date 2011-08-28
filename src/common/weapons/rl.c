@@ -188,7 +188,7 @@ void() W_FireRocket =
 	
 	newmis.angles = vectoangles(newmis.velocity);
 	setsize(newmis, '0 0 0', '0 0 0');
-	setorigin(newmis, self.origin + v_forward*16 + v_up*16);
+	setorigin(newmis, self.origin + v_forward*16 + '0 0 16');
 
 	
 	if(self.rl_mode == RL_NORMAL) //Normal rockets

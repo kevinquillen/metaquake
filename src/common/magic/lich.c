@@ -659,7 +659,7 @@ void() LichCast =
 	if (self.spell == 6)
 		LichSilence();
 	if (self.spell == 7) //resist fire
-		LichResist(SH_LAVA|SH_FIRE|SH_INCINERATE|SH_PLASMA);
+		LichResist(SH_LAVA|SH_FIRE|SH_PLASMA);
 	if (self.spell == 8) //resist natural
 		LichResist(SH_LAVA|SH_SLIME|SH_WATER|SH_FALL);
 	if (self.spell == 9) //resist mortal

@@ -91,13 +91,11 @@
 #define SH_ELECTRICITY	512
 #define SH_EXPLOSION	1024
 #define SH_PLASMA		2048
-#define SH_INCINERATE	4096
-#define SH_MAGIC		8192
+#define SH_MAGIC		4096
 
-#define SH_ILLEGAL		32768
-#define SH_CRITHIT		65536
-
-#define SH_RESET		1048576 // reset (??)
+#define SH_ILLEGAL		8192
+#define SH_CRITHIT		16384
+#define SH_RESET		32768 //TODO: what is this for?
 
 
 // =======================================

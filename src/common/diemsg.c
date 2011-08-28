@@ -93,7 +93,7 @@ void(entity targ, entity attacker, entity inflictor, float dam, float dtype) Dea
 		else
 			dmsg = "…ª…ÁNNÉHÉLÁTÅD…ª…"; //annihilated
 	}
-	else if((dtype & (SH_FIRE|SH_PLASMA|SH_INCINERATE))!=0)
+	else if((dtype & (SH_FIRE|SH_PLASMA))!=0)
 	{
 		if(dam <= 40)
 			dmsg = "torched";
@@ -189,10 +189,26 @@ void(entity targ, entity attacker, entity inflictor, float dam, float dtype) Dea
 	{
 		bprint(targ.netname);
 		
-		if(random() < 0.5)
-			bprint(" sleeps with the fishes.\n");
+		#ifdef GAME_CTF
+		if (deathmatch != MODE_CTF)
+		#endif
+		targ.frags = targ.frags - 1;
+		
+		//Silly fire elementals...
+		if(targ.playerclass == CL_FIREELEM)
+		{
+			if(random() < 0.5)
+				bprint(" really shouldn't play in the water.\n");
+			else
+				bprint(" forgot he was made of fire.\n");
+		}
 		else
-			bprint(" forgot to come up for air.\n");
+		{			
+			if(random() < 0.5)
+				bprint(" sleeps with the fishes.\n");
+			else
+				bprint(" forgot to come up for air.\n");
+		}
 			
 		return;
 	}
@@ -224,13 +240,13 @@ void(entity targ, entity attacker, entity inflictor, float dam, float dtype) Dea
 		}
 		else if(r < 0.75)
 		{
-			bprint("'s kneecaps become ");
+			bprint("'s kneecaps became ");
 			bprint(attacker.netname);
 			bprint("'s frisbee.\n");
 		}
 		else
 		{
-			bprint(" gets a double helping of ");
+			bprint(" got a double helping of ");
 			bprint(attacker.netname);
 			bprint("'s puppy love.\n");
 		}
