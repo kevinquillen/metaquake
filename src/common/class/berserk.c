@@ -113,7 +113,7 @@ void() player_berserk_attack =
 	self.attack_finished = time + 0.7;		
 };
 
-void(entity attacker, float damage) player_berserk_pain =
+void(float damage) player_berserk_pain =
 {		
 	//Play a hurt sound
 	sound(self, CHAN_VOICE, "hknight/pain1.wav", 1, ATTN_NORM);
@@ -133,12 +133,6 @@ void(entity attacker, float damage) player_berserk_pain =
 
 void() berserk_die =
 {
-	//Set current frame
-	self.frame = HKNIGHTFRAME_DIE_BASE + self.walkframe;
-
-	//Advance frame
-	self.walkframe = self.walkframe + 1;
-	
 	//At the end of the animation...
 	if(self.walkframe >= HKNIGHTFRAME_DIE_LENGTH)
 	{
@@ -146,6 +140,12 @@ void() berserk_die =
 		PlayerDead();
 		return;
 	}
+
+	//Set current frame
+	self.frame = HKNIGHTFRAME_DIE_BASE + self.walkframe;
+
+	//Advance frame
+	self.walkframe = self.walkframe + 1;
 	
 	self.think = berserk_die;
 	self.nextthink = time;
@@ -153,6 +153,15 @@ void() berserk_die =
 
 void() berserk_attack1 =
 {
+	//At the end of the animation...
+	if(self.weaponframe >= HKNIGHTFRAME_ATTACK1_LENGTH)
+	{
+		self.weaponframe = 0;
+		self.think = player_stand1;
+		self.nextthink = time;
+		return;
+	}
+
 	//Set current frame
 	self.frame = HKNIGHTFRAME_ATTACK1_BASE + self.weaponframe;
 
@@ -165,16 +174,7 @@ void() berserk_attack1 =
 	
 	//Advance frame
 	self.weaponframe = self.weaponframe + 1;
-	
-	//At the end of the animation...
-	if(self.weaponframe >= HKNIGHTFRAME_ATTACK1_LENGTH)
-	{
-		self.weaponframe = 0;
-		self.think = player_stand1;
-		self.nextthink = time;
-		return;
-	}
-	
+		
 	self.think = berserk_attack1;
 	self.nextthink = time;
 };
@@ -185,18 +185,19 @@ void() berserk_attack2 =
 
 void() berserk_pain =
 {
-	//Set current frame
-	self.frame = HKNIGHTFRAME_PAIN_BASE + self.walkframe;
-
-	//Advance frame
-	self.walkframe = self.walkframe + 1;
-	
 	//At the end of the animation...
 	if(self.walkframe >= HKNIGHTFRAME_PAIN_LENGTH)
 	{
 		player_stand1();
 		return;
 	}
+
+	//Set current frame
+	self.frame = HKNIGHTFRAME_PAIN_BASE + self.walkframe;
+
+	//Advance frame
+	self.walkframe = self.walkframe + 1;
+	
 	
 	self.think = berserk_pain;
 	self.nextthink = time;	

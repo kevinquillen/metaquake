@@ -552,17 +552,9 @@ void()  player_axpain4 =        [       $axpain4,       player_axpain5  ] {};
 void()  player_axpain5 =        [       $axpain5,       player_axpain6  ] {};
 void()  player_axpain6 =        [       $axpain6,       player_run      ] {};
 
-// ****** old code
-
-void() player_hw_pain1 = [$deathc10, player_hw_pain2] {PainSound();self.weaponframe=0;};
-void() player_hw_pain2 = [$deathc11, player_hw_pain3] {};
-void() player_hw_pain3 = [$deathc12, player_hw_pain4] {};
-void() player_hw_pain4 = [$deathc13, player_hw_pain5] {};
-void() player_hw_pain5 = [$deathc14, player_hw_pain6] {};
-void() player_hw_pain6 = [$deathc15, player_run] {};
-
-
-void(entity attacker, float damage) player_berserk_pain;
+//Declare class-specific pain animation function prototype
+void(float damage) player_berserk_pain;
+void(float damage) player_hweap_pain;
 
 void(entity attacker, float damage) player_pain =
 {
@@ -572,18 +564,21 @@ void(entity attacker, float damage) player_pain =
 	if (self.invisible_finished > time)
 		return;         // eyes don't have pain frames
 
+	//Fire elemental has no pain animation
 	if (self.playerclass == CL_FIREELEM)
           return;
 
+	//Heavy weapons has custom framing
 	if (self.playerclass == CL_HWEAP)
 	{ 
-	  player_hw_pain1();
-	  return;
+		player_hweap_pain(damage);
+		return;
 	}
 	
+	//Berserk has custom framing
 	if(self.playerclass == CL_BERSERK)
 	{
-		player_berserk_pain(attacker, damage);
+		player_berserk_pain(damage);
 		return;
 	}
 
@@ -657,6 +652,10 @@ local float             rs;
 	if(self.playerclass == CL_BERSERK)
 	{
 		self.noise = "hknight/death1.wav";
+	}
+	else if(self.playerclass == CL_HWEAP)
+	{
+		self.noise = "enforcer/death1.wav";
 	}
 	else
 	{
@@ -821,9 +820,9 @@ void() PlayerDie =
 	self.invincible_finished = 0;
 	self.super_damage_finished = 0;
 	self.radsuit_finished = 0;
-	
-	//Revert to normal player on death, except berserk
-	if(self.playerclass != CL_BERSERK)
+
+	//Unmorph players, but don't change special class models
+	if(self.playerclass != CL_BERSERK && self.playerclass != CL_HWEAP)
 	{
 		self.modelindex = modelindex_player;
 		self.normalmodel = modelindex_player;
@@ -856,6 +855,12 @@ void() PlayerDie =
 	if(self.playerclass == CL_BERSERK)
 	{
 		player_berserk_die();
+		return;
+	}
+	
+	if(self.playerclass == CL_HWEAP)
+	{
+		player_hweap_die();
 		return;
 	}
 	

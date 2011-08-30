@@ -22,7 +22,7 @@ void() MetaPrecache =
   precache_sound("shalrath/attack2.wav");	// Hook
   precache_sound ("boss2/pop2.wav");		// Raiden devices
   precache_sound ("boss1/out1.wav");		// for meltdown
-  precache_sound("enforcer/enfstop.wav");	// lazer touch
+  precache_sound("enforcer/enfstop.wav");	// laser touch
   precache_sound("enforcer/enfire.wav");	// laser launch
   precache_sound("shambler/sboom.wav");		// Chain Lightning
 
@@ -60,6 +60,9 @@ void() MetaPrecache =
   precache_sound ("hknight/slash1.wav");	// Berkserk swing 1
   precache_sound ("knight/sword1.wav");		// Berkserk swing 2
   precache_sound ("knight/sword2.wav");		// Berkserk swing 3
+  precache_sound ("enforcer/pain1.wav");	// Heavy weapons pain sound 1
+  precache_sound ("enforcer/pain2.wav");	// Heavy weapons pain sound 2
+  precache_sound ("enforcer/death1.wav");	// Heavy weapons pain sound 2
   
   // for classes/morph
   precache_model ("progs/s_light.spr");		// fire elemental

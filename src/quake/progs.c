@@ -19,6 +19,7 @@ effects.qc
 ../common/weapons/rl.qc
 ../common/weapons/tb.qc
 
+../common/class/hweap.qc
 ../common/class/berserk.qc
 ../common/class/scout.qc
 ../common/class/druid.qc
