@@ -2,7 +2,7 @@ include ../baserules.mk
 SOURCE = $(wildcard *.c)
 QC = $(SOURCE:.c=.qc)
 
-ifeq ($(QCC),../../qcc)
+ifeq ($(QCC),../../qccx)
 	QCCFLAGS ?= -O2
 endif
 
