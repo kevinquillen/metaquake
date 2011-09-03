@@ -21,19 +21,6 @@
 /* HELP PAGE PROTOTYPES... don't remove: modify, and replace old pages w/
    new ones...
 
-Well, I think I just killed the server. All the lazy or illiterate people will
-just assume people who play on the server are cheating and will disconnect.
-
-I added a message for people who don't choose a class. Every time someone
-respawns without having chosen a class, a message appears in the center of
-their screen saying to "Press BACKSPACE for help on picking classes".
-
-                                                -- Lon
-
-P.S. I don't care if people are too lazy to read the help files. I worked
-TOO much on this server to have people bitch at me because it requires
-a little reading :)
-
 NOTE: These help pages are of a fixed size for one reason. The
   void(entity,string) centerprint statement has a limitation of (I think)
   256 bytes. So, our help pages are 30x7 = 210 bytes, which should leave
@@ -41,323 +28,301 @@ NOTE: These help pages are of a fixed size for one reason. The
 */
 /*
 void() HelpOnHelp = { centerprint(self.owner, "
-ÈÊ Help ÈÊ\n
+€‚ Help €‚\n
 Press BACKSPACE to quit.     \n
 Press 1 for Next Page        \n
 Press 2 for Previous Page    \n
 Press 3 to view topic/select \n
         class                \n
-ÈÊ ... on help ÈÊ\n");
+€‚ ... on help €‚\n");
 };
 
 void() HelpPage1 = { centerprint(self.owner, "
-ÈÊ Help ÈÊ\n
+€‚ Help €‚\n
 >> Class Selection           \n
    Help on Magic             \n
    Help on the Hook          \n
 \n
 \n
-ÈÊ Main ÈÊ\n");
+€‚ Main €‚\n");
 };
 
 void() HelpPage2 = { centerprint(self.owner, "
-ÈÊ Help ÈÊ\n
+€‚ Help €‚\n
    Class Selection           \n
 >> Help on Magic             \n
    Help on the Hook          \n
 \n
 \n
-ÈÊ Main ÈÊ\n");
+€‚ Main €‚\n");
 };
 
 void() HelpPage3 = { centerprint(self.owner, "
-ÈÊ Help ÈÊ\n
+€‚ Help €‚\n
    Class Selection           \n
    Help on Magic             \n
 >> Help on the Hook          \n
 \n
 \n
-ÈÊ Main ÈÊ\n");
+€‚ Main €‚\n");
 };
 
 void() HelpPage4 = { centerprint(self.owner, "
-ÈÊ Help - About Classes (P 1/2)ÈÊ\n
+€‚ Help - About Classes €‚\n
 Classes have different amounts\n
 of health, ammo, and armor.\n
 Additionally, they have vari-\n
-ous abilities. (next page).
-ÈÊ Classes ÈÊ\n");
+ous abilities. Experiment!\n
+€‚ Classes €‚\n");
 };
 
 void() HelpPage5 = { centerprint(self.owner, "
-ÈÊ Help - About Classes (P 2/3)ÈÊ\n
-S - Resists slime\n
-L - Resists lava\n
-E - Resists electrity\n
-C - Resists cold\n
-I - Resists fire\n
-ÈÊ Classes ÈÊ\n");
-};
-void() HelpPage6 = { centerprint(self.owner, "
-ÈÊ Help - About Classes (P 3/3)ÈÊ\n
-F - Can fly\n
-
-ÈÊ Classes ÈÊ\n");
-};
-
-void() HelpPage4 = { centerprint(self.owner, "
-ÈÊ Help - Standard Quake Guy ÈÊ\n
-
+€‚ Help €‚\n
+>> Standard Quake Player     \n
    Soldier - Rocket Boy      \n
    Sniper - Meant to Camp    \n
    Specialist - Bomberman    \n
    Scout - Quick & Light     \n
-ÈÊ Classes ÈÊ\n");
-}; 
+€‚ Classes €‚\n");
+"); 
 
-void() HelpPage5 = { centerprint(self.owner, "
-ÈÊ Help ÈÊ\n
+void() HelpPage6 = { centerprint(self.owner, "
+€‚ Help €‚\n
    Standard Quake Player     \n
 >> Soldier - Rocket Boy      \n
    Sniper - Meant to Camp    \n
    Specialist - Bomberman    \n
    Scout - Quick & Light     \n
-ÈÊ Classes ÈÊ\n");
+€‚ Classes €‚\n");
 "); 
-void() HelpPage6 = { centerprint(self.owner, "
-ÈÊ Help ÈÊ\n
+void() HelpPage7 = { centerprint(self.owner, "
+€‚ Help €‚\n
    Standard Quake Player     \n
    Soldier - Rocket Boy      \n
 >> Sniper - Meant to Camp    \n
    Specialist - Bomberman    \n
    Scout - Quick & Light     \n
-ÈÊ Classes ÈÊ\n");
+€‚ Classes €‚\n");
 };
  
-void() HelpPage7 = { centerprint(self.owner, "
-ÈÊ Help ÈÊ\n
+void() HelpPage8 = { centerprint(self.owner, "
+€‚ Help €‚\n
    Soldier - Rocket Boy      \n
    Sniper - Meant to Camp    \n
 >> Specialist - Bomberman    \n
    Scout - Quick & Light     \n
    Base Guard / Heavy Weapons\n
-ÈÊ Classes ÈÊ\n");
+€‚ Classes €‚\n");
 }; 
 
-void() HelpPage8 = { centerprint(self.owner, "
-ÈÊ Help ÈÊ\n
+void() HelpPage9 = { centerprint(self.owner, "
+€‚ Help €‚\n
    Sniper - Meant to Camp    \n
    Specialist - Bomberman    \n
 >> Scout - Quick & Light     \n
    Base Guard / Heavy Weapons\n
    Mage - Magical Offense    \n
-ÈÊ Classes ÈÊ\n");
+€‚ Classes €‚\n");
 }; 
 
-void() HelpPage9 = { centerprint(self.owner, "
-ÈÊ Help ÈÊ\n
+void() HelpPage10 = { centerprint(self.owner, "
+€‚ Help €‚\n
    Specialist - Bomberman    \n
    Scout - Quick & Light     \n
 >> Base Guard / Heavy Weapons\n
    Mage - Magical Offense    \n
    Cleric - Magical Defense  \n
-ÈÊ Classes ÈÊ\n");
+€‚ Classes €‚\n");
 }; 
 
-void() HelpPage10 = { centerprint(self.owner, "
-ÈÊ Help ÈÊ\n
+void() HelpPage11 = { centerprint(self.owner, "
+€‚ Help €‚\n
    Scout - Quick & Light     \n
    Base Guard / Heavy Weapons\n
 >> Mage - Magical Offense    \n
    Cleric - Magical Defense  \n
    Druid - Frooty            \n
-ÈÊ Classes ÈÊ\n"); 
+€‚ Classes €‚\n"); 
 };
 
-void() HelpPage11 = { centerprint(self.owner, "
-ÈÊ Help ÈÊ\n
+void() HelpPage12 = { centerprint(self.owner, "
+€‚ Help €‚\n
    Base Guard / Heavy Weapons\n
    Mage - Magical Offense    \n
 >> Cleric - Magical Defense  \n
    Druid - Frooty            \n
    Shock Trooper - zzaapp    \n
-ÈÊ Classes ÈÊ\n");
+€‚ Classes €‚\n");
 }; 
 
-void() HelpPage12 = { centerprint(self.owner, "
-ÈÊ Help ÈÊ\n
+void() HelpPage13 = { centerprint(self.owner, "
+€‚ Help €‚\n
    Mage - Magical Offense    \n
    Cleric - Magical Defense  \n
 >> Druid - Frooty            \n
    Shock Trooper - zzaapp    \n
    Fire Elemental - Hot.     \n
-ÈÊ Classes ÈÊ\n");
+€‚ Classes €‚\n");
 }; 
 
-void() HelpPage13 = { centerprint(self.owner, "
-ÈÊ Help ÈÊ\n
+void() HelpPage14 = { centerprint(self.owner, "
+€‚ Help €‚\n
    Cleric - Magical Defense  \n
    Druid - Frooty            \n
 >> Shock Trooper - zzaapp    \n
    Fire Elemental - Hot.     \n
    Ninja - Quiet, fast       \n
-ÈÊ Classes ÈÊ\n");
+€‚ Classes €‚\n");
 }; 
 
-void() HelpPage14 = { centerprint(self.owner, "
-ÈÊ Help ÈÊ\n
-   Cleric - Magical Defense  \n
+void() HelpPage15 = { centerprint(self.owner, "
+€‚ Help €‚\n
    Druid - Frooty            \n
    Shock Trooper - zzaapp    \n
 >> Fire Elemental - Hot.     \n
    Ninja - Quiet, fast       \n
-ÈÊ Classes ÈÊ\n");
-};
-
-
-void() HelpPage15 = { centerprint(self.owner, "
-ÈÊ Help ÈÊ\n
-   Cleric - Magical Defense  \n
-   Druid - Frooty            \n
-   Shock Trooper - zzaapp    \n
-   Fire Elemental - Hot.     \n
->> Ninja - Quiet, fast       \n
-ÈÊ Classes ÈÊ\n");
-};
+   Lich - Netherworld Magic  \n
+€‚ Classes €‚\n");
+}; 
 
 
 void() HelpPage16 = { centerprint(self.owner, "
-ÈÊ Help ÈÊ\n
+€‚ Help €‚\n
+   Shock Trooper - zzaapp    \n
+   Fire Elemental - Hot.     \n
+>> Ninja - Quiet, fast       \n
+   Lich - Netherworld Magic  \n
+   Assault Sniper - Bang-pow \n
+€‚ Classes €‚\n");
+}; 
+
+void() HelpPage17 = { centerprint(self.owner, "
+€‚ Help €‚\n
+   Fire Elemental - Hot.     \n
+   Ninja - Quiet, fast       \n
+>> Lich - Netherworld Magic  \n
+   Assault Sniper - Bang-pow \n
+   Berserk - Swords and armor\n
+€‚ Classes €‚\n");
+}; 
+
+void() HelpPage18 = { centerprint(self.owner, "
+€‚ Help €‚\n
+   Fire Elemental - Hot.     \n
+   Ninja - Quiet, fast       \n
+   Lich - Netherworld Magic  \n
+>> Assault Sniper - Bang-pow \n
+   Berserk - Swords and armor\n
+€‚ Classes €‚\n");
+}; 
+
+void() HelpPage19 = { centerprint(self.owner, "
+€‚ Help €‚\n
+   Fire Elemental - Hot.     \n
+   Ninja - Quiet, fast       \n
+   Lich - Netherworld Magic  \n
+   Assault Sniper - Bang-pow \n
+>> Berserk - Swords and armor\n
+€‚ Classes €‚\n");
+}; 
+
+void() HelpPage20 = { centerprint(self.owner, "
+€‚ Help €‚\n
 The hook on this server is a \n
 definite tool. It is designed\n
 for combat, not fleeing. To  \n
 use the hook, either:        \n
                              \n
-ÈÊ The Hook ÈÊ\n");
+€‚ The Hook €‚\n");
 }; 
 
-void() HelpPage17 = { centerprint(self.owner, "
+void() HelpPage21 = { centerprint(self.owner, "
 €‚ Help €‚\n
 * Press the number '1' a few \n
   times to select it.        \n
 * Bind a key to 'impulse 11'.\n
 * Bind a key to '+hook'. This\n
   is strongly recommended!   \n
-ÈÊ The Hook ÈÊ\n");
+€‚ The Hook €‚\n");
 }; 
 
-void() HelpPage18 = { centerprint(self.owner, "
-ÈÊ Help ÈÊ\n
+void() HelpPage22 = { centerprint(self.owner, "
+€‚ Help €‚\n
 Some classes have the ability\n
 to cast spells. These classes\n
 may not use the Thunderbolt  \n
 or the BFG because of the    \n
 nature in which they draw    \n
-ÈÊ Magic ÈÊ\n");
+€‚ Magic €‚\n");
 }; 
 
-void() HelpPage19 = { centerprint(self.owner, "
-ÈÊ Help ÈÊ\n
+void() HelpPage23 = { centerprint(self.owner, "
+€‚ Help €‚\n
 mana. Impulse commands which \n
 change spells and cast on the\n
 fly are:                     \n
 nextspell   - Next Spell     \n
 prevspell   - Previous Spell \n
-ÈÊ Magic ÈÊ\n");
+€‚ Magic €‚\n");
 }; 
 
-void() HelpPage20 = { centerprint(self.owner, "
-ÈÊ Help ÈÊ\n
+void() HelpPage24 = { centerprint(self.owner, "
+€‚ Help €‚\n
 spellmode   - Spell Mode     \n
 castspell   - Cast selected  \n
               spell          \n
 In addition to these, spells \n
 may also be cast by binding a\n
-ÈÊ Magic ÈÊ\n");
+€‚ Magic €‚\n");
 }; 
 
-void() HelpPage21 = { centerprint(self.owner, "
-ÈÊ Help ÈÊ\n
+void() HelpPage25 = { centerprint(self.owner, "
+€‚ Help €‚\n
 a key to the number shown in \n
 brackets when a spell is     \n
 selected or by selecting     \n
 weapon 8 (Thunderbolt) and   \n
 pressing the attack button.  \n
-ÈÊ Magic ÈÊ\n");
+€‚ Magic €‚\n");
 }; 
 */
-
-void() HelpOnHelp = { centerprint(self.owner, "ÈÊ Help ÈÊ\nPress BACKSPACE to quit.     \nPress 1 for Next Page/Down   \nPress 2 for Previous Page/Up \nPress 3 to view topic/select \n        class                \nÈÊ ... on help ÈÊ\n");};
-
-void() HelpPage1 = { centerprint(self.owner, "ÈÊ Help ÈÊ\n>> Class Selection           \n   Help on Magic             \n   Help on the Hook          \n\n\nÈÊ Main ÈÊ\n");
-};
-
-void() HelpPage2 = { centerprint(self.owner, "ÈÊ Help ÈÊ\n   Class Selection           \n>> Help on Magic             \n   Help on the Hook          \n\n\nÈÊ Main ÈÊ\n");
-};
-
-void() HelpPage3 = { centerprint(self.owner, "ÈÊ Help ÈÊ\n   Class Selection           \n   Help on Magic             \n>> Help on the Hook          \n\n\nÈÊ Main ÈÊ\n");
-};
-
-void() HelpPage4 = { centerprint(self.owner, "ÈÊ Help ÈÊ\n>> Standard Quake Player     \n   Soldier - Rocket Boy      \n   Sniper - Meant to Camp    \n   Specialist - Bomberman    \n   Scout - Quick & Light     \nÈÊ Classes ÈÊ\n");
-}; 
-
-void() HelpPage5 = { centerprint(self.owner, "ÈÊ Help ÈÊ\n   Standard Quake Player     \n>> Soldier - Rocket Boy      \n   Sniper - Meant to Camp    \n   Specialist - Bomberman    \n   Scout - Quick & Light     \nÈÊ Classes ÈÊ\n");
-};
- 
-void() HelpPage6 = { centerprint(self.owner, "ÈÊ Help ÈÊ\n   Standard Quake Player     \n   Soldier - Rocket Boy      \n>> Sniper - Meant to Camp    \n   Specialist - Bomberman    \n   Scout - Quick & Light     \nÈÊ Classes ÈÊ\n");
-};
- 
-void() HelpPage7 = { centerprint(self.owner, "ÈÊ Help ÈÊ\n   Soldier - Rocket Boy      \n   Sniper - Meant to Camp    \n>> Specialist - Bomberman    \n   Scout - Quick & Light     \n   Base Guard / Heavy Weapons\nÈÊ Classes ÈÊ\n");
-}; 
-
-void() HelpPage8 = { centerprint(self.owner, "ÈÊ Help ÈÊ\n   Sniper - Meant to Camp    \n   Specialist - Bomberman    \n>> Scout - Quick & Light     \n   Base Guard / Heavy Weapons\n   Mage - Magical Offense    \nÈÊ Classes ÈÊ\n");
-}; 
-
-void() HelpPage9 = { centerprint(self.owner, "ÈÊ Help ÈÊ\n   Specialist - Bomberman    \n   Scout - Quick & Light     \n>> Base Guard / Heavy Weapons\n   Mage - Magical Offense    \n   Cleric - Magical Defense  \nÈÊ Classes ÈÊ\n");
-}; 
-
-void() HelpPage10 = { centerprint(self.owner, "ÈÊ Help ÈÊ\n   Scout - Quick & Light     \n   Base Guard / Heavy Weapons\n>> Mage - Magical Offense    \n   Cleric - Magical Defense  \n   Druid - Frooty            \nÈÊ Classes ÈÊ\n"); 
-};
-
-void() HelpPage11 = { centerprint(self.owner, "ÈÊ Help ÈÊ\n   Base Guard / Heavy Weapons\n   Mage - Magical Offense    \n>> Cleric - Magical Defense  \n   Druid - Frooty            \n   Shock Trooper - zzaapp    \nÈÊ Classes ÈÊ\n");
-}; 
-
-void() HelpPage12 = { centerprint(self.owner, "ÈÊ Help ÈÊ\n   Mage - Magical Offense    \n   Cleric - Magical Defense  \n>> Druid - Frooty            \n   Shock Trooper - zzaapp    \n   Fire Elemental - Hot.     \nÈÊ Classes ÈÊ\n");
-}; 
-
-void() HelpPage13 = { centerprint(self.owner, "ÈÊ Help ÈÊ\n   Cleric - Magical Defense  \n   Druid - Frooty            \n>> Shock Trooper - zzaapp    \n   Fire Elemental - Hot.     \n   Ninja - Quiet, fast       \nÈÊ Classes ÈÊ\n");
-}; 
-
-void() HelpPage14 = { centerprint(self.owner, "ÈÊ Help ÈÊ\n   Cleric - Magical Defense  \n   Druid - Frooty            \n   Shock Trooper - zzaapp    \n>> Fire Elemental - Hot.     \n   Ninja - Quiet, fast       \nÈÊ Classes ÈÊ\n");
-};
-
-void() HelpPage15 = { centerprint(self.owner, "ÈÊ Help ÈÊ\n   Cleric - Magical Defense  \n   Druid - Frooty            \n   Shock Trooper - zzaapp    \n   Fire Elemental - Hot.     \n>> Ninja - Quiet, fast       \nÈÊ Classes ÈÊ\n");
-};
-
-void() HelpPage16 = { centerprint(self.owner, "ÈÊ Help ÈÊ\nThe hook on this server is a \ndefinite tool. It is designed\nfor combat, not fleeing. To  \nuse the hook, either:        \n\nÈÊ The Hook ÈÊ\n");
-}; 
-
-void() HelpPage17 = { centerprint(self.owner, "ÉÊ Help ÉÊ\n* Press the number '1' a few \n  times to select it.        \n* Bind a key to 'impulse 11'.\n* Bind a key to '+hook'. This\n  is strongly recommended!   \nÈÊ The Hook ÈÊ\n");
-}; 
-
-void() HelpPage18 = { centerprint(self.owner, "ÈÊ Help ÈÊ\nSome classes have the ability\nto cast spells. These classes\nmay not use the Thunderbolt  \nor the BFG because of the    \nnature in which they draw    \nÈÊ Magic ÈÊ\n");
-}; 
-
-void() HelpPage19 = { centerprint(self.owner, "ÈÊ Help ÈÊ\nmana. Impulse commands which \nchange spells and cast on the\nfly are:                     \nnextspell   - Next Spell     \nprevspell   - Previous Spell \nÈÊ Magic ÈÊ\n");
-}; 
-
-void() HelpPage20 = { centerprint(self.owner, "ÈÊ Help ÈÊ\nspellmode   - Spell Mode     \ncast        - Cast selected  \n              spell          \nIn addition to these, spells \nmay also be cast by binding a\nÈÊ Magic ÈÊ\n");
-}; 
-
-void() HelpPage21 = { centerprint(self.owner, "ÈÊ Help ÈÊ\na key to the number shown in \nbrackets when a spell is     \nselected or by selecting     \nweapon 8 (Thunderbolt) and   \npressing the attack button.  \nÈÊ Magic ÈÊ\n");
-}; 
+void() HelpOnHelp = { centerprint(self.owner, "€‚ Help €‚\nPress BACKSPACE to quit.     \nPress 1 for Next Page        \nPress 2 for Previous Page    \nPress 3 to view topic/select \n        class                \n€‚ ... on help €‚\n");};
+void() HelpPage1 = { centerprint(self.owner, "€‚ Help €‚\n>> Class Selection           \n   Help on Magic             \n   Help on the Hook          \n\n\n€‚ Main €‚\n");};
+void() HelpPage2 = { centerprint(self.owner, "€‚ Help €‚\n   Class Selection           \n>> Help on Magic             \n   Help on the Hook          \n\n\n€‚ Main €‚\n");};
+void() HelpPage3 = { centerprint(self.owner, "€‚ Help €‚\n   Class Selection           \n   Help on Magic             \n>> Help on the Hook          \n\n\n€‚ Main €‚\n");};
+void() HelpPage4 = { centerprint(self.owner, "€‚ Help - About Classes €‚\nClasses have different amounts\nof health, ammo, and armor.\nAdditionally, they have vari-\nous abilities. Experiment!\n€‚ Classes €‚\n"); };
+void() HelpPage5 = { centerprint(self.owner, "€‚ Help €‚\n>> Standard Quake Player     \n   Soldier - Rocket Boy      \n   Sniper - Meant to Camp    \n   Specialist - Bomberman    \n   Scout - Quick & Light     \n€‚ Classes €‚\n");}; 
+void() HelpPage6 = { centerprint(self.owner, "€‚ Help €‚\n   Standard Quake Player     \n>> Soldier - Rocket Boy      \n   Sniper - Meant to Camp    \n   Specialist - Bomberman    \n   Scout - Quick & Light     \n€‚ Classes €‚\n");}; 
+void() HelpPage7 = { centerprint(self.owner, "€‚ Help €‚\n   Standard Quake Player     \n   Soldier - Rocket Boy      \n>> Sniper - Meant to Camp    \n   Specialist - Bomberman    \n   Scout - Quick & Light     \n€‚ Classes €‚\n");};
+void() HelpPage8 = { centerprint(self.owner, "€‚ Help €‚\n   Soldier - Rocket Boy      \n   Sniper - Meant to Camp    \n>> Specialist - Bomberman    \n   Scout - Quick & Light     \n   Base Guard / Heavy Weapons\n€‚ Classes €‚\n");}; 
+void() HelpPage9 = { centerprint(self.owner, "€‚ Help €‚\n   Sniper - Meant to Camp    \n   Specialist - Bomberman    \n>> Scout - Quick & Light     \n   Base Guard / Heavy Weapons\n   Mage - Magical Offense    \n€‚ Classes €‚\n");}; 
+void() HelpPage10 = { centerprint(self.owner, "€‚ Help €‚\n   Specialist - Bomberman    \n   Scout - Quick & Light     \n>> Base Guard / Heavy Weapons\n   Mage - Magical Offense    \n   Cleric - Magical Defense  \n€‚ Classes €‚\n");}; 
+void() HelpPage11 = { centerprint(self.owner, "€‚ Help €‚\n   Scout - Quick & Light     \n   Base Guard / Heavy Weapons\n>> Mage - Magical Offense    \n   Cleric - Magical Defense  \n   Druid - Frooty            \n€‚ Classes €‚\n"); };
+void() HelpPage12 = { centerprint(self.owner, "€‚ Help €‚\n   Base Guard / Heavy Weapons\n   Mage - Magical Offense    \n>> Cleric - Magical Defense  \n   Druid - Frooty            \n   Shock Trooper - zzaapp    \n€‚ Classes €‚\n");}; 
+void() HelpPage13 = { centerprint(self.owner, "€‚ Help €‚\n   Mage - Magical Offense    \n   Cleric - Magical Defense  \n>> Druid - Frooty            \n   Shock Trooper - zzaapp    \n   Fire Elemental - Hot.     \n€‚ Classes €‚\n");}; 
+void() HelpPage14 = { centerprint(self.owner, "€‚ Help €‚\n   Cleric - Magical Defense  \n   Druid - Frooty            \n>> Shock Trooper - zzaapp    \n   Fire Elemental - Hot.     \n   Ninja - Quiet, fast       \n€‚ Classes €‚\n");}; 
+void() HelpPage15 = { centerprint(self.owner, "€‚ Help €‚\n   Druid - Frooty            \n   Shock Trooper - zzaapp    \n>> Fire Elemental - Hot.     \n   Ninja - Quiet, fast       \n   Lich - Netherworld Magic  \n€‚ Classes €‚\n");}; 
+void() HelpPage16 = { centerprint(self.owner, "€‚ Help €‚\n   Shock Trooper - zzaapp    \n   Fire Elemental - Hot.     \n>> Ninja - Quiet, fast       \n   Lich - Netherworld Magic  \n   Assault Sniper - Bang-pow \n€‚ Classes €‚\n");}; 
+void() HelpPage17 = { centerprint(self.owner, "€‚ Help €‚\n   Fire Elemental - Hot.     \n   Ninja - Quiet, fast       \n>> Lich - Netherworld Magic  \n   Assault Sniper - Bang-pow \n   Berserk - Swords and armor\n€‚ Classes €‚\n");}; 
+void() HelpPage18 = { centerprint(self.owner, "€‚ Help €‚\n   Fire Elemental - Hot.     \n   Ninja - Quiet, fast       \n   Lich - Netherworld Magic  \n>> Assault Sniper - Bang-pow \n   Berserk - Swords and armor\n€‚ Classes €‚\n");}; 
+void() HelpPage19 = { centerprint(self.owner, "€‚ Help €‚\n   Fire Elemental - Hot.     \n   Ninja - Quiet, fast       \n   Lich - Netherworld Magic  \n   Assault Sniper - Bang-pow \n>> Berserk - Swords and armor\n€‚ Classes €‚\n");}; 
+void() HelpPage20 = { centerprint(self.owner, "€‚ Help €‚\nThe hook on this server is a \ndefinite tool. It is designed\nfor combat, not fleeing. To  \nuse the hook, either:        \n                             \n€‚ The Hook €‚\n");}; 
+void() HelpPage21 = { centerprint(self.owner, "€‚ Help €‚\n* Press the number '1' a few \n  times to select it.        \n* Bind a key to 'impulse 11'.\n* Bind a key to '+hook'. This\n  is strongly recommended!   \n€‚ The Hook €‚\n");}; 
+void() HelpPage22 = { centerprint(self.owner, "€‚ Help €‚\nSome classes have the ability\nto cast spells. These classes\nmay not use the Thunderbolt  \nor the BFG because of the    \nnature in which they draw    \n€‚ Magic €‚\n");}; 
+void() HelpPage23 = { centerprint(self.owner, "€‚ Help €‚\nmana. Impulse commands which \nchange spells and cast on the\nfly are:                     \nnextspell   - Next Spell     \nprevspell   - Previous Spell \n€‚ Magic €‚\n");}; 
+void() HelpPage24 = { centerprint(self.owner, "€‚ Help €‚\nspellmode   - Spell Mode     \ncastspell   - Cast selected  \n              spell          \nIn addition to these, spells \nmay also be cast by binding a\n€‚ Magic €‚\n");}; 
+void() HelpPage25 = { centerprint(self.owner, "€‚ Help €‚\na key to the number shown in \nbrackets when a spell is     \nselected or by selecting     \nweapon 8 (Thunderbolt) and   \npressing the attack button.  \n€‚ Magic €‚\n");}; 
 
 
+#define HELP_MAX 25
 
-#define HELP_CLPAGE_START 0
-#define HELP_MAX 21
-
-
+#define HELP_PAGE_CLASSSELECT 1
+#define HELP_PAGE_HELPONMAGIC 2
+#define HELP_PAGE_HELPONHOOK 3
+#define HELP_PAGE_MAGIC 22
+#define HELP_PAGE_HOOK 20
+#define HELP_PAGE_CLASSSTART 5
+#define HELP_PAGE_CLASSEND HELP_PAGE_CLASSSTART + CLASS_COUNT
 void() HelpNext =
 {
 	if (self.help == 100)
@@ -367,69 +332,67 @@ void() HelpNext =
 	}
 
 	self.help = self.help + 1;
-	if(self.help < 1 || self.help > HELP_MAX)
+	if(self.help > HELP_MAX)
 		self.help = 1;
 };
 
 void() HelpPrev =
 {
-  if (self.help == 100)
-  {
-    self.help = 1;
-    return;
-  }
-  self.help = self.help - 1;
-  if ((self.help < 1) || (self.help > HELP_MAX ))
-    self.help = 20;
+	if (self.help == 100)
+	{
+		self.help = 1;
+		return;
+	}
+	self.help = self.help - 1;
+	if (self.help < 1)
+		self.help = HELP_MAX;
 };
 
 void() PutClientInServer;
 void() HelpSelectClass =
 {
-  local entity spot;
-  local float theclass;
-  if (self.help == 1)
-  {
-    self.help = 3+self.playerclass;
-    return;
-  }
+	local entity spot;
+	local float theclass;
+	
+	//If they select the "Class Selection", then
+	//jump to the page with their class.
+	if(self.help == 1)
+	{
+		self.help = HELP_PAGE_CLASSSTART+self.playerclass;
+		return;
+	}
 
-  if (self.help == 2)
-  {
-    self.help = 18;
-    return;
-  }
+	//If they select the "Help on Magic", jump to that page
+	if (self.help == HELP_PAGE_HELPONMAGIC)
+	{
+		self.help = HELP_PAGE_MAGIC;
+		return;
+	}
   
-  if (self.help == 3)
-  {
-    self.help = 16;
-    return;
-  }
+	if(self.help == HELP_PAGE_HELPONHOOK)
+	{
+		self.help = HELP_PAGE_HOOK;
+		return;
+	}
 
-  self.impulse = 0;
-  if (self.help > 15)
-  {
-    sprint(self,"But you are not looking at a class page!\n");
-    return;
-  }
+	self.impulse = 0;
+	if(self.help < HELP_PAGE_CLASSSTART || self.help >= HELP_PAGE_CLASSEND)
+	{
+		sprint(self,"But you are not looking at a class page!\n");
+		return;
+	}
+	else
+	{
+		theclass = self.help - HELP_PAGE_CLASSSTART;
 
-  if ((self.help >= 4) && (self.help <= 15))
-    theclass = self.help - 3;
-
-#ifdef QUAKEWORLD
-  if (!CheckClassCounts(theclass)) {
-    sprint(self,"Maximum percentage for that class has been reached.\n");
-    return;
-  }
-#endif
-
-#ifdef GAME_CTF
-  if (deathmatch != MODE_CTF) {
-#endif
-  if (self.player_flags & PF_HAS_CLASS) self.frags = self.frags - 1;
-#ifdef GAME_CTF
-  }
-#endif
+		#ifdef QUAKEWORLD
+		if (!CheckClassCounts(theclass))
+		{
+			sprint(self,"Maximum percentage for that class has been reached.\n");
+			return;
+		}
+		#endif
+	}
   
   self.playerclass = theclass;
 
@@ -444,68 +407,64 @@ void() HelpSelectClass =
 
 };
 
+/*
+	Useful macro to generate help if/else blocks:
+	
+	HELPPAGE(x) ->
+
+	--	
+	if(self.owner.help == x)
+		HelpPage'x'();
+	else
+	--
+	
+	Note that it ends with an 'else' block, so the last HELPPAGE(x) invocation must
+	have a clause to be the else clause. Also, this means using a semicolon at the
+	end of the macro invocation is likely an error.
+*/
+#define HELPPAGE(pg)		if(self.owner.help == pg) HelpPage##pg(); else
+
 void() HelpRefresh =
 {
-  if ((self.health > 19) || (self.owner.help != self.max_health))
-  {
-    if (self.owner.help == 100)
-      HelpOnHelp();
-    if (self.owner.help == 1)
-      HelpPage1();
-    if (self.owner.help == 2)
-      HelpPage2();
-    if (self.owner.help == 3)
-      HelpPage3();
-    if (self.owner.help == 4)
-      HelpPage4();
-    if (self.owner.help == 5)
-      HelpPage5();
-    if (self.owner.help == 6)
-      HelpPage6();
-    if (self.owner.help == 7)
-      HelpPage7();
-    if (self.owner.help == 8)
-      HelpPage8();
-    if (self.owner.help == 9)
-      HelpPage9();
-    if (self.owner.help == 10)
-      HelpPage10();
-    if (self.owner.help == 11)
-      HelpPage11();
-    if (self.owner.help == 12)
-      HelpPage12();
-    if (self.owner.help == 13)
-      HelpPage13();
-    if (self.owner.help == 14)
-      HelpPage14();
-    if (self.owner.help == 15)
-      HelpPage15();
-    if (self.owner.help == 16)
-      HelpPage16();
-    if (self.owner.help == 17)
-      HelpPage17();
-    if (self.owner.help == 18)
-      HelpPage18();
-    if (self.owner.help == 19)
-      HelpPage19();
-    if (self.owner.help == 20)
-      HelpPage20();
-    if (self.owner.help == 21)
-      HelpPage21();
+	if((self.health > 19) || (self.owner.help != self.max_health))
+	{
+			
+		HELPPAGE(1)
+		HELPPAGE(2)
+		HELPPAGE(3)
+		HELPPAGE(4)
+		HELPPAGE(5)
+		HELPPAGE(6)
+		HELPPAGE(7)
+		HELPPAGE(8)
+		HELPPAGE(9)
+		HELPPAGE(10)
+		HELPPAGE(11)
+		HELPPAGE(12)
+		HELPPAGE(13)
+		HELPPAGE(14)
+		HELPPAGE(15)
+		HELPPAGE(16)
+		HELPPAGE(17)
+		HELPPAGE(18)
+		HELPPAGE(19)
+		HELPPAGE(20)
+		HELPPAGE(21)
+		HELPPAGE(22)
+		HELPPAGE(23)
+		HELPPAGE(24)
+		HELPPAGE(25)
+		if (self.owner.help == 100)
+			HelpOnHelp();
 
-    self.max_health = self.owner.help;
-    self.health = 0;
-  }
+
+
+		self.max_health = self.owner.help;
+		self.health = 0;
+	}
 
   if (self.owner.help == 0)
   {
-#ifdef GAME_CTF
-    if (deathmatch != MODE_CTF) {
-#endif
-    if (self.owner.player_flags & PF_HAS_CLASS) self.owner.frags = self.owner.frags - 1;
-#ifdef GAME_CTF
-    }
-#endif
     centerprint(self.owner,"\n");
     self.owner.player_flags = self.owner.player_flags | PF_HAS_CLASS;
     self.owner.takedamage = DAMAGE_AIM;
