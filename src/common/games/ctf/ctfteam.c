@@ -1,6 +1,6 @@
 /*************************************************************************
- * Metamorphism Quake Server: Common/Games/CTF/teams.c,                  *
- *                            Common/Games/CTF/teams.qc                  *
+ * Metamorphism Quake Server: common/games/ctf/ctfteam.c,                *
+ *                            common/games/ctf/ctfteam.qc                *
  * Copyright (C) 1996-2000 by Lon Hohberger.                             *
  *                                                                       *
  * This code is free software; you can redistribute it and/or modify     *
@@ -18,34 +18,36 @@
  *************************************************************************/
 
 #include "meta.h"
+
 void(entity newbie) Assign_CTF_Team =
 {
-  local entity head;
-  local float blues,golds;
-  local float f;//,sk;
-  local string str;
-  local string st1, st2;
+	local entity head;
+	local float blues,golds;
+	local float f;
+	local string str;
+	local string st1, st2;
    
-    head = FindWorld("player");
-    blues = 0;
-    golds = 0;
+	head = FindWorld("player");
+	blues = 0;
+	golds = 0;
 
-    while (head) {
-      if (head != newbie)
-      {
-        f = GetTeam(head);
-        if (f == TEAM2_COLOR)
-          blues = blues + 1;
-        if (f == TEAM1_COLOR)
-          golds = golds + 1;
-      }
-      head = head.goalentity;
-    }
+	while (head)
+	{
+		if (head != newbie)
+		{
+			f = GetTeam(head);
+			if (f == TEAM2_COLOR)
+				blues = blues + 1;
+			if(f == TEAM1_COLOR)
+				golds = golds + 1;
+		}
+		head = head.goalentity;
+	}
 
-    if (golds >= blues)
-      newbie.fixed_team = TEAM2_COLOR;
-    else
-      newbie.fixed_team = TEAM1_COLOR;
+	if (golds >= blues)
+		newbie.fixed_team = TEAM2_COLOR;
+	else
+		newbie.fixed_team = TEAM1_COLOR;
 
 #ifdef QUAKEWORLD
   if (infokey(world,"clanwar")=="1")

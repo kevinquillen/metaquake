@@ -23,27 +23,32 @@ void() WelcomeMessage;
 
 void() MOTD3 =
 {
-  if (!deathmatch)
-  {
-    remove(self);
-    return;
-  }
+	if(!deathmatch)
+	{
+		remove(self);
+		return;
+	}
 
-  WelcomeMessage();
-//  centerprint(self.owner,"Game setting display will\nbe here soon...\nno bots\n");
-
-  self.nextthink = time + 2;
-  self.think = SUB_Remove;
+	WelcomeMessage();
+  
+ 
+	if(deathmatch == DMMODE_DM)
+	{
+		centerprint(self.owner, "€‚ DM RULES €‚\nFight to the death. Each kill\nis worth one point, but chan-\nging classes costs a point.  \nSuicides and team kills (if  \nenabled) also cost a point.  \n€‚ DM RULES €‚\n");	
+	}
+	else
+	{
+		centerprint(self.owner, "€‚ CTF RULES €‚\nTake the opposite team's flag\nwhile protecting your own. E-\nach capture is one point. Ki-\nlls do NOT give points, and  \nscores are combined.         \n€‚ CTF RULES €‚\n");
+	}
+	self.health = self.health + 1;
+	self.nextthink = time + 1.7;
+	if(self.health > 5)
+		self.think = SUB_Remove;
 };
 
 /*
 Mail of the Day
 */
-
-#ifdef GAME_CTF
-void(entity newbie) Assign_CTF_Team;
-#endif
-
 #ifdef QUAKEWORLD
 void() QWForward =
 {
@@ -69,28 +74,6 @@ void() MOTD2 =
   WelcomeMessage();
   
   self.option_flags = self.option_flags | OF_AUTOPUSH | OF_CLASSEXEC;
-
-#ifdef GAME_CTF
-  if (deathmatch == MODE_CTF)
-  {
-
-    Assign_CTF_Team(self.owner);
-    bprint(self.owner.netname);
-    bprint(" joins the ");
-    bprint_teamcolor(self.owner.fixed_team);
-    bprint(" team!\n");
-    teamname = TeamToColor(self.owner.fixed_team);
-
-#ifdef QUAKEWORLD
-    if (infokey(world,"clanwar")!="1") {
-      stuffcmd(self.owner,"team ");
-      stuffcmd(self.owner,teamname);
-      stuffcmd(self.owner,"\n");
-    }
-#endif
-
-  }
-#endif // GAME_CTF
 
 #ifdef QUAKEWORLD
   QWForward();

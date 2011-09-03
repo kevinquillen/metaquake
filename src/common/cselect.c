@@ -173,40 +173,44 @@ void () ClassCleric =
 
 void () ClassHweap =
 {
-  if (self.option_flags & OF_CE)
-  {
-    stuffcmd(self,"exec hweap.cfg\n");
-  }
-  self.saves = SH_BULLETS | SH_EXPLOSION | SH_UNKNOWN | SH_ELECTRICITY;
-  self.harms = SH_FALL | SH_WATER | SH_SLIME | SH_LAVA | SH_SNIPER | SH_FIRE;
+	if (self.option_flags & OF_CE)
+	{
+		stuffcmd(self,"exec hweap.cfg\n");
+	}
+	self.saves = SH_BULLETS | SH_EXPLOSION | SH_UNKNOWN | SH_ELECTRICITY;
+	self.harms = SH_FALL | SH_WATER | SH_SLIME | SH_LAVA | SH_SNIPER | SH_FIRE;
 
-  self.items = 0 | IT_SHOTGUN | IT_AXE | IT_SUPER_NAILGUN;
-  self.ammo_shells = 20;
-  self.ammo_cells = 0;
-  self.ammo_nails = 60;
-  self.ammo_rockets = 0;
+	self.items = 0 | IT_SHOTGUN | IT_AXE | IT_SUPER_NAILGUN;
+	self.ammo_shells = 20;
+	self.ammo_cells = 0;
+	self.ammo_nails = 60;
+	self.ammo_rockets = 0;
   
-  self.armorvalue = 0;
-  self.armortype = 0;
+	self.armorvalue = 0;
+	self.armortype = 0;
 
-  if (deathmatch == MODE_CTF) {
-    self.max_health = 200;
-    self.max_arm = 200;
-    self.max_ammo_shells = 50;
-    self.max_ammo_nails = 80;
-    self.max_ammo_rockets = 8;
-    self.max_ammo_cells = 80;
-  } else {
-    self.max_health = 150;
-    self.max_arm = 150;
-    self.max_ammo_shells = 50;
-    self.max_ammo_nails = 80;
-    self.max_ammo_rockets = 5;
-    self.max_ammo_cells = 30;
-  }
-  self.weight = 310;
-  self.weapon = IT_SUPER_NAILGUN;
-  self.sng_mode = 2;
+	if(deathmatch == DMMODE_CTF)
+	{
+		self.max_health = 200;
+		self.max_arm = 200;
+		self.max_ammo_shells = 50;
+		self.max_ammo_nails = 80;
+		self.max_ammo_rockets = 8;
+		self.max_ammo_cells = 80;
+	}
+	else
+	{
+		self.max_health = 150;
+		self.max_arm = 150;
+		self.max_ammo_shells = 50;
+		self.max_ammo_nails = 80;
+		self.max_ammo_rockets = 5;
+		self.max_ammo_cells = 30;
+	}
+	
+	self.weight = 310;
+	self.weapon = IT_SUPER_NAILGUN;
+	self.sng_mode = 2;
 };
 
 void () ClassSoldier =
@@ -571,13 +575,8 @@ void() ZeroStats =
    self.rl_mode = 0;
    self.tb_mode = 0;
  
-   if (deathmatch == MODE_CTF)
-   {
-   // Trap in case level isn't set up completely...
-     if (spot == world)
-       spot = SelectSpawnPoint();
-   } else 
-     spot = SelectSpawnPoint ();
+
+	spot = SelectSpawnPoint ();
 
    self.classname = "player";
    self.takedamage = DAMAGE_AIM;
@@ -660,17 +659,14 @@ void () S_SelectClass =
 	if (self.impulse != 0)
 		self.playerclass = self.impulse - IMPULSE_CLASS_START;
 	
-	#ifdef GAME_CTF
-	if (deathmatch != MODE_CTF) { //Don't allow trolls to bring down the team
-	#endif
+	//Don't allow trolls to bring down the team
+	if (deathmatch != DMMODE_CTF)
+	{ 
+		//Only lose a frag if choosing a class other than standard and not the same as your current class.
+		if(self.playerclass != CL_STANDARD && (oldclass != self.playerclass))
+			self.frags = self.frags - 1;
 	
-	//Only lose a frag if choosing a class other than standard and not the same as your current class.
-	if(self.playerclass != CL_STANDARD && (oldclass != self.playerclass))
-		self.frags = self.frags - 1;
-	
-	#ifdef GAME_CTF
 	}
-	#endif
 	
 	self.impulse = 0;
 	self.player_flags = self.player_flags | PF_HAS_CLASS;

@@ -19,6 +19,9 @@ void(entity client, string s) cprint;
 void() PlayerDie;
 void(string s) bprint;
 void(entity client,string s) sprint;
+
+#include "meta.h"
+
 // returns color of pants.
 float (entity checkme) GetTeam =
 {
@@ -138,7 +141,6 @@ void() CheckTeam =
   local float f;
 
 #ifdef QUAKEWORLD
-#ifdef GAME_CTF
   if ((deathmatch & MODE_CTF) && (teamplay & TP_TEAMLOCK))
   {
     str = infokey(self,"topcolor");
@@ -149,10 +151,8 @@ void() CheckTeam =
     {
       bprint(self.netname);
       bprint(" tried to crossdress.\n");
-#ifdef GAME_CTF
-      if (deathmatch != MODE_CTF)
-#endif
-      self.frags = self.frags - 3;
+      if (deathmatch != DMMODE_CTF)
+      self.frags = self.frags - 2;
       self.health = -1;
       str = ftos(self.fixed_team);
       stuffcmd(self,"color ");
@@ -163,7 +163,6 @@ void() CheckTeam =
       return;
     }
   }
-#endif
 #endif /* Cross Dress Check - QuakeWorld AND CTF */
 
   if ((!(teamplay & TP_TEAMLOCK)) || (self.fixed_team == 255))
@@ -174,10 +173,8 @@ void() CheckTeam =
   {
     bprint(self.netname);
     bprint(" was wearing the wrong colors.\n");
-#ifdef GAMES_CTF
-    if (deathmatch != MODE_CTF)
-#endif
-    self.frags = self.frags - 1;
+    if(deathmatch != DMMODE_CTF)
+		self.frags = self.frags - 1;
     self.health = -1;
     str = ftos(self.fixed_team);
     stuffcmd(self,"color ");

@@ -67,8 +67,6 @@ triggers.qc
 plats.qc
 misc.qc
 
-#ifdef GAME_CTF
 ../common/games/ctf/flags.qc
 ../common/games/ctf/barrier.qc
-../common/games/ctf/teams.qc
-#endif
+../common/games/ctf/ctfteam.qc

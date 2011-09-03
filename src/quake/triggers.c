@@ -167,7 +167,7 @@ set "message" to text string
 */
 void() trigger_once =
 {
-	if ((deathmatch&MODE_CTF) && (self.spawnflags & SF_NOT_CTF))
+	if ((deathmatch==DMMODE_CTF) && (self.spawnflags & SF_NOT_CTF))
 	  return;
 
 	self.wait = -1;
@@ -459,7 +459,7 @@ void() trigger_teleport =
 {
 	local vector o;
 
-	if ((deathmatch&MODE_CTF) && (self.spawnflags & SF_NOT_CTF))
+	if ((deathmatch==DMMODE_CTF) && (self.spawnflags & SF_NOT_CTF))
 	  return;
 
 

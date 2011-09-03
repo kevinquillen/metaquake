@@ -145,7 +145,6 @@ void() ClientKill =
 {
 	bprint (self.netname);
 	bprint (" suicides\n");
-        self.deathtype = "suicide";
 	self.modelindex = modelindex_player;
 	self.invincible_finished = 0;
 	self.health = -50;
@@ -153,7 +152,8 @@ void() ClientKill =
 #ifdef QUAKEWORLD
 	logfrag (self, self);
 #endif
-	self.frags = self.frags - 2;    // extra penalty
+	if(deathmatch != DMMODE_CTF)
+		self.frags = self.frags - 1;    // extra penalty
 //	respawn ();
 	self.attack_finished = time + 3;
 };
@@ -196,20 +196,21 @@ entity() SelectSpawnPoint =
 
 	spots = world;
 
-        spottype = "info_player_deathmatch";
-      if (v_forward_x != 1333)
-#ifdef GAME_CTF
-  	if ((deathmatch == MODE_CTF) && (self.classname == "player"))
+	spottype = "info_player_deathmatch";
+	if (v_forward_x != 1333) //TODO: what is this for?
 	{
-	  if (GetTeam(self)==TEAM1_COLOR)
-	    spottype = "info_player_team1";
-	  else if (GetTeam(self)==TEAM2_COLOR)
-	    spottype = "info_player_team2";
-	  else
-            spottype = "info_player_deathmatch";
-	} else 
-#endif
-          spottype = "info_player_deathmatch";
+		if((deathmatch == DMMODE_CTF) && (self.classname == "player"))
+		{
+			if (GetTeam(self)==TEAM1_COLOR)
+				spottype = "info_player_team1";
+			else if (GetTeam(self)==TEAM2_COLOR)
+				spottype = "info_player_team2";
+			else
+				spottype = "info_player_deathmatch";
+		}
+		else 
+			spottype = "info_player_deathmatch";
+	}
 
 	spot = find (world, classname, spottype);       
 	if (!spot)
@@ -231,8 +232,7 @@ entity() SelectSpawnPoint =
 			thing=thing.chain;      
 		}
 		if (pcount == 0) {
-#ifdef GAME_CTF
-			if ((deathmatch == MODE_CTF) && 
+			if ((deathmatch == DMMODE_CTF) && 
                             (spot.attack_finished < time) && 
                             (self.classname == "player") &&
                             (spot.classname != "info_player_deathmatch"))
@@ -240,7 +240,7 @@ entity() SelectSpawnPoint =
 			  spot.attack_finished = time + 3;
 			  return spot;
 			}
-#endif
+			
 			spot.goalentity = spots;
 			spots = spot;
 			numspots = numspots + 1;
@@ -935,45 +935,63 @@ ClientConnect
 called when a player connects to a server
 ============
 */
-//void() Assign_CTF_Team;
+void(entity newbie) Assign_CTF_Team;
 void() MetaMOTD;
 void() ClientConnect =
 {
-        local string str;
-	bprint ( self.netname);
-	bprint ( " joined the ");
-	if (deathmatch == 1)
+	local string teamname;
+	
+	if(!deathmatch || coop)
 	{
-		bprint("Deathmatch\n");
+		bprint("No single player/cooperative modes\navailable.\n");
+		stuffcmd(self,"disconnect\n");
 	}
-#ifdef GAME_CTF
-	if (deathmatch == 2)
+
+	//Annouce to other players that you've joined
+	bprint(self.netname);
+	bprint(" joined the ");
+	if(deathmatch == DMMODE_DM)
+		bprint("Deathmatch\n");
+	else if(deathmatch == DMMODE_CTF)
 	{
 		bprint("CTF game\n");
 	}
-#endif
 
-#ifdef QUAKEWORLD
-        str = infokey(self,"ip");
-#endif
-
-	if ((!deathmatch) || (coop))
-	{
-          bprint("No single player/cooperative modes\navailable.\n");
-	  stuffcmd(self,"disconnect\n");
-	}
-
-	self.wait = time + 30;
-
-        self.player_flags = 0;
+	#ifdef QUAKEWORLD
+	str = infokey(self,"ip");
+	#endif
+	
+	self.player_flags = 0;
 	self.option_flags = OF_AUTOPUSH;
 	self.fixed_team = 255;
-        self.teament = world;
-	self.handicap = 1.0;
+	self.teament = world;
+
+	//CTF Mode: assign a team
+	if(deathmatch == DMMODE_CTF)
+	{
+		Assign_CTF_Team(self);
+		
+		//Now tell everyone what team this person joined
+		bprint(self.netname);
+		bprint(" joins the ");
+		bprint_teamcolor(self.fixed_team);
+		bprint(" team!\n");
+		teamname = TeamToColor(self.fixed_team);
+		
+		#ifdef QUAKEWORLD
+		if (infokey(world,"clanwar") != "1")
+		{
+			stuffcmd(self.owner,"team ");
+			stuffcmd(self.owner,teamname);
+			stuffcmd(self.owner,"\n");
+		}
+		#endif
+	}
+	self.wait = time + 30;
 
 	MetaMOTD();
 
-// a client connecting during an intermission can cause problems
+	// a client connecting during an intermission can cause problems
 	if (intermission_running)
 		GotoNextMap ();
 };
@@ -992,18 +1010,22 @@ void() ClientDisconnect =
 	self.fixed_team = 255;
 	self.team = 0;
 	self.id_number = 0;
-#ifdef GAME_CTF
-        self.player_flags = self.player_flags - (self.player_flags & (PF_HAS_SPECIAL|PF_HAS_FLAG));
-#else
-        self.player_flags = self.player_flags - (self.player_flags & PF_HAS_SPECIAL);
-#endif
-	bprint ( self.netname);
-		bprint ( " left the game with ");
-		bprint ( ftos(self.frags));
-		bprint ( " frags\n");
-        self.classname = "unknown";
-        self.health = 0;
-        self.solid = SOLID_NOT;
+	
+	//Make sure that they drop any runes/flags.
+	self.player_flags = self.player_flags - (self.player_flags & (PF_HAS_SPECIAL|PF_HAS_FLAG));
+
+	//Print a message telling everyone that this person left
+	bprint(self.netname);
+	bprint(" left the game with ");
+	bprint(ftos(self.frags));	
+	if(deathmatch == DMMODE_CTF)
+		bprint(" captures.\n");
+	else
+		bprint(" frags.\n");
+	
+	self.classname = "unknown";
+	self.health = 0;
+	self.solid = SOLID_NOT;
 	sound (self, CHAN_BODY, "player/tornoff2.wav", 1, ATTN_NONE);
 	set_suicide_frame ();
 };

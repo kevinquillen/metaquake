@@ -20,22 +20,25 @@
 
 void() FlagTaken =
 {
-  local entity head;
-  local float f;
-  head = FindWorld("player");
-  while (head) {
-    f = SameTeam(self,head);
-    if (f)
-    {
-      cprint(head,"Your team's flag has been taken!\n");
-    } else {
-      if (head != self.owner)
-        cprint(head,"Your team has the enemy flag!\n");
-      else
-        cprint(head,"You have the enemy flag!\n");
-    }
-    head=head.goalentity;
-  }
+	local entity head;
+	local float f;
+	head = FindWorld("player");
+	while(head)
+	{
+		f = SameTeam(self,head);
+		if(f)
+		{
+			cprint(head,"Your team's flag has been taken!\n");
+		}
+		else
+		{
+			if (head != self.owner)
+				cprint(head,"Your team has the enemy flag!\n");
+			else
+				cprint(head,"You have the enemy flag!\n");
+		}
+		head = head.goalentity;
+	}
 };
 
 // Broadcast messages of a flag being returned to its base
@@ -306,13 +309,13 @@ void() T_FlagTouch =
 
         if (other.player_flags & PF_SPEED)
         {
-          centerprint(other,"You must turn off your jetpack!\n");
+          cprint(other,"You must turn off your jetpack!\n");
           return;
         }
 
         if (other.playerclass == CL_HWEAP)
         {
-          centerprint(other,"Base guards may not take flags.\n");
+          cprint(other,"Base guards may not take flags.\n");
           return;
         }
       }
@@ -338,19 +341,21 @@ void() T_FlagTouch =
 };
 
 /* 
-  Threewave Compliant CTF Spawning functions??
+	Threewave Compliant CTF spawn points
 */
 
 void() info_player_team1 =
-{};
+{
+};
 
 void() info_player_team2 =
-{};
+{
+};
 
 void() item_flag_team1 =
 {
   local entity flag;
-  if (deathmatch != MODE_CTF)
+  if (deathmatch != DMMODE_CTF)
     return;
 
   precache_model ("progs/w_g_key.mdl");
@@ -376,7 +381,7 @@ void() item_flag_team1 =
 void() item_flag_team2 =
 {
   local entity flag;
-  if (deathmatch != MODE_CTF)
+  if (deathmatch != DMMODE_CTF)
     return;
 
   precache_model ("progs/w_s_key.mdl");

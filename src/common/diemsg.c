@@ -20,37 +20,58 @@
  
 void(entity targ, entity attacker, entity inflictor, float dam, float dtype) DeathMsg =
 {
-  local string dmsg;
-  local string smsg;
-  local float r;
+	local string dmsg;
+	local string smsg;
+	local float r;
   
 
-  if (dtype == SH_RESET)
-  {
-    return;
-  }
+	if(dtype == SH_RESET)
+	{
+		return;
+	}
 
-  if (dtype == SH_ILLEGAL)
-  {
-    bprint(targ.netname);
-    bprint(" tried to break the rules.\n");
-    return;
-  }
+	if (dtype == SH_ILLEGAL)
+	{
+		bprint(targ.netname);
+		bprint(" tried to break the rules.\n");
+		return;
+	}
 
 // Section 1: Team Play
-  if ((SameTeam(targ,attacker) && (targ!=attacker)) && (teamplay&TP_ON))
-  {
-#ifdef GAME_CTF
-    if (deathmatch != MODE_CTF)
-#endif
-      attacker.frags = attacker.frags - 1;
+	if(SameTeam(targ,attacker) && (targ != attacker) && (teamplay & TP_ON))
+	{
+		if(deathmatch != DMMODE_CTF)
+			attacker.frags = attacker.frags - 1;
+			
+		//Let everyone know what a great teammate 'attacker' is
+		
 	      
-    attacker.deaths = 0;
-	     
-    bprint(attacker.netname);
-    bprint(" killed a teammate!\n");
-    return;
-  }
+		r = random();
+		if(r < 0.25)
+		{
+			bprint(attacker.netname);
+			bprint(" should really check his fire.\n");
+		}
+		else if(r < 0.5)
+		{
+			bprint(attacker.netname);
+			bprint(" mowed down a teammate.\n");
+		}
+		else if(r < 0.75)
+		{
+			bprint(targ.netname);
+			bprint(" didn't think ");
+			bprint(attacker.netname);
+			bprint("'s fire was that friendly.\n");
+		}
+		else
+		{
+			bprint(attacker.netname);
+			bprint(" decided to help the other team instead.\n");
+		}
+		
+		return;
+	}
 
 	
 	// section 1.5: Sex determination
@@ -189,10 +210,8 @@ void(entity targ, entity attacker, entity inflictor, float dam, float dtype) Dea
 	{
 		bprint(targ.netname);
 		
-		#ifdef GAME_CTF
-		if (deathmatch != MODE_CTF)
-		#endif
-		targ.frags = targ.frags - 1;
+		if (deathmatch != DMMODE_CTF)
+			targ.frags = targ.frags - 1;
 		
 		//Silly fire elementals...
 		if(targ.playerclass == CL_FIREELEM)
@@ -261,10 +280,8 @@ void(entity targ, entity attacker, entity inflictor, float dam, float dtype) Dea
 	// Section 3: attacker = targ (suicide)
 	if((attacker == targ) && (inflictor == world))
 	{
-		#ifdef GAME_CTF
-		if (deathmatch != MODE_CTF)
-		#endif
-		targ.frags = targ.frags - 1;
+		if(deathmatch != DMMODE_CTF)
+			targ.frags = targ.frags - 1;
 		bprint(".\n");
 		return;
 	}
@@ -274,10 +291,8 @@ void(entity targ, entity attacker, entity inflictor, float dam, float dtype) Dea
 
 	if((attacker == targ) || (attacker == world))
 	{
-		#ifdef GAME_CTF
-		if (deathmatch != MODE_CTF)
-		#endif
-		targ.frags = targ.frags - 1;
+		if(deathmatch != DMMODE_CTF)
+			targ.frags = targ.frags - 1;
 
 		if (inflictor == attacker) // falling, etc
 		{
@@ -333,18 +348,19 @@ void(entity targ, entity attacker, entity inflictor, float dam, float dtype) Dea
 	}
 
 	// Section 6: normal kill
-	#ifdef GAME_CTF
-	if ((targ.netname != "chromatic fireball") && (deathmatch != MODE_CTF))
+	//====================================
+	
+	//TODO: wtf chromatic fireball? this is killable?
+	if((targ.netname != "chromatic fireball") && (deathmatch != DMMODE_CTF))
 	{
 		attacker.frags = attacker.frags + 1;
 		attacker.deaths = attacker.deaths + 1;
 	}
-	#else
+	
 	if (targ.netname != "chromatic fireball")
 	{
 		attacker.frags = attacker.frags + 1; 
 	}
-	#endif
 
 	bprint(attacker.netname);
 	bprint("'s ");

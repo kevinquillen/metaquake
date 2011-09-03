@@ -21,8 +21,6 @@
 float SF_ONLY_CTF = 8192;
 float SF_NOT_CTF = 65536;
 
-float MODE_CTF = 2;
-
 float TP_CTF_TEAMSCORE = 32;
 float TP_CTF_REVERSE = 64;
 float TP_CTF_GUARDBOT = 128;

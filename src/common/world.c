@@ -3,6 +3,7 @@
  *   Copyright 1996 by id Software
  *   Portions Copyright 1996-2000 by Lon Hohberger
  */
+#include "meta.h"
 
 #ifdef QUAKEWORLD
 void() p_army;
@@ -88,15 +89,15 @@ void() MetaPrecache =
   precache_model ("progs/k_spike.mdl");  // blockades.
  
   // for CTF
-  if (deathmatch & MODE_CTF)
-  {
-    precache_model ("progs/w_g_key.mdl");   // gold flag
-    precache_model ("progs/w_s_key.mdl");   // blue flag
-    precache_model ("progs/teleport.mdl");
+	if(deathmatch == DMMODE_CTF)
+	{
+		precache_model ("progs/w_g_key.mdl");   // gold flag	
+		precache_model ("progs/w_s_key.mdl");   // blue flag
+		precache_model ("progs/teleport.mdl");
 
-    precache_sound ("misc/basekey.wav");    // snag flag
-    precache_sound ("boss1/sight1.wav");    // capture flag
-  }
+		precache_sound ("misc/basekey.wav");    // snag flag
+		precache_sound ("boss1/sight1.wav");    // capture flag
+	}
 
   precache_sound ("misc/runekey.wav"); // scout snagging a pipebomb
 

@@ -58,7 +58,7 @@ void() plat_hit_bottom =
 
 void() plat_go_down =
 {
-	if ((self.spawnflags & SF_NOT_CTF) && (deathmatch&MODE_CTF))
+	if ((self.spawnflags & SF_NOT_CTF) && (deathmatch==DMMODE_CTF))
 	  return;
 
 	sound (self, CHAN_VOICE, self.noise, 1, ATTN_NORM);
@@ -68,7 +68,7 @@ void() plat_go_down =
 
 void() plat_go_up =
 {
-	if ((self.spawnflags & SF_NOT_CTF) && (deathmatch&MODE_CTF))
+	if ((self.spawnflags & SF_NOT_CTF) && (deathmatch==DMMODE_CTF))
 	  return;
 
 	sound (self, CHAN_VOICE, self.noise, 1, ATTN_NORM);

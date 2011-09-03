@@ -66,7 +66,7 @@ entity() FindIntermission =
 string nextmap;
 void() GotoNextMap =
 {
-	if (deathmatch == MODE_CTF)
+	if (deathmatch == DMMODE_CTF)
         {
           if (world.model == "maps/e1m5.bsp")
             changelevel("e2m1");
@@ -249,7 +249,7 @@ void() changelevel_touch =
 {
 	local entity	pos;
 
-	if (deathmatch == MODE_CTF)
+	if (deathmatch == DMMODE_CTF)
 		return;
 
 	if (cvar("samelevel")==SL_ON)

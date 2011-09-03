@@ -1,3 +1,5 @@
+#include "meta.h"
+
 // button and multiple button
 
 void() button_wait;
@@ -35,7 +37,7 @@ void() button_blocked =
 
 void() button_fire =
 {
-	if ((self.spawnflags & SF_NOT_CTF) && (deathmatch&MODE_CTF))
+	if ((self.spawnflags & SF_NOT_CTF) && (deathmatch==DMMODE_CTF))
 	  return;
 
 	if (self.state == STATE_UP || self.state == STATE_TOP)

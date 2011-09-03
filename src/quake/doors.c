@@ -493,7 +493,7 @@ void() func_door =
 
 	self.blocked = door_blocked;
 
-	if ((self.spawnflags & SF_NOT_CTF) && (deathmatch&MODE_CTF))
+	if ((self.spawnflags & SF_NOT_CTF) && (deathmatch==DMMODE_CTF))
 	  return;
 
 	self.use = door_use;

@@ -239,19 +239,17 @@ Megahealth will add 100 health, up to 2x your max health
 void() health_touch;
 void() item_health =
 {       
-#ifdef GAME_CTF
-	if ( !(deathmatch&MODE_CTF) && (self.spawnflags & SF_ONLY_CTF))
+	if (!(deathmatch == DMMODE_CTF) && (self.spawnflags & SF_ONLY_CTF))
 	{
-	  remove(self);
-	  return;
+		remove(self);
+		return;
 	}
 
-	if ( (deathmatch&MODE_CTF) && (self.spawnflags & SF_NOT_CTF))
+	if((deathmatch == DMMODE_CTF) && (self.spawnflags & SF_NOT_CTF))
 	{
-	  remove(self);
-          return;
+		remove(self);
+		return;
 	}
-#endif
 
 	self.touch = health_touch;
 
@@ -424,13 +422,11 @@ void() item_armor2 =
 
 void() item_armorInv =
 {
-#ifdef GAME_CTF
-	if ( !(deathmatch&MODE_CTF) && (self.spawnflags & SF_ONLY_CTF))
+	if(!(deathmatch == DMMODE_CTF) && (self.spawnflags & SF_ONLY_CTF))
 	{
 	  remove(self);
 	  return;
 	}
-#endif
 
 	self.touch = armor_touch;
 	precache_model ("progs/armor.mdl");
@@ -1250,13 +1246,12 @@ void() item_artifact_invulnerability =
     return;
   }
 #endif
-#ifdef GAME_CTF
-  if (deathmatch & MODE_CTF)
+
+  if(deathmatch == DMMODE_CTF)
   {
     remove(self);
     return;
   }
-#endif
   
   self.touch = powerup_touch;
   precache_model("progs/invulner.mdl");
@@ -1332,19 +1327,17 @@ void() item_artifact_super_damage =
    }
 #endif
    
-#ifdef GAME_CTF
-	if ( !(deathmatch&MODE_CTF) && (self.spawnflags & SF_ONLY_CTF))
+	if ( !(deathmatch==DMMODE_CTF) && (self.spawnflags & SF_ONLY_CTF))
 	{
 	  remove(self);
 	  return;
 	}
 
-	if ((deathmatch&MODE_CTF) && (self.spawnflags & SF_NOT_CTF))
+	if((deathmatch==DMMODE_CTF) && (self.spawnflags & SF_NOT_CTF))
 	{
 	  remove(self);
           return;
 	}
-#endif
 
 	self.touch = powerup_touch;
 

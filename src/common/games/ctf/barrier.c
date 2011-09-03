@@ -16,11 +16,12 @@
  * Visit http://www.gnu.org for more information on the GPL.             *
  *                                                                       *
  *************************************************************************/
+#include "meta.h"
 
 void() ctf_barrier_large =
 {
 	local float	oldz;
-	if (deathmatch != MODE_CTF)
+	if (deathmatch != DMMODE_CTF)
 	{
           remove(self);
           return;
@@ -47,7 +48,7 @@ void() ctf_barrier_large =
 void() ctf_barrier_small =
 {
 	local float	oldz;
-	if (deathmatch != MODE_CTF)
+	if (deathmatch != DMMODE_CTF)
 	{
           remove(self);
           return;
@@ -74,7 +75,7 @@ void() ctf_barrier_small =
 void() ctf_statue_shambler =
 {
 	local float	oldz;
-	if (deathmatch != MODE_CTF)
+	if (deathmatch != DMMODE_CTF)
 	{
           remove(self);
           return;
