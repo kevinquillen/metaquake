@@ -971,7 +971,6 @@ void() ClientConnect =
 		CTF_AssignTeam(self);
 		
 		//Now tell everyone what team this person joined
-		bprint(self.netname);
 		bprint(" and joins the ");
 		bprint_teamcolor(self.fixed_team);
 		bprint(" team!\n");
