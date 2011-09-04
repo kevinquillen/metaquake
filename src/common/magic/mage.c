@@ -287,13 +287,11 @@ void() MageGate =
 {
 	local entity spot;
 
-#ifdef GAME_CTF
 	if(self.player_flags & PF_HAS_FLAG)
 	{
 		cprint(self,"You must drop the flag first!\n");
 		return;
 	}
-#endif
 
 	if(!CheckMana(self, 70))
 		return;

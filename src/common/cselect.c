@@ -575,9 +575,6 @@ void() ZeroStats =
    self.rl_mode = 0;
    self.tb_mode = 0;
  
-
-	spot = SelectSpawnPoint ();
-
    self.classname = "player";
    self.takedamage = DAMAGE_AIM;
    self.solid = SOLID_SLIDEBOX;
@@ -593,6 +590,8 @@ void() ZeroStats =
 	
    self.deadflag = DEAD_NO;
    self.pausetime = 0;
+   
+	spot = SelectSpawnPoint();
 	
    self.origin = spot.origin + '0 0 1';
    self.angles = spot.angles;

@@ -122,7 +122,50 @@ void() S_MetaHelp =
 	self.impulse = 0;
 };
 
-void() S_ServerRules = {};
+void() S_ServerRules =
+{
+	local string gmode;
+	
+	if(deathmatch == DMMODE_DM)
+		gmode = "Deathmatch";
+	else if(deathmatch == DMMODE_CTF)
+		gmode = "Capture the Flag";
+	else
+		gmode = "?";
+
+	//Display game mode
+	sprint(self, "Game Type: ");
+	sprint(self, gmode);
+	sprint(self, "\n");
+	
+	//Show if teamplay is on. For CTF, clearly it is
+	if(deathmatch == DMMODE_DM)
+	{
+		sprint(self, "Teamplay: ");
+		if(teamplay & TP_ON)
+			sprint(self, "ON.\n");
+		else
+			sprint(self, "OFF.\n");
+	}
+
+	//Show whether friendly fire is enabled or not
+	if((deathmatch == DMMODE_DM && teamplay & TP_ON) || deathmatch == DMMODE_CTF)
+	{
+		sprint(self,"Friendly Fire: ");
+		if(teamplay & TP_TEAMSAFE)
+			sprint(self, "OFF.\n");
+		else
+			sprint(self, "ON.\n");			
+	}
+	
+	//Show whether self damage is enabled or not
+	sprint(self,"Self Damage: ");
+	if(teamplay & TP_SELFSAFE)
+		sprint(self, "OFF.\n");
+	else
+		sprint(self, "ON.\n");			
+
+};
 
 #ifdef DEBUG
 void() S_Location = 

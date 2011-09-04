@@ -8,6 +8,9 @@
 #ifdef QUAKEWORLD
 void() p_army;
 #endif
+
+void() CTF_SpawnScoreboard;
+
 void() MetaPrecache =
 {
 #ifdef QUAKEWORLD
@@ -97,11 +100,15 @@ void() MetaPrecache =
 
 		precache_sound ("misc/basekey.wav");    // snag flag
 		precache_sound ("boss1/sight1.wav");    // capture flag
+		
+		//Spawn the scoreboard entity that prints team scores
+		CTF_SpawnScoreboard();
 	}
 
   precache_sound ("misc/runekey.wav"); // scout snagging a pipebomb
 
-  SpawnSpecials();
+	SpawnSpecials();
+  
   
 #ifdef QUAKEWORLD
   Spawn_NNSM();

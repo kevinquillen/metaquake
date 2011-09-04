@@ -34,11 +34,11 @@ void() MOTD3 =
  
 	if(deathmatch == DMMODE_DM)
 	{
-		centerprint(self.owner, "€‚ DM RULES €‚\nFight to the death. Each kill\nis worth one point, but chan-\nging classes costs a point.  \nSuicides and team kills (if  \nenabled) also cost a point.  \n€‚ DM RULES €‚\n");	
+		cprint(self.owner, "€‚ DM RULES €‚\nFight to the death. Each kill\nis worth one point, but chan-\nging classes costs a point.  \nSuicides and team kills (if  \nenabled) also cost a point.  \n€‚ DM RULES €‚\n");	
 	}
 	else
 	{
-		centerprint(self.owner, "€‚ CTF RULES €‚\nTake the opposite team's flag\nwhile protecting your own. E-\nach capture is one point. Ki-\nlls do NOT give points, and  \nscores are combined.         \n€‚ CTF RULES €‚\n");
+		cprint(self.owner, "€‚ CTF RULES €‚\nTake the opposite team's flag\nwhile protecting your own. E-\nach capture is one point. Ki-\nlls do NOT give points, and  \nscores are combined.         \n€‚ CTF RULES €‚\n");
 	}
 	self.health = self.health + 1;
 	self.nextthink = time + 1.7;
@@ -67,23 +67,22 @@ void() QWForward =
 
 void() MOTD2 =
 {
-  local string teamname;
+	local string teamname;
 
-  sprint(self.owner,"Type 'meta' at console for server information.\n");
-  sprint(self.owner,"Type 'commands' at console for a list of commands.\n");
-  WelcomeMessage();
+	sprint(self.owner,"Type 'meta' at console for server information.\n");
+	sprint(self.owner,"Type 'rules' at console for specific rules.\n");
+	WelcomeMessage();
   
-  self.option_flags = self.option_flags | OF_AUTOPUSH | OF_CLASSEXEC;
+	self.option_flags = self.option_flags | OF_AUTOPUSH | OF_CLASSEXEC;
 
-#ifdef QUAKEWORLD
-  QWForward();
-#endif
+	#ifdef QUAKEWORLD
+		QWForward();
+	#endif
 
-  self.owner.invincible_finished = time + 5;
+	self.owner.invincible_finished = time + 5;
 
-  self.think = MOTD3;
-  self.nextthink = time + 1.7;
-
+	self.think = MOTD3;
+	self.nextthink = time + 1.7;
 };
 
 void(entity monkey) S_MetaInfo;
@@ -100,14 +99,11 @@ void(entity client, string cmd, float value) AddAlias =
 	s = ftos(value);
 
 	/* Effectively the same as: printf("alias %s \"impulse %d\"\n", cmd, (int)value) */
-	
 	stuffcmd(client, "alias ");
 	stuffcmd(client, cmd);
 	stuffcmd(client, " \"impulse ");
 	stuffcmd(client, s);
 	stuffcmd(client, "\"\n");
-
-	
 };
 
 /*
@@ -182,8 +178,8 @@ void() MOTD1 =
 
 // Special bindings...
   stuffcmd(pl,"bind BACKSPACE \"impulse 99\"\n");
-  stuffcmd(pl,"alias commands \"impulse 99\"\n");
   stuffcmd(pl,"alias meta \"impulse 112\"\n");
+	AddAlias(pl, "rules",	101);
 
   stuffcmd(pl,"bind l light\n");
   stuffcmd(pl,"bind [ prevspell\n");

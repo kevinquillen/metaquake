@@ -357,7 +357,7 @@ void(entity targ, entity attacker, entity inflictor, float dam, float dtype) Dea
 		attacker.deaths = attacker.deaths + 1;
 	}
 	
-	if (targ.netname != "chromatic fireball")
+	if (targ.netname != "chromatic fireball" && (deathmatch != DMMODE_CTF))
 	{
 		attacker.frags = attacker.frags + 1; 
 	}

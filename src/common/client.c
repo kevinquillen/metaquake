@@ -24,6 +24,7 @@ void() W_SetCurrentAmmo;
 void() player_stand1;
 void (vector org) spawn_tfog;
 void (vector org, entity death_owner) spawn_tdeath;
+void(entity newbie) CTF_AssignTeam;
 
 float	modelindex_eyes, modelindex_player, 
 		modelindex_demon, modelindex_dog, 
@@ -177,6 +178,7 @@ entity() SelectSpawnPoint =
 	local   float   numspots, totalspots;
 	local   float   rnum, pcount;
 	local   float   rs;
+	local float whichteam;
 	local entity spots;
 
 // for CTF...
@@ -197,26 +199,24 @@ entity() SelectSpawnPoint =
 	spots = world;
 
 	spottype = "info_player_deathmatch";
-	if (v_forward_x != 1333) //TODO: what is this for?
+	if(deathmatch == DMMODE_CTF && self.classname == "player")
 	{
-		if((deathmatch == DMMODE_CTF) && (self.classname == "player"))
-		{
-			if (GetTeam(self)==TEAM1_COLOR)
-				spottype = "info_player_team1";
-			else if (GetTeam(self)==TEAM2_COLOR)
-				spottype = "info_player_team2";
-			else
-				spottype = "info_player_deathmatch";
-		}
-		else 
+		whichteam = GetTeam(self);
+		if(whichteam == TEAM1_COLOR)
+			spottype = "info_player_team1";
+		else if(whichteam == TEAM2_COLOR)
+			spottype = "info_player_team2";
+		else
 			spottype = "info_player_deathmatch";
 	}
 
+//		spottype = "info_player_deathmatch";
+
 	spot = find (world, classname, spottype);       
-	if (!spot)
+	if(!spot)
 	{
-	  spottype = "info_player_deathmatch";
-	  spot = find (world, classname, spottype);       
+		spottype = "info_player_deathmatch";
+		spot = find (world, classname, spottype);       
 	}
 
 	while (spot)
@@ -935,7 +935,6 @@ ClientConnect
 called when a player connects to a server
 ============
 */
-void(entity newbie) Assign_CTF_Team;
 void() MetaMOTD;
 void() ClientConnect =
 {
@@ -949,12 +948,12 @@ void() ClientConnect =
 
 	//Annouce to other players that you've joined
 	bprint(self.netname);
-	bprint(" joined the ");
+	bprint(" entered the ");
 	if(deathmatch == DMMODE_DM)
 		bprint("Deathmatch\n");
 	else if(deathmatch == DMMODE_CTF)
 	{
-		bprint("CTF game\n");
+		bprint("CTF game");
 	}
 
 	#ifdef QUAKEWORLD
@@ -969,11 +968,11 @@ void() ClientConnect =
 	//CTF Mode: assign a team
 	if(deathmatch == DMMODE_CTF)
 	{
-		Assign_CTF_Team(self);
+		CTF_AssignTeam(self);
 		
 		//Now tell everyone what team this person joined
 		bprint(self.netname);
-		bprint(" joins the ");
+		bprint(" and joins the ");
 		bprint_teamcolor(self.fixed_team);
 		bprint(" team!\n");
 		teamname = TeamToColor(self.fixed_team);

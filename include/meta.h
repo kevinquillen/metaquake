@@ -24,6 +24,12 @@
  Global defines for Meta
 \***********************/
 
+// Deathmatch Modes =======================================================
+//Set the value of "deathmatch" to set the game mode
+#define DMMODE_NONE 0
+#define DMMODE_DM	1
+#define DMMODE_CTF	2
+
 // Classes ===============================================================
 #define CL_STANDARD	0	//Standard Quake Guy
 #define CL_SOLDIER	1
@@ -98,9 +104,9 @@
 #define SH_RESET		32768 //TODO: what is this for?
 
 
-// =======================================
+// CTF =======================================
 #define TEAM1_COLOR 12
-#define TEAM2_COLOR 2
+#define TEAM2_COLOR 0
 
 // IMPULSES ===============================================
 #define IMPULSE_CLASS_START 120

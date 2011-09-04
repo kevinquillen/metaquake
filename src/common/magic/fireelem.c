@@ -22,7 +22,6 @@
 
 entity(float radius) ClosestTarget;
 void(entity inflictor, entity attacker, float damage, float radius, entity ignore, float damagetype) T_AreaDamage;
-entity() SelectSpawnPoint;
 void() TurnThink;
 
 void() FireElemStasisField =

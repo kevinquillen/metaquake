@@ -36,10 +36,16 @@ float (entity checkme) GetTeam =
     s = infokey(checkme,"bottomcolor");
     f = stof(s);
   } else {
-    f = (checkme.team - 1);
+	if(deathmatch == DMMODE_CTF)
+		f = checkme.fixed_team;
+	else
+		f = checkme.team - 1;
   }
 #else
-  f = (checkme.team - 1);
+	if(deathmatch == DMMODE_CTF)
+		f = checkme.fixed_team;
+	else
+		f = checkme.team - 1; //Quake stores pants color as [1,14] even though console "color" is [0,13]
 #endif
 
   return f;
@@ -47,16 +53,19 @@ float (entity checkme) GetTeam =
 
 float(entity one, entity two) SameTeam =
 { 
-  local float f1,f2;
-  if (!(teamplay & TP_ON))
-    return 0;
+	local float f1,f2;
+	
+	//TODO: SameTeam() probably shouldn't be called if teamplay & TP_ON is
+	//      false, grep source usage, maybe bprint() a debug error?
+	if(!(teamplay & TP_ON))
+		return 0;
  
-  f1 = GetTeam(one);
-  f2 = GetTeam(two);
+	f1 = GetTeam(one);
+	f2 = GetTeam(two);
 
-  if ((f1 == f2) && ((f1 + f2) > 0))
-    return 1;
-  return 0;
+	if (f1 == f2)
+		return 1;
+	return 0;
 };
 
 string(float f_team) TeamToColor =
@@ -101,33 +110,33 @@ void(float f_team) bprint_teamcolor =
   local string s;
 
   if (f_team == 0)
-    s = "White";
+    s = "WHITE";
   else if (f_team == 1)
-    s = "Brown";
+    s = "BROWN";
   else if (f_team == 2)
-    s = "Light Blue";
+    s = "LIGHT BLUE";
   else if (f_team == 3)
-    s = "Green";
+    s = "GREEN";
   else if (f_team == 4)
-    s = "Red";
+    s = "RED";
   else if (f_team == 5)
-    s = "Dark Yellow";
+    s = "DARK YELLOW";
   else if (f_team == 6)
-    s = "Gold";
+    s = "SALMON";
   else if (f_team == 7)
-    s = "Pink";
+    s = "PEACH";
   else if (f_team == 8)
-    s = "Indigo";
+    s = "INDIGO";
   else if (f_team == 9)
-    s = "Violet";
+    s = "VIOLET";
   else if (f_team == 10)
-    s = "Off White";
+    s = "TAN";
   else if (f_team == 11)
-    s = "Cyan";
+    s = "CYAN";
   else if (f_team == 12)
-    s = "Yellow";
+    s = "GOLD";
   else if (f_team == 13)
-    s = "Blue";
+    s = "BLUE";
   else
     s = "UNKNOWN??";
 
@@ -141,7 +150,7 @@ void() CheckTeam =
   local float f;
 
 #ifdef QUAKEWORLD
-  if ((deathmatch & MODE_CTF) && (teamplay & TP_TEAMLOCK))
+  if ((deathmatch == MODE_CTF) && (teamplay & TP_TEAMLOCK))
   {
     str = infokey(self,"topcolor");
     tc = stof(str);
@@ -168,8 +177,8 @@ void() CheckTeam =
   if ((!(teamplay & TP_TEAMLOCK)) || (self.fixed_team == 255))
     return;
 
-  f = GetTeam(self); 
-  if ((f != self.fixed_team) && (self.invincible_finished < time))
+  f = GetTeam(self); //See ctfteam.c: CTF_AssignTeam() why self.team-1
+  if ((f != self.team - 1) && (self.invincible_finished < time))
   {
     bprint(self.netname);
     bprint(" was wearing the wrong colors.\n");

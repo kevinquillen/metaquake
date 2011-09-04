@@ -44,41 +44,47 @@ void() FlagTaken =
 // Broadcast messages of a flag being returned to its base
 void() FlagReturned =
 {
-  local entity head;
-  local float f;
-  head = FindWorld("player");
-  while (head) {
-    f = SameTeam(self,head);
-    if (f)
-    {
-      cprint(head,"Your team's flag is back home!\n");
-    } else {
-      cprint(head,"Enemy flag has been returned to base.\n");
-    }
-    head=head.goalentity;
-  }
+	local entity head;
+	local float f;
+	head = FindWorld("player");
+	while (head)
+	{
+		f = SameTeam(self,head);
+		if (f)
+		{
+			cprint(head,"Your team's flag is back home!\n");
+		}
+		else
+		{
+			cprint(head,"Enemy flag has been returned to base.\n");
+		}
+		head = head.goalentity;
+	}
 };
 
 // Broadcast a message of a flag that was captured
 void() FlagCaptured =
 {
-  local entity head;
-  local float f;
-  head = FindWorld("player");
-  while (head) {
-    f = SameTeam(head,self);
-    if (f)
-    {
-      head.frags = self.frags;
-      if (head == other)
-        cprint(head,"You captured the enemy flag!\n");
-      else
-        cprint(head,"Your team captured the flag!\n");
-    } else {
-      cprint(head,"Your team's flag was captured!\n");
-    }
-    head=head.goalentity;
-  }
+	local entity head;
+	local float f;
+	head = FindWorld("player");
+	while (head)
+	{
+		f = SameTeam(head,self);
+		if (f)
+		{
+			head.frags = self.frags;
+			if (head == other)
+				cprint(head,"You captured the enemy flag!\n");
+			else
+				cprint(head,"Your team captured the flag!\n");
+		}
+		else
+		{
+			cprint(head,"Your team's flag was captured!\n");
+		}
+		head = head.goalentity;
+	}
 };
 
 void() FlagThink;
@@ -86,9 +92,9 @@ void() T_FlagTouch;
 
 void() FlagOK =
 {
-  self.think = FlagThink;
-  self.touch = T_FlagTouch;
-  self.nextthink = time;
+	self.think = FlagThink;
+	self.touch = T_FlagTouch;
+	self.nextthink = time;
 };
 
 void() FlagRespawn =
@@ -106,7 +112,7 @@ void() FlagRespawn =
     setmodel(newf,"progs/w_g_key.mdl");
   if (newf.classname == "item_flag_team2")
     setmodel(newf,"progs/w_s_key.mdl");
-  newf.team = self.team;
+  newf.fixed_team = self.fixed_team;
   setsize (newf, '-16 -16 -24', '16 16 32');
   newf.think = FlagOK;
   newf.nextthink = time;
@@ -133,7 +139,7 @@ void() FlagThrow =
     setmodel(newf,"progs/w_g_key.mdl");
   if (newf.classname == "item_flag_team2")
     setmodel(newf,"progs/w_s_key.mdl");
-  newf.team = self.team;
+  newf.fixed_team = self.fixed_team;
   newf.spawn_origin = self.spawn_origin;
   setsize (newf, '-16 -16 -24', '16 16 32');
   newf.think = FlagOK;
@@ -262,47 +268,48 @@ void() FlagRetThink =
 // Flag touch routines.
 void() T_FlagTouch =
 {
-  local float f;
-  if (other.classname == "player")
-  {
-    // Capture the enemy flag if you run into your flag and it is at home.    
-    if ((other.player_flags & PF_HAS_FLAG) && (self.origin == self.spawn_origin))
-    {
-      self.frags = self.frags + 1;		// flags keep global score
-      FlagCaptured();
-      sound(world,CHAN_VOICE,"boss1/sight1.wav",1,ATTN_NONE);
-      other.player_flags = other.player_flags - (other.player_flags & PF_HAS_FLAG);
-      other.items = other.items - (other.items & (IT_KEY1 | IT_KEY2));
-      bprint(other.netname);
-      bprint(" captured the ");
-      if (self.team == TEAM1_COLOR)
-        bprint_teamcolor(TEAM2_COLOR);
-      else
-        bprint_teamcolor(TEAM1_COLOR);
+	local float f;
+	if(other.classname == "player")
+	{
+		// Capture the enemy flag if you run into your flag and it is at home.    
+		if ((other.player_flags & PF_HAS_FLAG) && (self.origin == self.spawn_origin))
+		{
+			self.frags = self.frags + 1;		// flags keep global score
+			FlagCaptured();
+			sound(world,CHAN_VOICE,"boss1/sight1.wav",1,ATTN_NONE);
+			other.player_flags = other.player_flags - (other.player_flags & PF_HAS_FLAG);
+			other.items = other.items - (other.items & (IT_KEY1 | IT_KEY2));
+      
+			bprint(other.netname);
+			bprint(" captured the ");
+			if(self.fixed_team == TEAM1_COLOR)
+				bprint_teamcolor(TEAM2_COLOR);
+			else
+				bprint_teamcolor(TEAM1_COLOR);
 
-      bprint(" team's flag!\n");
-    }
+			bprint(" team's flag!\n");
+		}
 
-    // Return your own flag if you hit it and it is not at base.
-    if (!(other.deadflag))
-    {
-      f = SameTeam(other,self);
+		// Return your own flag if you hit it and it is not at base.
+		if (!(other.deadflag))
+		{
+			f = SameTeam(other,self);
 
-      other.spawn_origin = self.spawn_origin;
+			other.spawn_origin = self.spawn_origin;
 
-      if (f && (self.origin != self.spawn_origin))
-      {
-        bprint(other.netname);
-        bprint(" returned the ");
-        bprint_teamcolor(GetTeam(self));
-        bprint(" team's flag!\n");
-        self.origin = self.spawn_origin;
-        self.touch = SUB_Null;
-        FlagReturned();
-        self.think = FlagRespawn;
-        self.nextthink = time;
-        return;
-      }
+			if (f && (self.origin != self.spawn_origin))
+			{
+				bprint(other.netname);
+				bprint(" returned the ");
+				bprint_teamcolor(GetTeam(self));
+				bprint(" team's flag!\n");
+				self.origin = self.spawn_origin;
+				self.touch = SUB_Null;
+				FlagReturned();
+				self.think = FlagRespawn;
+				self.nextthink = time;
+				return;
+			}
    
       // can't take flag?
       if (!f) {
@@ -361,7 +368,7 @@ void() item_flag_team1 =
   precache_model ("progs/w_g_key.mdl");
   flag = spawn();
   flag.frags = 0;
-  flag.team = TEAM1_COLOR + 1;
+  flag.fixed_team = TEAM1_COLOR;
   setsize (flag, '-16 -16 -24', '16 16 32');
   flag.classname = "item_flag_team1";
   flag.effects = EF_DIMLIGHT;
@@ -387,7 +394,7 @@ void() item_flag_team2 =
   precache_model ("progs/w_s_key.mdl");
   flag = spawn();
   flag.frags = 0;
-  flag.team = TEAM2_COLOR + 1;
+  flag.fixed_team = TEAM2_COLOR;
   setsize (flag, '-16 -16 -24', '16 16 32');
   flag.classname = "item_flag_team2";
   flag.effects = EF_DIMLIGHT;

@@ -126,11 +126,11 @@ void (entity targ,
 		}
 	}
   
-  if (((attacker.playerclass == CL_SNIPER) && (targ.playerclass == CL_SCOUT)) &&
-		  (damtype & SH_SNIPER))
-	  newdam = newdam * 0.3;
+	//Extra damage reduction for the case that a sniper or asniper shoots a scout.
+	if((attacker.playerclass == CL_SNIPER || attacker.playerclass == CL_ASNIPER) && targ.playerclass == CL_SCOUT && damtype & SH_SNIPER)
+		newdam = newdam * 0.5;
 	   
 
-  if (newdam != 0)
-    T_Damage(targ, inflictor, attacker, newdam, damtype);
+	if (newdam != 0)
+		T_Damage(targ, inflictor, attacker, newdam, damtype);
 };
