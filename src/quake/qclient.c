@@ -432,7 +432,10 @@ void() CheckRules =
 {
 	local	float		tlimit;
 	local	float		flimit;
-	
+	local float team1pts, team2pts;
+	local entity head;
+	local float f;
+
 	if (gameover)	// someone else quit the game already
 		return;
 		
@@ -444,12 +447,52 @@ void() CheckRules =
 		NextLevel ();
 		return;
 	}
-	
-	if(flimit && self.frags >= flimit)
+
+	if(flimit)
 	{
-		NextLevel ();
-		return;
-	}	
+	
+		if(deathmatch == DMMODE_CTF)
+		{
+	
+			team1pts = 0;
+			team2pts = 0;
+	
+			head = FindWorld("player");
+	
+
+			while(head)
+			{
+				f = GetTeam(head);
+				if(f == TEAM2_COLOR)
+					team2pts = team2pts + head.frags;
+				else if(f == TEAM1_COLOR)
+					team1pts = team1pts + head.frags;
+				head = head.goalentity;
+			}
+			
+			if(team1pts >= flimit)
+			{
+				bprint_teamcolor(TEAM1_COLOR);
+				bprint(" team wins!");
+				NextLevel();
+			}
+			else if(team2pts >= flimit)
+			{
+				bprint_teamcolor(TEAM1_COLOR);
+				bprint(" team wins!");
+				NextLevel();
+			}
+		
+		}
+		else
+		{
+			if(flimit && self.frags >= flimit)
+			{
+				NextLevel ();
+				return;
+			}
+		}
+	}
 };
 
 //============================================================================
