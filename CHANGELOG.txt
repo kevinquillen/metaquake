@@ -1,5 +1,24 @@
-METAMORPHISM QUAKE V6.0
-=======================
+METAMORPHISM QUAKE V6.0.1
+=========================
+
+Release Notes
+-------------------------------
+
+Fixed some issues with character encodings that I could find so far. It looks like
+there could have been characters lost in translation from the 2011 update and editing
+with a code editor, and then myself running git svn clone without preserving source
+encoding. My bad.
+
+The donut glyphs are back in the help menu and MOTD text. I was able to track down
+their value here:
+
+https://icculus.org/~marco/quakec/fteqcc_manual.txt
+
+Fixed a few typos and updated the console log text.
+
+
+METAMORPHISM QUAKE V6.0.0
+=========================
 
 Release Notes
 -------------------------------
