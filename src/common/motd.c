@@ -34,11 +34,11 @@ void() MOTD3 =
  
 	if(deathmatch == DMMODE_DM)
 	{
-		cprint(self.owner, "€‚ DM RULES €‚\nFight to the death. Each kill\nis worth one point, but chan-\nging classes costs a point.  \nSuicides and team kills (if  \nenabled) also cost a point.  \n€‚ DM RULES €‚\n");	
+		cprint(self.owner, "\(\) DM RULES \(\)\nFight to the death. Each kill\nis worth one point, but chan-\nging classes costs a point.  \nSuicides and team kills (if  \nenabled) also cost a point.  \n\(\) DM RULES \(\)\n");
 	}
 	else
 	{
-		cprint(self.owner, "€‚ CTF RULES €‚\nTake the opposite team's flag\nwhile protecting your own. E-\nach capture is one point. Ki-\nlls do NOT give points, and  \nscores are combined.         \n€‚ CTF RULES €‚\n");
+		cprint(self.owner, "\(\) CTF RULES \(\)\nTake the opposite team's flag\nwhile protecting your own. E-\nach capture is one point. Ki-\nlls do NOT give points, and  \nscores are combined.         \n\(\) CTF RULES \(\)\n");
 	}
 	self.health = self.health + 1;
 	self.nextthink = time + 1.7;
