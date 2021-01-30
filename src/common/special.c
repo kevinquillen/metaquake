@@ -287,7 +287,7 @@ void() S_GoRandom =
 
 void(entity monkey) S_MetaInfo =
 {
-  sprint(monkey,"\nÍœEœÔœAœÍœOœÒœPœÈœIœÓœM Quake Server\n");
+  sprint(monkey,"\nMetamorphism Quake Server\n\n");
   sprint(monkey,"  Copyright 1996-2000 by Lon Hohberger\n");
   sprint(monkey,"  Portions Copyright 1996 by id Software\n\n");
   sprint(monkey,"  --- N O  W A R R A N T Y ---\n");
@@ -295,8 +295,12 @@ void(entity monkey) S_MetaInfo =
   sprint(monkey,"  and is distributed under the GNU General\n");
   sprint(monkey,"  Public License.  Visit http://www.gnu.org\n");
   sprint(monkey,"  for information regarding the GPL.\n\n");
-  sprint(monkey,"Version ");
+  sprint(monkey,"  Current Version ");
   sprint(monkey,VERSION);
+  sprint(monkey,"\n\n");
+  sprint(monkey,"  --- Metamorphism Code ---\n");
+  sprint(monkey,"  Interested in helping fix bugs? Modding?\n  Grab the source code and dive in:\n\n");
+  sprint(monkey,"  https://github.com/kevinquillen/metaquake\n");
   sprint(monkey,"\n\n");
 };
 
