@@ -36,6 +36,5 @@ release: $(QCC) force_look
 	cp CHANGELOG.txt $(COPYDIR)
 	cp LICENSE.txt $(COPYDIR)
 
-
 force_look:
 	@true
