@@ -29,12 +29,12 @@ progs.dat: $(QCC) force_look
 	make -C src/common CFLAGS="-I../../include -DQUAKE -DGAME_CTF"
 	make -C src/quake QCC=../../$(QCC) CFLAGS="-I../../include -DQUAKE -DGAME_CTF"
 	mkdir -p $(COPYDIR)
-	cp progs.dat $(COPYDIR)
+	mv progs.dat $(COPYDIR)
 
 release: $(QCC) force_look
 	make progs.dat
-	cp Changes.txt $(COPYDIR)
-	cp license.txt $(COPYDIR)
+	cp CHANGELOG.txt $(COPYDIR)
+	cp LICENSE.txt $(COPYDIR)
 
 
 force_look:
