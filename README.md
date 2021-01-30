@@ -1,6 +1,6 @@
-# Metaquake
+# Metamorphosis Quake
 
-Repo to preserve a great Quake mod, MetaQuake.
+Repo to preserve a great Quake mod, Metamorphosis.
 
 ## Installation
 
