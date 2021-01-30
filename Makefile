@@ -1,8 +1,9 @@
 #
 # Makefile for Metamorphism; (C) 2007 Lon Hohberger
 # Updated by Patrick Baggett 2011
+# Updated by Kevin Quillen 2021
 
-COPYDIR ?= ~/Quake/meta/
+COPYDIR ?= ./build/meta/
 QCC ?= qccx
 
 all: $(QCC) progs.dat
@@ -27,6 +28,7 @@ progs.dat: $(QCC) force_look
 	-rm progs.dat
 	make -C src/common CFLAGS="-I../../include -DQUAKE -DGAME_CTF"
 	make -C src/quake QCC=../../$(QCC) CFLAGS="-I../../include -DQUAKE -DGAME_CTF"
+	mkdir -p $(COPYDIR)
 	cp progs.dat $(COPYDIR)
 
 force_look:
