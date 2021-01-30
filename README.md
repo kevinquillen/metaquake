@@ -35,3 +35,9 @@ This would bind the grappling hook action to your right mouse button.
 Check out this repository to your local machine. The root Makefile has a few commands to build the project.
 
 To build, use `make all`. The default directory for the output will be ./build/meta. After building, copy the "meta" directory in ./build to the installation path for Quake as noted above. 
+
+## Disclaimer
+
+I am not a master C programmer. This repository is mainly for preservation purposes and a few tweaks or bugfixes that I am able to find and rectify. I really just wanted to save and share this fantastic Quake 1 mod that I dumped many hours into in the 90s. Hopefully, it will be spotted and cared for and carried forward by folks in the GitHub/gaming community.
+
+Thanks Lon.
