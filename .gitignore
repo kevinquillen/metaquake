@@ -7,3 +7,5 @@ qccx-src/*.o
 *.qc
 *.src
 src/quake/progdefs.h
+*.tar.gz
+*.gz
