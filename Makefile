@@ -31,5 +31,11 @@ progs.dat: $(QCC) force_look
 	mkdir -p $(COPYDIR)
 	cp progs.dat $(COPYDIR)
 
+release: $(QCC) force_look
+	make progs.dat
+	cp Changes.txt $(COPYDIR)
+	cp license.txt $(COPYDIR)
+
+
 force_look:
 	@true
