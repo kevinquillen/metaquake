@@ -1,0 +1,9 @@
+.idea
+qccx
+progs.dat
+/meta
+/build
+qccx-src/*.o
+*.qc
+*.src
+src/quake/progdefs.h
