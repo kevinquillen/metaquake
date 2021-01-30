@@ -1,6 +1,6 @@
-# Metaquake
+# Metamorphism Quake
 
-Repo to preserve a great Quake mod, MetaQuake.
+Repo to preserve a great Quake mod, Metamorphism. This mod is akin to a fast paced Team Fortress style Quake mod with deathmatch and capture the flag game mode support on QuakeWorld or p2p.
 
 ## Installation
 
