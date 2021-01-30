@@ -183,7 +183,7 @@ void() W_FireGrenade =
 		
 	if ((self.gl_mode == 2) && (!CheckCount(5000,"landmine",maxmines)))
         {
-          cprint(self,"Tom many mines already out!");
+          cprint(self,"Too many mines already out!");
 	  return;
         }
 
