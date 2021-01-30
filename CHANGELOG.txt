@@ -184,6 +184,6 @@ License
 In short: GPL.
 
 This code is a modification of Metamorphism, available at http://lon.110mb.com/.
-The mod was released under the GPL license (see license.txt for legal details).
+The mod was released under the GPL license (see LICENSE.txt for legal details).
 By law then, Metamorphism Quake 6.0 (this mod) must be released under the terms
 of the GPL.
