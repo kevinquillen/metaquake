@@ -1,3 +1,16 @@
+METAMORPHISM QUAKE V6.0.2
+=========================
+
+Release Notes
+-------------------------------
+
+Fixed some text strings and updated the README. This version fixes a game crashing bug
+by just hiding it for now.
+
+- https://github.com/kevinquillen/metaquake/commit/50555b2fe9e698492c7b9343052201d91b1b7d1d
+
+As a result, certain maps no longer crash.
+
 METAMORPHISM QUAKE V6.0.1
 =========================
 
