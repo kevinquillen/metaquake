@@ -248,7 +248,7 @@ void() train_wait =
 	}
 	else
 		self.nextthink = self.ltime + 0.1;
-	
+
 	self.think = train_next;
 };
 
@@ -258,14 +258,22 @@ void() train_next =
 
 	targ = find (world, targetname, self.target);
 	self.target = targ.target;
-	if (!self.target)
-		objerror ("train_next: no next target");
-	if (targ.wait)
-		self.wait = targ.wait;
-	else
-		self.wait = 0;
-	sound (self, CHAN_VOICE, self.noise1, 1, ATTN_NORM);
-	SUB_CalcMove (targ.origin - self.mins, self.speed, train_wait);
+	if (!self.target) {
+	    // @todo: Don't crash the game, just do nothing for now until we can debug the cause.
+	    // To test, load e1m3 and go to a room with a lift. The game will crash.
+	    // Try to load e1m5, it will crash immediately.
+	    // Root cause still unknown. Regular Quake (without meta) works fine.
+		//objerror ("train_next: no next target");
+	} else {
+        if (targ.wait) {
+            self.wait = targ.wait;
+        } else {
+            self.wait = 0;
+        }
+
+        sound(self, CHAN_VOICE, self.noise1, 1, ATTN_NORM);
+        SUB_CalcMove(targ.origin - self.mins, self.speed, train_wait);
+    }
 };
 
 void() func_train_find =
