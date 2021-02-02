@@ -17,6 +17,5 @@
  *************************************************************************/
 
 void() WelcomeMessage = {
-	cprint(self.owner,"WELCOME TO\nMetamorphism 6.0 Server\n");
-
+	cprint(self.owner,"WELCOME TO\nMetamorphism Server\n");
 };
