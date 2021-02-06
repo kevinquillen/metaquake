@@ -116,19 +116,21 @@ void() MetaPrecache =
 
 };
 
+entity	bodyqueue_head;
+
 //// make a body que entry for the given ent so the ent can be
 //// respawned elsewhere
-//void(entity ent) CopyToBodyQueue =
-//{
-//    bodyqueue_head.angles = ent.angles;
-//    bodyqueue_head.model = ent.model;
-//    bodyqueue_head.modelindex = ent.modelindex;
-//    bodyqueue_head.frame = ent.frame;
-//    bodyqueue_head.colormap = ent.colormap;
-//    bodyqueue_head.movetype = ent.movetype;
-//    bodyqueue_head.velocity = ent.velocity;
-//    bodyqueue_head.flags = 0;
-//    setorigin(bodyqueue_head, ent.origin);
-//    setsize(bodyqueue_head, ent.mins, ent.maxs);
-//    bodyqueue_head = bodyqueue_head.owner;
-//};
+void(entity ent) CopyToBodyQueue =
+{
+    bodyqueue_head.angles = ent.angles;
+    bodyqueue_head.model = ent.model;
+    bodyqueue_head.modelindex = ent.modelindex;
+    bodyqueue_head.frame = ent.frame;
+    bodyqueue_head.colormap = ent.colormap;
+    bodyqueue_head.movetype = ent.movetype;
+    bodyqueue_head.velocity = ent.velocity;
+    bodyqueue_head.flags = 0;
+    setorigin(bodyqueue_head, ent.origin);
+    setsize(bodyqueue_head, ent.mins, ent.maxs);
+    bodyqueue_head = bodyqueue_head.owner;
+};
