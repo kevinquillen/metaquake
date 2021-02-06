@@ -24,9 +24,6 @@
 float SF_ONLY_DM = 16384;
 float SF_ONLY_SMEAR = 32768;
 
-// deathmatch mode
-float MODE_DM = 1;
-
 // teamplay flags (global)
 float TP_ON = 1;
 float TP_TEAMSAFE = 2;
