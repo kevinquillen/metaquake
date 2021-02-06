@@ -9,7 +9,6 @@ dummy.qc
 ../common/damage.qc
 ../common/hud.qc
 ../common/print.qc
-//../common/cdate.qc
 ../common/weapons/hook.qc
 #ifndef NO_SYSOP
 ../common/sys_imp.qc
@@ -62,7 +61,6 @@ world.qc
 ../common/welcome.qc
 ../common/motd.qc
 ../common/client.qc
-//../common/deathmsg.qc
 client.qc
 ../common/player.qc
 
