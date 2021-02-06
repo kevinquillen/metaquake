@@ -386,7 +386,7 @@ float   UPDATE_TEMP             = 3;
 
 // entity effects
 
-//float EF_BRIGHTFIELD  = 1;
+float EF_BRIGHTFIELD  = 1;
 //float EF_MUZZLEFLASH  = 2;
 float   EF_BRIGHTLIGHT  = 4;
 float   EF_DIMLIGHT     = 8;
@@ -542,6 +542,7 @@ float   AS_MISSILE              = 4;
 .float		tb_mode;
 
 .float		spell;
+.entity		spell_effects;
 
 .float		max_arm;
 .float		max_ammo_shells;
@@ -556,7 +557,7 @@ float   AS_MISSILE              = 4;
 
 .float		saves;
 .float		harms;
-//.float		help;
+.float		help;
 
 .float		damage_type;
 
@@ -689,7 +690,7 @@ void() traceoff                                         = #30;
 void(entity e) eprint                           = #31;          // prints an entire edict
 float(float yaw, float dist) walkmove   = #32;  // returns TRUE or FALSE
 // #33 was removed
-float(float yaw, float dist) droptofloor= #34;  // TRUE if landed on floor
+float(/*float yaw, float dist*/) droptofloor= #34;  // TRUE if landed on floor
 void(float style, string value) lightstyle = #35;
 float(float v) rint                                     = #36;          // round to nearest int
 float(float v) floor                            = #37;          // largest integer <= v
@@ -777,3 +778,6 @@ float(entity targ, entity inflictor) CanDamage;
 
 //*========================================================================
 float QUAKEWORLD = 1;
+
+entity	bodyqueue_head;
+void(entity end) CopyToBodyQueue;

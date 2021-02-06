@@ -167,7 +167,7 @@ set "message" to text string
 */
 void() trigger_once =
 {
-	if ((deathmatch&MODE_CTF) && (self.spawnflags & SF_NOT_CTF))
+	if ((deathmatch == 2) && (self.spawnflags & SF_NOT_CTF))
 	  return;
 
 	self.wait = -1;
@@ -335,16 +335,16 @@ void() tdeath_touch =
 			self.classname = "teledeath3";
 			other.invincible_finished = 0;
 			self.owner.invincible_finished = 0;
-			T_Damage (other, self, self, 50000,SH_UNKNOWN);
+			T_Damage (other, self, self, 50000,64);
 			other2 = self.owner;
 			self.owner = other;
-			T_Damage (other2, self, self, 50000, SH_UNKNOWN);
+			T_Damage (other2, self, self, 50000, 64);
 		}
 			
 		if (other.invincible_finished > time)
 		{
 			self.classname = "teledeath2";
-			T_Damage (self.owner, self, self, 50000, SH_UNKNOWN);
+			T_Damage (self.owner, self, self, 50000, 64);
 			return;
 		}
 		
@@ -358,7 +358,7 @@ void() tdeath_touch =
 
 	if (other.health)
 	{
-		T_Damage (other, self, self, 50000, SH_UNKNOWN);
+		T_Damage (other, self, self, 50000, 64);
 	}
 };
 
@@ -473,7 +473,7 @@ void() trigger_teleport =
 {
 	local vector o;
 
-	if ((deathmatch == MODE_CTF) && (self.spawnflags & SF_NOT_CTF))
+	if ((deathmatch == 2) && (self.spawnflags & SF_NOT_CTF))
 	  return;
 
 	InitTrigger ();
@@ -564,7 +564,7 @@ void() hurt_touch =
 	if (other.takedamage)
 	{
 		self.solid = SOLID_NOT;
-		T_Damage (other, self, self, self.dmg, SH_UNKNOWN);
+		T_Damage (other, self, self, self.dmg, 64);
 		self.think = hurt_on;
 		self.nextthink = time + 1;
 	}

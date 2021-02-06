@@ -150,7 +150,7 @@ void() CheckTeam =
   local float f;
 
 #ifdef QUAKEWORLD
-  if ((deathmatch == MODE_CTF) && (teamplay & TP_TEAMLOCK))
+  if ((deathmatch == DMMODE_CTF) && (teamplay & TP_TEAMLOCK))
   {
     str = infokey(self,"topcolor");
     tc = stof(str);
@@ -368,7 +368,7 @@ void() S_CreateTeam =
   local entity newteam;
   local string str;
 
-  if (deathmatch != MODE_DM)
+  if (deathmatch != DMMODE_DM)
   {
     sprint(self,"*** Teams may not be created in non-DM modes!\n");
     return;

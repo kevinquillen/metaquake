@@ -3,7 +3,7 @@
  *   Copyright 1996 by id Software
  *   Portions Copyright 2000 by Lon Hohberger
  */
-
+#include "meta.h"
 
 // Meta 5 -- crude-ass lame AI ;)
 #ifdef QUAKEWORLD
@@ -642,18 +642,18 @@ void() armythink =
 void() create_army =
 {
 	local entity e;
-        e = find(world,classname,"Énhumaî…ÃÒ‘");
+        e = find(world,classname,"ï¿½nhumaî…ï¿½Ò‘");
         while(e) { return; }
-        bprint("# Alpha # Summoned Énhumaî…ÃÒ‘\n");
+        bprint("# Alpha # Summoned ï¿½nhumaî…ï¿½Ò‘\n");
 	e = spawn();
-        e.netname = "Énhumaî…ÃÒ‘";
-        e.classname = "Énhumaî…ÃÒ‘";
+        e.netname = "ï¿½nhumaî…ï¿½Ò‘";
+        e.classname = "ï¿½nhumaî…ï¿½Ò‘";
 	e.think = army_respawn;
 	e.nextthink = time + 1;
 	e.frags = 0;
 	sound(self,CHAN_VOICE,"misc/talk.wav",1,ATTN_NONE);
 	bprint(e.netname);
-        bprint("º ");
+        bprint("ï¿½ ");
 	bprint(self.netname);
 	bprint(" is a big meanie.\n");
 
@@ -693,15 +693,15 @@ void() army_respawn =
 	spot = SelectSpawnPoint();
 	new.origin = spot.origin + '0 0 25';
 	new.angles = spot.angles;
-        new.classname = "Énhumaî…ÃÒ‘";
+        new.classname = "ï¿½nhumaî…ï¿½Ò‘";
 	spawn_tfog(new.origin);
 	spawn_tdeath(new.origin,new);
 	new.netname = self.netname;
 	bprint(new.netname);
 	str = ftos(new.frags);
-        bprint("º ");
+        bprint("ï¿½ ");
 	bprint(str);
-        bprint(" Æòáç¨ó©\n");
+        bprint(" ï¿½ï¿½ï¿½ï¿½ï¿½\n");
 
 	new.think = armythink;
 	new.nextthink = time + 0.5;

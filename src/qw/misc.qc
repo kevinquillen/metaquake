@@ -211,7 +211,8 @@ local entity    fireball;
 
 void() fire_touch =
 {
-	T_Damage (other, self, self, 20, SH_LAVA);
+    // SH_LAVA
+	T_Damage (other, self, self, 20, 4);
 	remove(self);
 };
 
@@ -223,7 +224,8 @@ void() barrel_explode =
 	self.takedamage = DAMAGE_NO;
 	self.classname = "explo_box";
 	// did say self.owner
-	T_RadiusDamage (self, self, 160, world, SH_EXPLOSION);
+	// SH_EXPLOSION
+	T_RadiusDamage (self, self, 160, world, 1024);
 	WriteByte (MSG_MULTICAST, SVC_TEMPENTITY);
 	WriteByte (MSG_MULTICAST, TE_EXPLOSION);
 	WriteCoord (MSG_MULTICAST, self.origin_x);
@@ -326,7 +328,8 @@ void() Laser_Touch =
 //		if (self.owner.playerclass == CL_SHOCK)
 //		  T_Damage (other, self, self.owner, 32);
 //                else
-		  DoDamage (other, self, self.owner, 16, SH_ELECTRICITY);
+// SH_ELECTRICITY
+		  DoDamage (other, self, self.owner, 16, 512);
 	}
 	else
 	{
@@ -355,7 +358,7 @@ void(vector org, vector vec) LaunchLaser =
 //	newmis.effects = EF_DIMLIGHT;
 	newmis.netname = "laser";
 
-	if (self.playerclass == CL_SHOCK)
+	if (self.playerclass == 9)
 	  setmodel(newmis,"progs/bolt.mdl");
         else
 	  setmodel (newmis, "progs/laser.mdl");
@@ -601,7 +604,7 @@ void() func_illusionary =
 	self.movetype = MOVETYPE_NONE;
 	self.solid = SOLID_NOT;
 	setmodel (self, self.model);
-	makestatic ();
+	makestatic (self);
 };
 
 /*QUAKED func_episodegate (0 .5 .8) ? E1 E2 E3 E4
