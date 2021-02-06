@@ -778,6 +778,3 @@ float(entity targ, entity inflictor) CanDamage;
 
 //*========================================================================
 float QUAKEWORLD = 1;
-
-entity	bodyqueue_head;
-void(entity end) CopyToBodyQueue;
