@@ -949,18 +949,12 @@ void() ClientConnect =
 	//Annouce to other players that you've joined
 	bprint(self.netname);
 	bprint(" entered the ");
-	if(deathmatch == DMMODE_DM)
-		bprint("Deathmatch\n");
-	else if(deathmatch == DMMODE_CTF)
-	{
+	if(deathmatch == DMMODE_DM) {
+        bprint("Deathmatch\n");
+    } else if(deathmatch == DMMODE_CTF) {
 		bprint("CTF game");
 	}
 
-	#ifdef QUAKEWORLD
-	// What is this?
-	//str = infokey(self,"ip");
-	#endif
-	
 	self.player_flags = 0;
 	self.option_flags = OF_AUTOPUSH;
 	self.fixed_team = 255;
@@ -969,30 +963,20 @@ void() ClientConnect =
 	//CTF Mode: assign a team
 	if(deathmatch == DMMODE_CTF)
 	{
+        //Now tell everyone what team this person joined
 		CTF_AssignTeam(self);
-		
-		//Now tell everyone what team this person joined
 		bprint(" and joins the ");
 		bprint_teamcolor(self.fixed_team);
 		bprint(" team!\n");
 		teamname = TeamToColor(self.fixed_team);
-		
-		#ifdef QUAKEWORLD
-		if (infokey(world,"clanwar") != "1")
-		{
-			stuffcmd(self.owner,"team ");
-			stuffcmd(self.owner,teamname);
-			stuffcmd(self.owner,"\n");
-		}
-		#endif
 	}
-	self.wait = time + 30;
 
+	self.wait = time + 30;
 	MetaMOTD();
 
 	// a client connecting during an intermission can cause problems
 	if (intermission_running)
-		GotoNextMap ();
+		GotoNextMap();
 };
 
 
