@@ -58,7 +58,7 @@ void() plat_hit_bottom =
 
 void() plat_go_down =
 {
-	if ((self.spawnflags & SF_NOT_CTF) && (deathmatch&MODE_CTF))
+	if ((self.spawnflags & SF_NOT_CTF) && (deathmatch == 2))
 	  return;
 
 	sound (self, CHAN_VOICE, self.noise, 1, ATTN_NORM);
@@ -68,7 +68,7 @@ void() plat_go_down =
 
 void() plat_go_up =
 {
-	if ((self.spawnflags & SF_NOT_CTF) && (deathmatch&MODE_CTF))
+	if ((self.spawnflags & SF_NOT_CTF) && (deathmatch ==2))
 	  return;
 
 	sound (self, CHAN_VOICE, self.noise, 1, ATTN_NORM);
@@ -118,7 +118,7 @@ void() plat_crush =
 //dprint ("plat_crush\n");
 
 	other.deathtype = "squish";
-	T_Damage (other, self, self, 2, SH_UNKNOWN);
+	T_Damage (other, self, self, 2, 64);
 	
 	if (self.state == STATE_UP)
 		plat_go_down ();
@@ -232,7 +232,7 @@ void() train_blocked =
 		return;
 	self.attack_finished = time + 0.5;
 	other.deathtype = "squish";
-	T_Damage (other, self, self, self.dmg, SH_UNKNOWN);
+	T_Damage (other, self, self, self.dmg, 64);
 };
 
 void() train_use =

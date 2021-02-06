@@ -1,3 +1,5 @@
+include ../baserules.mk
+
 all: progs.src qwprogs.dat
 
 progs.qc:
@@ -7,7 +9,7 @@ progs.src: progs.qc
 	mv progs.qc progs.src
 
 qwprogs.dat: progs.src
-	../qcc
+	$(QCC) $(CFLAGS)
 
 clean:
 	rm -f progs.src progs.qc qwprogs.dat

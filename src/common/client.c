@@ -49,7 +49,7 @@ void() DecodeLevelParms =
   //
   // think it was clanwar stuff
   /*
-  if (deathmatch == MODE_CTF)
+  if (deathmatch == DMMODE_CTF)
   {
     f = find(world,classname,"item_flag_team1");
     if (parm2)
@@ -957,7 +957,8 @@ void() ClientConnect =
 	}
 
 	#ifdef QUAKEWORLD
-	str = infokey(self,"ip");
+	// What is this?
+	//str = infokey(self,"ip");
 	#endif
 	
 	self.player_flags = 0;

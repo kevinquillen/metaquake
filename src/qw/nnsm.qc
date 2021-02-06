@@ -6,7 +6,7 @@
 void() NNSM_Remind =
 {
   local string ipa;
-  if ((((!self.enemy) || (self.enemy == world)) || (self.enemy.classname !="player")) || (!(self.enemy.player_flags & PF_CHEATER)))
+  if ((((!self.enemy) || (self.enemy == world)) || (self.enemy.classname !="player")) || (!(self.enemy.player_flags & 8192)))
   {
     remove(self);
     return;
@@ -40,7 +40,7 @@ void() NNSM_Check =
       {
         localcmd("serverinfo cheater \"\"\n");
         a = spawn();
-        e.player_flags = e.player_flags | PF_CHEATER;
+        e.player_flags = e.player_flags | 8192;
         a.netname = ipc;
         a.enemy = e;
         a.think = NNSM_Remind;

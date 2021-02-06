@@ -1,66 +1,70 @@
-../qwprogs.dat
+../../qwprogs.dat
 
 defs.qc
 dummy.qc
-../Common/globals.qc
-../Common/modes.qc
-../Common/teams.qc
-../Common/diemsg.qc
-../Common/damage.qc
-../Common/hud.qc
-../Common/print.qc
-../Common/cdate.qc
-../Common/Weapons/hook.qc
+../common/globals.qc
+../common/modes.qc
+../common/teams.qc
+../common/diemsg.qc
+../common/damage.qc
+../common/hud.qc
+../common/print.qc
+//../common/cdate.qc
+../common/weapons/hook.qc
 #ifndef NO_SYSOP
-../Common/sys_imp.qc
-../Common/sysop.qc
+../common/sys_imp.qc
+//../common/sysop.qc
 #endif
-../Common/special.qc
-../Common/Weapons/sg.qc
-../Common/Weapons/sng.qc
-../Common/Weapons/gl.qc
-../Common/Weapons/rl.qc
-../Common/Weapons/tb.qc
+../common/special.qc
+../common/weapons/sg.qc
+../common/weapons/sng.qc
+../common/weapons/gl.qc
+../common/weapons/rl.qc
+../common/weapons/tb.qc
+../common/weapons/ssg.qc
 
-../Common/Class/scout.qc
-../Common/Class/druid.qc
-../Common/Class/ninja.qc
-../Common/Class/sniper.qc
+../common/class/scout.qc
+../common/class/druid.qc
+../common/class/ninja.qc
+../common/class/sniper.qc
+../common/class/hweap.qc
+../common/class/berserk.qc
 
-../Common/Magic/magic.qc
-../Common/Magic/mage.qc
-../Common/Magic/cleric.qc
-../Common/Magic/fireelem.qc
-../Common/Magic/druid.qc
-../Common/Magic/ninja.qc
-../Common/Magic/lich.qc
+../common/magic/spellfx.qc
+../common/magic/magic.qc
+../common/magic/mage.qc
+../common/magic/cleric.qc
+../common/magic/fireelem.qc
+../common/magic/druid.qc
+../common/magic/ninja.qc
+../common/magic/lich.qc
 
 subs.qc
 
-../Common/subs.qc
+../common/subs.qc
 
-../Common/combat.qc
+../common/combat.qc
 
-../Common/items.qc
-../Common/spcitem.qc
-../Common/Weapons/dspweap.qc
-../Common/Weapons/chgweap.qc
-../Common/cselect.qc
-../Common/impulse.qc
+../common/items.qc
+../common/spcitem.qc
+../common/weapons/dspweap.qc
+../common/weapons/chgweap.qc
+../common/cselect.qc
+../common/impulse.qc
 
 nnsm.qc
 
-../Common/world.qc
-../Common/Weapons/weapons.qc
+../common/world.qc
+../common/weapons/weapons.qc
 
 world.qc
 
-../Common/welcome.qc
-../Common/motd.qc
-../Common/client.qc
-//../Common/deathmsg.qc
+../common/welcome.qc
+../common/motd.qc
+../common/client.qc
+//../common/deathmsg.qc
 client.qc
-../Common/player.qc
+../common/player.qc
 
 spectate.qc
 
@@ -71,12 +75,12 @@ plats.qc
 misc.qc
 
 #ifdef GAME_CTF
-../Common/Games/CTF/flags.qc
-../Common/Games/CTF/barrier.qc
-../Common/Games/CTF/teams.qc
+../common/games/ctf/flags.qc
+../common/games/ctf/barrier.qc
+../common/games/ctf/ctfteam.qc
 #endif
 
-../Common/soldier.qc
+../common/soldier.qc
 
 server.qc
 

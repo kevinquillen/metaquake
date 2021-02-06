@@ -2,7 +2,7 @@
 // prototypes
 void () W_WeaponFrame;
 void() W_SetCurrentAmmo;
-void() player_pain;
+//void() player_pain;
 void() player_stand1;
 void (vector org) spawn_tfog;
 void (vector org, entity death_owner) spawn_tdeath;
@@ -142,7 +142,7 @@ void() changelevel_touch =
 	if (other.classname != "player")
 		return;
 
-	if (deathmatch == MODE_CTF)
+	if (deathmatch == 2)
 	  return;
 	
 	if (cvar("samelevel")==SL_ON)
@@ -152,7 +152,7 @@ void() changelevel_touch =
 
 	if ((cvar("samelevel")&(SL_EXITKILL|SL_ON))==(SL_EXITKILL|SL_ON))
 	{
-		T_Damage (other, self, self, 50000, SH_UNKNOWN);
+		T_Damage (other, self, self, 50000, 64);
 		return;
 	}
 

@@ -4,6 +4,7 @@
 # Updated by Kevin Quillen 2021
 
 COPYDIR ?= ./build/meta/
+QW_COPYDIR ?= ./build/qw/
 QCC ?= qccx
 
 all: $(QCC) progs.dat
@@ -19,20 +20,22 @@ clean:
 	rm -f qwprogs.dat progs.dat
 
 qwprogs.dat: $(QCC)
-	for f in `find Common -type f -name "*.c"`; do \
-		gcc -E -P $$f -o $${f/.c/.qc}  -DGAME_CTF -DQUAKEWORLD ;\
-	done
-	make -C srcQW
+	make -C src/common QCC=../../$(QCC) CFLAGS="-I../../include -DQUAKEWORLD -DGAME_CTF -DNO_SYSOP"
+	make -C src/qw QCC=../../$(QCC) CFLAGS="-I../../include -DQUAKEWORLD -DGAME_CTF -DNO_SYSOP"
+	mkdir -p $(QW_COPYDIR)
+	mv qwprogs.dat $(QW_COPYDIR)
 
 progs.dat: $(QCC) force_look
-	-rm progs.dat
 	make -C src/common CFLAGS="-I../../include -DQUAKE -DGAME_CTF"
 	make -C src/quake QCC=../../$(QCC) CFLAGS="-I../../include -DQUAKE -DGAME_CTF"
 	mkdir -p $(COPYDIR)
 	mv progs.dat $(COPYDIR)
 
 release: $(QCC) force_look
+	make clean
 	make progs.dat
+	make clean
+	make qwprogs.dat
 	cp CHANGELOG.txt $(COPYDIR)
 	cp LICENSE.txt $(COPYDIR)
 
