@@ -176,6 +176,8 @@ I recommend grabbing an IDE like [CLion](https://www.jetbrains.com/clion/) if yo
 
 # Disclaimer
 
-I am not a master C programmer. This repository is mainly for preservation purposes and a few tweaks or bugfixes that I am able to find and rectify. I really just wanted to save and share this fantastic Quake 1 mod that I dumped many hours into in the 90s. Hopefully, it will be spotted and cared for and carried forward by folks in the GitHub/gaming community.
+I am not a master C programmer. This repository is mainly for preservation purposes and a few tweaks or bugfixes that I am able to find and rectify. I really just wanted to save and share this fantastic Quake 1 mod that I dumped many hours into in the 90s. 
+
+Hopefully it will be spotted and cared for and carried forward by folks in the GitHub/gaming community. I hear Quake 1 mods are still going strong in 2021! That is incredible, so please fork or provide updates and keep this repo informed of any servers hosting Meta!
 
 Thanks Lon & Patrick!
