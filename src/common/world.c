@@ -118,6 +118,35 @@ void() MetaPrecache =
 
 entity	bodyqueue_head;
 
+#define BODYQUEUE_SIZE 10
+
+void() InitBodyQueue =
+{
+    local entity enext, eprev;
+    local float bodycount;
+
+    bodyqueue_head = spawn();
+    bodyqueue_head.classname = "bodyqueue";
+
+    eprev = bodyqueue_head;
+    bodycount = 1;
+
+    while(bodycount < BODYQUEUE_SIZE)
+    {
+        //Spawn new body
+        enext = spawn();
+        enext.classname = "bodyqueue";
+
+        //link prev->next = next
+        eprev.owner = enext;
+        bodycount = bodycount + 1;
+    }
+
+    //after exiting the while() loop, enext points to the last body in the
+    //body queue. Link that to the head entry to complete the circular list
+    enext.owner = bodyqueue_head;
+};
+
 //// make a body que entry for the given ent so the ent can be
 //// respawned elsewhere
 void(entity ent) CopyToBodyQueue =
