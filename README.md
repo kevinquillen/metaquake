@@ -170,6 +170,7 @@ I recommend grabbing an IDE like [CLion](https://www.jetbrains.com/clion/) if yo
 - You must supply the [base.pcx skin](http://ftp.gwdg.de/pub/misc/ftp.idsoftware.com/idstuff/quakeworld/skins/skinbase.zip) file under 'meta/skins' on the server so players can connect.
 - rcon must be unencrypted in mvdsv.cfg otherwise the server will not recognize the password at all from the client.
 - sv_mapcheck must be set to 0 or basic game maps may fail to load for players (this may be an nQuake/mvdsv quirk)
+- The .qc files in /qw do not understand certain constants defined in meta.h and had to be replaced with their actual value
 
 ## Helpful Resources
 
