@@ -1,3 +1,16 @@
+METAMORPHISM QUAKE V6.0.3
+=========================
+
+Release Notes
+-------------------------------
+
+Contains a series of fixes so that the code in the /qw/ folder will compile for QuakeWorld.
+
+Updated the README with information on how to setup nQuake to run meta for QuakeWorld.
+
+Fixed a bug where the mvdsv server would crash on player respawn.
+
+
 METAMORPHISM QUAKE V6.0.2
 =========================
 
