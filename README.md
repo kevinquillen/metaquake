@@ -129,6 +129,8 @@ sv_mapcheck           0
 ./mvdsv -port 28501 +gamedir meta
 ```
 
+This would start a mvdsv server on port 28501, and autoload the server.cfg file. The map would be set to e2m2, with the game mode set as CTF (set it to 1 for deathmatch).
+
 Using rcon, you can send commands to the server after entering your password in the Quake console in-game. Check the link in this document for a list of all commands.
 
 Example:
