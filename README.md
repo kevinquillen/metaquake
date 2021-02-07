@@ -1,6 +1,6 @@
 # Metamorphism Quake
 
-Repo to preserve a great Quake mod, Metamorphism. This mod is akin to a fast paced Team Fortress style Quake mod with deathmatch and capture the flag game mode support on QuakeWorld or p2p.
+Repository to preserve a great Quake mod, Metamorphism. This mod is akin to a fast paced Team Fortress style Quake mod with deathmatch and capture the flag game mode support on QuakeWorld or p2p.
 
 ## Installation
 
@@ -12,11 +12,57 @@ Quake
   - meta
 ```
 
-Run the game with the flag `-game meta` to load the game files. You can do this in Steam by changing the game properties.
+Run the game with the flag `-game meta` to load the game files. You can do this in Steam by changing the game properties, or by appending it on your server start command.
 
 ### In game help
 
 To enter the in game help menu, hit Backspace. Navigate the menu options with the 1, 2, and 3 keys.
+
+NOTE: Help system does not appear in QuakeWorld, currently. To select a class, type its alias into the console:
+
+- soldier
+- sniper
+- special
+- scout
+- hweap
+- mage
+- cleric
+- druid
+- shock
+- fireelem
+- ninja
+- lich
+- asniper
+- berserk
+
+### Current Classes
+
+Pick from any of the following classes in Meta with their own abilities:
+
+- Soldier
+- Sniper
+- Demolition
+- Scout
+- Heavy Weapons
+- Mage
+- Cleric
+- Druid
+- Shock Trooper
+- Fire Elemental
+- Ninja
+- Lich
+- Assault Sniper
+- Berserker
+
+#### Spells
+
+Note that some classes use magic only based attacks and no weapons. Spells can be cast in a few 'modes' you can cycle through:
+
+- Directed
+- Area
+- Self
+
+You may want to bind a key to `nextspell` or `prevspell` so you can cycle through them quickly.
 
 ### Full Mouselook
 
@@ -42,16 +88,94 @@ This would bind the grappling hook action to your right mouse button.
 
 ### Capture the Flag mode
 
-To enter capture the flag mode, either set launch options of deathmatch 2 or enter deathmatch 2 in the console and reload the map.
+To set capture the flag mode, either set launch options of deathmatch 2 or enter deathmatch 2 in the console and reload the map.
 
-## Building from source
+### MVDSV Server Example
+
+With nQuake installed, you can run meta on a server like so:
+
+1. Add the 'meta' game dir to the nquakesv directory
+2. Inside the meta directory, upload qwprogs.dat file from the latest release.
+3. Add a server.cfg, pwd.cfg, and mvdsv.cfg file.
+
+server.cfg:
+
+```
+exec mvdsv.cfg
+exec pwd.cfg
+
+map e2m2
+set deathmatch 2
+```
+
+pwd.cfg
+
+```
+rcon_password YOURPASSWORD
+```
+
+mvdsv.cfg
+
+```
+sv_hashpasswords      0         // hash account passwords (0 = off, 1 = on)
+sv_crypt_rcon         0         // rcon encryption (0 = off, 1 = on)
+sv_timestamplen       60        // time (seconds) during rcon command which encryption is valid
+sv_mapcheck           0
+```
+
+4. With that in place, start your Quake server (from the nquakesv root):
+
+```
+./mvdsv -port 28501 +gamedir meta
+```
+
+Using rcon, you can send commands to the server after entering your password in the Quake console in-game. Check the link in this document for a list of all commands.
+
+Example:
+
+```
+rcon_password "YOURPASSWORD"
+rcon map e1m1
+rcon deathmatch 2
+```
+
+If you are hosting the server, make sure you are accepting UDP traffic on ports 26000-29000. Additionally, if you are hosting it from your home computer, you need to enable port forwarding on your router.
+
+# Building from source
 
 Check out this repository to your local machine. The root Makefile has a few commands to build the project.
 
-To build, use `make all`. The default directory for the output will be ./build/meta. After building, copy the "meta" directory in ./build to the installation path for Quake as noted above.
+To build, use `make progs.dat` for Quake or `make qwprogs.dat` for QuakeWorld. The default directory for the output will be ./build/meta. After building, copy the "meta" directory in ./build to the installation path for Quake as noted above.
 
-## Disclaimer
+## Testing
+
+This build was tested under the following:
+
+- Built/compiled on Ubuntu 20 & qccx
+- Quake (Steam on Linux)
+- Amazon EC2 t2.medium with mvdsv (nQuake) loading and serving the game with QuakeWorld
+- GLQuake and GLQuakeWorld is *UNTESTED*
+
+Additional game engines (QuakeSpasm, FTE) are completely untested. This is meant specifically for vanilla Quake/QuakeWorld.
+
+I recommend grabbing an IDE like [CLion](https://www.jetbrains.com/clion/) if you plan on grokking/editing the codebase.
+
+## Known Issues
+
+- The game client will currently crash on player respawn in QuakeWorld if the resolution is set above 1024x. Do not use anything higher.
+- The Help menu appears in Quake LAN play, but does not appear in QuakeWorld
+- You must supply the game PAK0/PAK1 files in the Id1 directory for the server to run it.
+- You must supply the [base.pcx skin](http://ftp.gwdg.de/pub/misc/ftp.idsoftware.com/idstuff/quakeworld/skins/skinbase.zip) file under 'meta/skins' on the server so players can connect.
+- rcon must be unencrypted in mvdsv.cfg otherwise the server will not recognize the password at all from the client.
+- sv_mapcheck must be set to 0 or basic game maps may fail to load for players (this may be an nQuake/mvdsv quirk)
+
+## Helpful Resources
+
+- [FTEQCC Manual](https://icculus.org/~marco/quakec/fteqcc_manual.txt)
+- [QuakeWorld Server Console Commands](http://www.joz3d.net/html/qwsconsole.html)
+
+# Disclaimer
 
 I am not a master C programmer. This repository is mainly for preservation purposes and a few tweaks or bugfixes that I am able to find and rectify. I really just wanted to save and share this fantastic Quake 1 mod that I dumped many hours into in the 90s. Hopefully, it will be spotted and cared for and carried forward by folks in the GitHub/gaming community.
 
-Thanks Lon.
+Thanks Lon & Patrick!
