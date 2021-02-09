@@ -63,6 +63,7 @@ world.qc
 ../common/client.qc
 client.qc
 ../common/player.qc
+../common/help.qc
 
 spectate.qc
 

@@ -21,18 +21,10 @@
 void() ClassRespawn;
 
 //Help system!
-#ifdef QUAKE
 void() CreateHelp;
 void() HelpNext;
 void() HelpPrev;
 void() HelpSelectClass;
-#else
-// QuakeWorld help system seems busted for now.
-void() CreateHelp = {};
-void() HelpNext = {};
-void() HelpPrev = {};
-void() HelpSelectClass = {};
-#endif
 
 void() S_JetOn = 
 {

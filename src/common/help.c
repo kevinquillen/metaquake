@@ -254,7 +254,7 @@ void() CreateHelp =
 	self.frame = 0;
 	self.velocity = '0 0 0';
 	#ifdef QUAKEWORLD
-	setmodel(self,"progs/blank.mdl");
+	setmodel(self,"");
 	#else
 	setmodel(self,"");
 	#endif
