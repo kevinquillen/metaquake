@@ -18,7 +18,7 @@ Run the game with the flag `-game meta` to load the game files. You can do this 
 
 To enter the in game help menu, hit Backspace. Navigate the menu options with the 1, 2, and 3 keys.
 
-NOTE: Help system does not appear in QuakeWorld, currently. To select a class, type its alias into the console:
+To select a class, you can also type its alias into the console:
 
 - soldier
 - sniper
