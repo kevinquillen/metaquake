@@ -158,14 +158,13 @@ This build was tested under the following:
 - Amazon EC2 t2.medium with mvdsv (nQuake) loading and serving the game with QuakeWorld
 - GLQuake and GLQuakeWorld is *UNTESTED*
 
-Additional game engines (QuakeSpasm, FTE) are completely untested. This is meant specifically for vanilla Quake/QuakeWorld.
+Additional game engines (QuakeSpasm, FTE, ezQuake) are completely untested. This is meant specifically for vanilla Quake/QuakeWorld, and was tested so far only on mvdsv server.
 
 I recommend grabbing an IDE like [CLion](https://www.jetbrains.com/clion/) if you plan on grokking/editing the codebase.
 
 ## Known Issues
 
 - The game client will currently crash on player respawn in QuakeWorld if the resolution is set above 1024x. Do not use anything higher.
-- The Help menu appears in Quake LAN play, but does not appear in QuakeWorld
 - You must supply the game PAK0/PAK1 files in the Id1 directory for the server to run it.
 - You must supply the [base.pcx skin](http://ftp.gwdg.de/pub/misc/ftp.idsoftware.com/idstuff/quakeworld/skins/skinbase.zip) file under 'meta/skins' on the server so players can connect.
 - rcon must be unencrypted in mvdsv.cfg otherwise the server will not recognize the password at all from the client.
