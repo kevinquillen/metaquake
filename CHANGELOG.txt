@@ -1,3 +1,12 @@
+METAMORPHISM QUAKE V6.0.4
+=========================
+
+Release Notes
+-------------------------------
+
+Fixes the in-game help menu not working in QuakeWorld. Press backspace to enter help during the game!
+
+
 METAMORPHISM QUAKE V6.0.3
 =========================
 

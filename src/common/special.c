@@ -287,21 +287,26 @@ void() S_GoRandom =
 
 void(entity monkey) S_MetaInfo =
 {
-  sprint(monkey,"\nMetamorphism Quake Server\n\n");
-  sprint(monkey,"  Copyright 1996-2000 by Lon Hohberger\n");
-  sprint(monkey,"  Portions Copyright 1996 by id Software\n\n");
-  sprint(monkey,"  --- N O  W A R R A N T Y ---\n");
-  sprint(monkey,"  This server modification is free software,\n");
-  sprint(monkey,"  and is distributed under the GNU General\n");
-  sprint(monkey,"  Public License.  Visit http://www.gnu.org\n");
-  sprint(monkey,"  for information regarding the GPL.\n\n");
-  sprint(monkey,"  Current Version ");
-  sprint(monkey,VERSION);
-  sprint(monkey,"\n\n");
-  sprint(monkey,"  --- Metamorphism Code ---\n");
-  sprint(monkey,"  Interested in helping fix bugs? Modding?\n  Grab the source code and dive in:\n\n");
-  sprint(monkey,"  https://github.com/kevinquillen/metaquake\n");
-  sprint(monkey,"\n\n");
+    sprint(monkey,"\nMetamorphism Quake Server\n\n");
+    sprint(monkey,"  Copyright 1996-2000 by Lon Hohberger\n");
+    sprint(monkey,"  2011 updates by Patrick Baggett\n");
+    sprint(monkey,"  2021 updates by Kevin Quillen\n");
+    sprint(monkey,"  Portions Copyright 1996 by id Software\n\n");
+    sprint(monkey,"  --- N O  W A R R A N T Y ---\n");
+    sprint(monkey,"  This server modification is free software,\n");
+    sprint(monkey,"  and is distributed under the GNU General\n");
+    sprint(monkey,"  Public License.  Visit http://www.gnu.org\n");
+    sprint(monkey,"  for information regarding the GPL.\n\n");
+    sprint(monkey,"  Current Version ");
+    sprint(monkey,VERSION);
+    sprint(monkey,"\n\n");
+    sprint(monkey,"  --- Metamorphism Code ---\n");
+    sprint(monkey,"  Interested in helping fix bugs? Modding?\n  Grab the source code and dive in:\n\n");
+    sprint(monkey,"  https://github.com/kevinquillen/metaquake\n");
+    sprint(monkey,"\n\n");
+    sprint(monkey,"  --- Need Help? ---\n");
+    sprint(monkey,"  Close the console and press the backspace key to enter the help screen!\n");
+    sprint(monkey,"\n\n");
 };
 
 #ifdef GAME_CTF
