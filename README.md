@@ -78,13 +78,29 @@ To show a crosshair on your HUD, open the Quake console and enter:
 
 Upon joining a game, use the Backspace key to open the Metaquake game menu. Navigate through to view simple tips and explanations, and pick your class.
 
-### Hookshot
+### Grappling Hook
 
-This mod comes bundled with the grappling hook. You can use it at your discretion by selecting the Axe weapon until you see "Axe: Hook" notification in the top left, or you can open the Quake console and type:
+This mod comes bundled with the grappling hook. You can use it at your discretion by selecting the Axe weapon until you see "Axe: Hook" notification in the top left, or you can open the Quake console and alias it:
+
+#### ORIGINAL QUAKE 1
+
+This is the bind alias for the original release of Quake:
 
 `bind mouse2 +hook`
 
-This would bind the grappling hook action to your right mouse button.
+#### QUAKE 1 REMASTER (2021)
+
+The Quake 1 remaster from NightDive Studios needs to bind like this.
+
+```
+bind mouse_right "-hook; bind mouse_right +hook"
+alias +hook "impulse 90"
+alias -hook "impulse 91"
+```
+
+The above would bind the grappling hook action to your right mouse button. Upon releasing the mouse right button, the hook will release.
+
+You can still fire your weapon as you grapple through the air.
 
 ### Capture the Flag mode
 
