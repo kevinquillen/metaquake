@@ -159,7 +159,7 @@ void() CheckTeam =
        && (self.wait <= time))
     {
       bprint(self.netname);
-      bprint(" tried to crossdress.\n");
+      bprint(" tried to switch teams.\n");
       if (deathmatch != DMMODE_CTF)
       self.frags = self.frags - 2;
       self.health = -1;
@@ -167,12 +167,12 @@ void() CheckTeam =
       stuffcmd(self,"color ");
       stuffcmd(self,str);
       stuffcmd(self,"\n");
-      cprint(self,"*** Don't crossdress. It's lame.\n");
+      cprint(self,"*** Play fairly with the team you were assigned to. There will always be more matches!\n");
       PlayerDie();
       return;
     }
   }
-#endif /* Cross Dress Check - QuakeWorld AND CTF */
+#endif /* Team switch Check - QuakeWorld AND CTF */
 
   if ((!(teamplay & TP_TEAMLOCK)) || (self.fixed_team == 255))
     return;
